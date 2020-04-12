@@ -1,3 +1,3 @@
-file(GLOB_RECURSE ad_util_SOURCES *.cpp)
+file(GLOB_RECURSE util_SOURCES *.cpp)
 
-add_library(ad_csvparser ${ad_util_SOURCES})
+add_library(csvparser ${util_SOURCES})

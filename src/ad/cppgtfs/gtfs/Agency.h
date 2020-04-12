@@ -11,80 +11,80 @@
 using std::exception;
 using std::string;
 
-namespace ad {
-namespace cppgtfs {
-namespace gtfs {
+namespace ad::cppgtfs::gtfs
+{
+    class Agency
+    {
+    public:
+        typedef Agency* Ref;
 
-class Agency {
- public:
-  typedef Agency* Ref;
-  static std::string getId(Ref r) { return r->getId(); }
+        static std::string getId(Ref r) { return r->getId(); }
 
-  Agency() {}
+        Agency() = default;
 
-  Agency(const std::string& id, const std::string& name, const std::string& url,
-         const std::string& timezone, const std::string& lang,
-         const std::string& phone, const std::string& fare_url,
-         const std::string& agency_email)
-      : _id(id),
-        _name(name),
-        _url(url),
-        _timezone(timezone),
-        _lang(lang),
-        _phone(phone),
-        _fare_url(fare_url),
-        _agency_email(agency_email) {}
+        Agency(const std::string& id, const std::string& name, const std::string& url, const std::string& timezone, const std::string& lang, const std::string& phone, const std::string& fare_url, const std::string& agency_email) :
+            _id(id),
+            _name(name),
+            _url(url),
+            _timezone(timezone),
+            _lang(lang),
+            _phone(phone),
+            _fare_url(fare_url),
+            _agency_email(agency_email) {}
 
-  Agency(const char* id, const char* name, const char* url,
-         const char* timezone, const char* lang, const char* phone,
-         const char* fare_url, const char* agency_email)
-      : _id(id),
-        _name(name),
-        _url(url),
-        _timezone(timezone),
-        _lang(lang),
-        _phone(phone),
-        _fare_url(fare_url),
-        _agency_email(agency_email) {}
+        Agency(const char* id, const char* name, const char* url, const char* timezone, const char* lang, const char* phone, const char* fare_url, const char* agency_email) :
+            _id(id),
+            _name(name),
+            _url(url),
+            _timezone(timezone),
+            _lang(lang),
+            _phone(phone),
+            _fare_url(fare_url),
+            _agency_email(agency_email) {}
 
-  const std::string& getId() const { return _id; }
+        const std::string& getId() const { return _id; }
 
-  const std::string& getName() const { return _name; }
+        const std::string& getName() const { return _name; }
 
-  const std::string& getUrl() const { return _url; }
+        const std::string& getUrl() const { return _url; }
 
-  const std::string& getTimezone() const { return _timezone; }
+        const std::string& getTimezone() const { return _timezone; }
 
-  const std::string& getLang() const { return _lang; }
+        const std::string& getLang() const { return _lang; }
 
-  const std::string& getPhone() const { return _phone; }
+        const std::string& getPhone() const { return _phone; }
 
-  const std::string& getFareUrl() const { return _fare_url; }
+        const std::string& getFareUrl() const { return _fare_url; }
 
-  const std::string& getAgencyEmail() const { return _agency_email; }
+        const std::string& getAgencyEmail() const { return _agency_email; }
 
-  flat::Agency getFlat() const {
-    flat::Agency r;
-    r.id = _id;
-    r.name = _name;
-    r.url = _url;
-    r.timezone = _timezone;
-    r.lang = _lang;
-    r.phone = _phone;
-    r.fare_url = _fare_url;
-    r.agency_email = _agency_email;
-    return r;
-  }
+        flat::Agency getFlat() const
+        {
+            flat::Agency r;
+            r.id = _id;
+            r.name = _name;
+            r.url = _url;
+            r.timezone = _timezone;
+            r.lang = _lang;
+            r.phone = _phone;
+            r.fare_url = _fare_url;
+            r.agency_email = _agency_email;
+            return r;
+        }
 
-  // TODO(patrick): implement setters
+        // TODO(patrick): implement setters
 
- private:
-  std::string _id, _name, _url, _timezone, _lang, _phone, _fare_url,
-      _agency_email;
-};
+    private:
+        std::string _id;
+        std::string _name;
+        std::string _url;
+        std::string _timezone;
+        std::string _lang;
+        std::string _phone;
+        std::string _fare_url;
+        std::string _agency_email;
+    };
 
-}  // namespace gtfs
-}  // namespace cppgtfs
-}  // namespace ad
+}    // namespace ad::cppgtfs::gtfs
 
-#endif  // AD_CPPGTFS_GTFS_AGENCY_H_
+#endif    // AD_CPPGTFS_GTFS_AGENCY_H_

@@ -52,8 +52,9 @@ typename FEEDB::Services& FEEDB::getServices() { return _services; }
 
 // ____________________________________________________________________________
 FEEDTPL
-const typename FEEDB::Transfers& FEEDB::getTransfers() const {
-  return _transfers;
+const typename FEEDB::Transfers& FEEDB::getTransfers() const
+{
+    return _transfers;
 }
 
 // ____________________________________________________________________________
@@ -126,11 +127,12 @@ void FEEDB::setEndDate(const ServiceDate& end) { _endDate = end; }
 
 // ____________________________________________________________________________
 FEEDTPL
-void FEEDB::updateBox(double lat, double lon) {
-  if (lat > _maxLat) _maxLat = lat;
-  if (lon > _maxLon) _maxLon = lon;
-  if (lat < _minLat) _minLat = lat;
-  if (lon < _minLon) _minLon = lon;
+void FEEDB::updateBox(double lat, double lon)
+{
+    if (lat > _maxLat) _maxLat = lat;
+    if (lon > _maxLon) _maxLon = lon;
+    if (lat < _minLat) _minLat = lat;
+    if (lon < _minLon) _minLon = lon;
 }
 
 // ____________________________________________________________________________

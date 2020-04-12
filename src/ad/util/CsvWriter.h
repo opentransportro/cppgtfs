@@ -20,37 +20,40 @@
  * This parser is an extension of the original AD CSV parser. It can handle
  * quoted strings and quote escapes as well as BOMs.
  */
-namespace ad {
-namespace util {
+namespace ad::util
+{
+    using HeaderList = std::vector<std::string>;
+    using Line = std::vector<std::string>;
 
-typedef std::vector<std::string> HeaderList;
-typedef std::vector<std::string> Line;
+    class CsvWriter
+    {
+    public:
+        // Initializes the parser by opening the file
+        CsvWriter(std::ostream* str, const HeaderList& headers);
 
-class CsvWriter {
- public:
-  // Initializes the parser by opening the file
-  CsvWriter(std::ostream* str, const HeaderList& headers);
+        bool writeDouble(double d);
 
-  bool writeDouble(double d);
-  bool writeString(const std::string& str);
-  bool writeInt(int i);
-  void skip();
+        bool writeString(const std::string& str);
 
-  void flushLine();
+        bool writeInt(int i);
 
- private:
-  std::ostream* _stream;
-  HeaderList _headers;
-  Line _curL;
-  bool _hWritten;
-  char _delim;
+        void skip();
 
-  bool writeRawString(const std::string& str);
-  void writeStrArr(const std::vector<std::string>& arr);
+        void flushLine();
 
-  std::string escStr(const std::string& str) const;
-};
-}  // namespace util
-}  // namespace ad
+    private:
+        std::ostream* _stream;
+        HeaderList _headers;
+        Line _curL;
+        bool _hWritten;
+        char _delim;
 
-#endif  // AD_UTIL_CSVWRITER_H_
+        bool writeRawString(const std::string& str);
+
+        void writeStrArr(const std::vector<std::string>& arr);
+
+        std::string escStr(const std::string& str) const;
+    };
+}    // namespace ad::util
+
+#endif    // AD_UTIL_CSVWRITER_H_

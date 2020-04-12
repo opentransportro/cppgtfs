@@ -10,53 +10,62 @@
 #include <string>
 #include <unordered_map>
 
-namespace ad {
-namespace cppgtfs {
-namespace gtfs {
+namespace ad::cppgtfs::gtfs
+{
+    template<typename T>
+    class ContContainer
+    {
+    public:
+        ContContainer() :
+            _final(false){};
 
-template <typename T>
-class ContContainer {
- public:
-  ContContainer() : _final(false){};
-  T* add(const T& obj);
-  bool remove(const std::string& id);
-  const T* get(const std::string& id) const;
-  T* get(const std::string& id);
-  const T* getRef(const std::string& id) const;
-  T* getRef(const std::string& id);
-  size_t size() const;
+        T* add(const T& obj);
 
-  void finalize();
+        bool remove(const std::string& id);
 
-  typename std::vector<T>::const_iterator begin() const;
-  typename std::vector<T>::iterator begin();
+        const T* get(const std::string& id) const;
 
-  typename std::vector<T>::const_iterator end() const;
-  typename std::vector<T>::iterator end();
+        T* get(const std::string& id);
 
- private:
-  std::vector<T> _vec;
-  bool _final;
-};
+        const T* getRef(const std::string& id) const;
 
-template <typename T>
-struct ContCompCmp {
-  bool operator()(const T& lh, const T& rh) const {
-    return lh.getId() < rh.getId();
-  }
-};
+        T* getRef(const std::string& id);
 
-template <typename T>
-struct ContCompCmp2 {
-  bool operator()(const T& lh, const std::string& rh) const {
-    return lh.getId() < rh;
-  }
-};
+        size_t size() const;
 
+        void finalize();
+
+        typename std::vector<T>::const_iterator begin() const;
+
+        typename std::vector<T>::iterator begin();
+
+        typename std::vector<T>::const_iterator end() const;
+
+        typename std::vector<T>::iterator end();
+
+    private:
+        std::vector<T> _vec;
+        bool _final;
+    };
+
+    template<typename T>
+    struct ContCompCmp
+    {
+        bool operator()(const T& lh, const T& rh) const
+        {
+            return lh.getId() < rh.getId();
+        }
+    };
+
+    template<typename T>
+    struct ContCompCmp2
+    {
+        bool operator()(const T& lh, const std::string& rh) const
+        {
+            return lh.getId() < rh;
+        }
+    };
 #include "ContContainer.tpp"
+}    // namespace ad::cppgtfs::gtfs
 
-}  // namespace gtfs
-}  // namespace cppgtfs
-}  // namespace ad
-
-#endif  // AD_CPPGTFS_GTFS_CONTCONTAINER_H_
+#endif    // AD_CPPGTFS_GTFS_CONTCONTAINER_H_

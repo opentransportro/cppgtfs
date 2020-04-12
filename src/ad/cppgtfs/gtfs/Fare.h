@@ -14,99 +14,98 @@
 using std::exception;
 using std::string;
 
-namespace ad {
-namespace cppgtfs {
-namespace gtfs {
+namespace ad::cppgtfs::gtfs
+{
+    template<typename RouteT>
+    class FareRule
+    {
+    public:
+        FareRule() {}
 
-template <typename RouteT>
-class FareRule {
- public:
-  FareRule() {}
+        FareRule(typename RouteT::Ref route, const std::string& originId, const std::string& destId, const std::string& containsId) :
+            _route(route),
+            _originId(originId),
+            _destId(destId),
+            _containsId(containsId) {}
 
-  FareRule(typename RouteT::Ref route, const std::string& originId,
-           const std::string& destId, const std::string& containsId)
-      : _route(route),
-        _originId(originId),
-        _destId(destId),
-        _containsId(containsId) {}
+        typename RouteT::Ref getRoute() const { return _route; }
 
-  typename RouteT::Ref getRoute() const { return _route; }
-  const std::string& getOriginId() const { return _originId; }
-  const std::string& getDestId() const { return _destId; }
-  const std::string& getContainsId() const { return _containsId; }
+        const std::string& getOriginId() const { return _originId; }
+
+        const std::string& getDestId() const { return _destId; }
+
+        const std::string& getContainsId() const { return _containsId; }
 
 
- private:
-  typename RouteT::Ref _route;
-  std::string _originId;
-  std::string _destId;
-  std::string _containsId;
-};
+    private:
+        typename RouteT::Ref _route;
+        std::string _originId;
+        std::string _destId;
+        std::string _containsId;
+    };
 
-template <typename RouteT>
-class Fare {
- public:
-  typedef Fare<RouteT>* Ref;
-  static std::string getId(Ref r) { return r->getId(); }
-  typedef flat::Fare::PAYMENT_METHOD PAYMENT_METHOD;
-  typedef flat::Fare::NUM_TRANSFERS NUM_TRANSFERS;
+    template<typename RouteT>
+    class Fare
+    {
+    public:
+        typedef Fare<RouteT>* Ref;
 
-  Fare() {}
+        static std::string getId(Ref r) { return r->getId(); }
 
-  Fare(const std::string& id, double price, const std::string& currencyType,
-       PAYMENT_METHOD paymentMethod, NUM_TRANSFERS numTransfers, Agency* agency,
-       int64_t dur)
-      : _id(id),
-        _price(price),
-        _currencyType(currencyType),
-        _paymentMethod(paymentMethod),
-        _numTransfers(numTransfers),
-        _agency(agency),
-        _duration(dur) {}
+        typedef flat::Fare::PAYMENT_METHOD PAYMENT_METHOD;
+        typedef flat::Fare::NUM_TRANSFERS NUM_TRANSFERS;
 
-  const std::string& getId() const { return _id; }
+        Fare() {}
 
-  double getPrice() const { return _price; }
+        Fare(const std::string& id, double price, const std::string& currencyType, PAYMENT_METHOD paymentMethod, NUM_TRANSFERS numTransfers, Agency* agency, int64_t dur) :
+            _id(id),
+            _price(price),
+            _currencyType(currencyType),
+            _paymentMethod(paymentMethod),
+            _numTransfers(numTransfers),
+            _agency(agency),
+            _duration(dur) {}
 
-  const std::string& getCurrencyType() const { return _currencyType; }
+        const std::string& getId() const { return _id; }
 
-  PAYMENT_METHOD getPaymentMethod() const { return _paymentMethod; }
+        double getPrice() const { return _price; }
 
-  NUM_TRANSFERS getNumTransfers() const { return _numTransfers; }
+        const std::string& getCurrencyType() const { return _currencyType; }
 
-  Agency* getAgency() const { return _agency; }
+        PAYMENT_METHOD getPaymentMethod() const { return _paymentMethod; }
 
-  int64_t getDuration() const { return _duration; }
+        NUM_TRANSFERS getNumTransfers() const { return _numTransfers; }
 
-  const std::vector<FareRule<RouteT>>& getFareRules() const {
-    return _fareRules;
-  }
+        Agency* getAgency() const { return _agency; }
 
-  void addFareRule(const FareRule<RouteT>& rule) { _fareRules.push_back(rule); }
+        int64_t getDuration() const { return _duration; }
 
-  flat::Fare getFlat() const {
-    return flat::Fare{_id,           _price,
-                      _currencyType, _paymentMethod,
-                      _numTransfers, _agency ? _agency->getId() : "",
-                      _duration};
-  }
+        const std::vector<FareRule<RouteT>>& getFareRules() const
+        {
+            return _fareRules;
+        }
 
-  // TODO(patrick): implement setters
+        void addFareRule(const FareRule<RouteT>& rule) { _fareRules.push_back(rule); }
 
- private:
-  std::string _id;
-  double _price;
-  std::string _currencyType;
-  PAYMENT_METHOD _paymentMethod;
-  NUM_TRANSFERS _numTransfers;
-  Agency* _agency;
-  int64_t _duration;
+        flat::Fare getFlat() const
+        {
+            return flat::Fare{ _id, _price, _currencyType, _paymentMethod, _numTransfers, _agency ? _agency->getId() : "", _duration };
+        }
 
-  std::vector<FareRule<RouteT>> _fareRules;
-};
+        // TODO(patrick): implement setters
 
-}  // namespace gtfs
-}  // namespace cppgtfs
-}  // namespace ad
+    private:
+        std::string _id;
+        double _price;
+        std::string _currencyType;
+        PAYMENT_METHOD _paymentMethod;
+        NUM_TRANSFERS _numTransfers;
+        Agency* _agency;
+        int64_t _duration;
 
-#endif  // AD_CPPGTFS_GTFS_FARE_H_
+        std::vector<FareRule<RouteT>> _fareRules;
+    };
+
+}    // namespace ad::cppgtfs::gtfs
+
+#endif    // AD_CPPGTFS_GTFS_FARE_H_

@@ -14,173 +14,192 @@
 using std::exception;
 using std::string;
 
-namespace ad {
-namespace cppgtfs {
-namespace gtfs {
-namespace flat {
+namespace ad::cppgtfs::gtfs::flat
+{
+    struct CalendarFlds
+    {
+        size_t serviceIdFld;
+        size_t mondayFld;
+        size_t tuesdayFld;
+        size_t wednesdayFld;
+        size_t thursdayFld;
+        size_t fridayFld;
+        size_t saturdayFld;
+        size_t sundayFld;
+        size_t startDateFld;
+        size_t endDateFld;
+    };
 
-struct CalendarFlds {
-  size_t serviceIdFld;
-  size_t mondayFld;
-  size_t tuesdayFld;
-  size_t wednesdayFld;
-  size_t thursdayFld;
-  size_t fridayFld;
-  size_t saturdayFld;
-  size_t sundayFld;
-  size_t startDateFld;
-  size_t endDateFld;
-};
+    struct CalendarDateFlds
+    {
+        size_t serviceIdFld;
+        size_t exceptionTypeFld;
+        size_t dateFld;
+    };
 
-struct CalendarDateFlds {
-  size_t serviceIdFld;
-  size_t exceptionTypeFld;
-  size_t dateFld;
-};
+    class ServiceDate
+    {
+    public:
+        ServiceDate(uint8_t day, uint8_t month, uint16_t year) :
+            _yyyymmdd((year * 10000 + month * 100 + day) - (1900 * 10000)) {}
 
-class ServiceDate {
- public:
-  ServiceDate(uint8_t day, uint8_t month, uint16_t year)
-      : _yyyymmdd((year * 10000 + month * 100 + day) - (1900 * 10000)) {}
+        explicit ServiceDate(uint32_t yyyymmdd) :
+            _yyyymmdd(yyyymmdd - (1900 * 10000)) {}
 
-  explicit ServiceDate(uint32_t yyyymmdd)
-      : _yyyymmdd(yyyymmdd - (1900 * 10000)) {}
+        ServiceDate() :
+            _yyyymmdd(0) {}
 
-  ServiceDate()
-      : _yyyymmdd(0) {}
+        uint32_t getYYYYMMDD() const { return _yyyymmdd + (1900 * 10000); }
 
-  uint32_t getYYYYMMDD() const { return _yyyymmdd + (1900 * 10000); }
+        uint16_t getYear() const { return (_yyyymmdd / 10000) + 1900; }
 
-  uint16_t getYear() const { return (_yyyymmdd / 10000) + 1900; }
-  uint8_t getMonth() const {
-    return (_yyyymmdd - ((getYear() - 1900) * 10000)) / 100;
-  }
-  uint8_t getDay() const {
-    return _yyyymmdd - ((getYear() - 1900) * 10000) - (getMonth() * 100);
-  }
+        uint8_t getMonth() const
+        {
+            return (_yyyymmdd - ((getYear() - 1900) * 10000)) / 100;
+        }
 
-  void setDay(uint8_t day) { _yyyymmdd = _yyyymmdd - getDay() + day; }
+        uint8_t getDay() const
+        {
+            return _yyyymmdd - ((getYear() - 1900) * 10000) - (getMonth() * 100);
+        }
 
-  void setMonth(uint8_t month) {
-    _yyyymmdd = _yyyymmdd - getMonth() * 100 + month * 100;
-  }
+        void setDay(uint8_t day) { _yyyymmdd = _yyyymmdd - getDay() + day; }
 
-  void setYear(uint16_t year) {
-    _yyyymmdd = _yyyymmdd - (getYear() - 1900) * 10000 + (year - 1900) * 10000;
-  }
+        void setMonth(uint8_t month)
+        {
+            _yyyymmdd = _yyyymmdd - getMonth() * 100 + month * 100;
+        }
 
-  bool empty() const {
-    return _yyyymmdd == 0;
-  }
+        void setYear(uint16_t year)
+        {
+            _yyyymmdd = _yyyymmdd - (getYear() - 1900) * 10000 + (year - 1900) * 10000;
+        }
 
-  // returns a time struct of this date at 12:00
-  tm getTimeStrc() const {
-    tm ret;
-    ret.tm_year = getYear() - 1900;
-    ret.tm_mon = getMonth() - 1;
-    ret.tm_mday = getDay();
-    ret.tm_hour = 12;
-    mktime(&ret);
-    return ret;
-  }
+        bool empty() const
+        {
+            return _yyyymmdd == 0;
+        }
 
- private:
-  uint32_t _yyyymmdd : 24;
-};
+        // returns a time struct of this date at 12:00
+        tm getTimeStrc() const
+        {
+            tm ret;
+            ret.tm_year = getYear() - 1900;
+            ret.tm_mon = getMonth() - 1;
+            ret.tm_mday = getDay();
+            ret.tm_hour = 12;
+            mktime(&ret);
+            return ret;
+        }
 
-inline bool operator>(const ServiceDate& lh,
-                                  const ServiceDate& rh) {
-  return lh.getYYYYMMDD() > rh.getYYYYMMDD();
-}
+    private:
+        uint32_t _yyyymmdd : 24;
+    };
 
-inline bool operator<(const ServiceDate& lh,
-                                  const ServiceDate& rh) {
-  return rh > lh;
-}
+    inline bool operator>(const ServiceDate& lh,
+        const ServiceDate& rh)
+    {
+        return lh.getYYYYMMDD() > rh.getYYYYMMDD();
+    }
 
-inline bool operator==(const ServiceDate& lh,
-                                   const ServiceDate& rh) {
-  return !(lh > rh) && !(lh < rh);
-}
+    inline bool operator<(const ServiceDate& lh,
+        const ServiceDate& rh)
+    {
+        return rh > lh;
+    }
 
-inline bool operator!=(const ServiceDate& lh,
-                                   const ServiceDate& rh) {
-  return !(lh == rh);
-}
+    inline bool operator==(const ServiceDate& lh,
+        const ServiceDate& rh)
+    {
+        return !(lh > rh) && !(lh < rh);
+    }
 
-inline bool operator>=(const ServiceDate& lh,
-                                   const ServiceDate& rh) {
-  return lh > rh || lh == rh;
-}
+    inline bool operator!=(const ServiceDate& lh,
+        const ServiceDate& rh)
+    {
+        return !(lh == rh);
+    }
 
-inline bool operator<=(const ServiceDate& lh,
-                                   const ServiceDate& rh) {
-  return rh > lh || lh == rh;
-}
+    inline bool operator>=(const ServiceDate& lh,
+        const ServiceDate& rh)
+    {
+        return lh > rh || lh == rh;
+    }
 
-inline ServiceDate operator+(const ServiceDate& lh, int i) {
-  tm tStrc = lh.getTimeStrc();
-  tStrc.tm_mday += i;
-  mktime(&tStrc);
+    inline bool operator<=(const ServiceDate& lh,
+        const ServiceDate& rh)
+    {
+        return rh > lh || lh == rh;
+    }
 
-  return ServiceDate(tStrc.tm_mday, tStrc.tm_mon + 1, tStrc.tm_year + 1900);
-}
+    inline ServiceDate operator+(const ServiceDate& lh, int i)
+    {
+        tm tStrc = lh.getTimeStrc();
+        tStrc.tm_mday += i;
+        mktime(&tStrc);
 
-inline ServiceDate operator-(const ServiceDate& lh, int i) {
-  return lh + (-i);
-}
+        return ServiceDate(tStrc.tm_mday, tStrc.tm_mon + 1, tStrc.tm_year + 1900);
+    }
 
-inline ServiceDate operator--(ServiceDate& lh) {
-  ServiceDate ret = lh - 1;
-  lh.setDay(ret.getDay());
-  lh.setMonth(ret.getMonth());
-  lh.setYear(ret.getYear());
-  return ret;
-}
+    inline ServiceDate operator-(const ServiceDate& lh, int i)
+    {
+        return lh + (-i);
+    }
 
-inline ServiceDate operator++(ServiceDate& lh) {
-  ServiceDate ret = lh + 1;
-  lh.setDay(ret.getDay());
-  lh.setMonth(ret.getMonth());
-  lh.setYear(ret.getYear());
-  return ret;
-}
+    inline ServiceDate operator--(ServiceDate& lh)
+    {
+        ServiceDate ret = lh - 1;
+        lh.setDay(ret.getDay());
+        lh.setMonth(ret.getMonth());
+        lh.setYear(ret.getYear());
+        return ret;
+    }
 
-struct Calendar {
-  enum SERVICE_DAY : uint8_t {
-    NEVER = 0,       // 0000000
-    MONDAYS = 1,     // 0000001
-    TUESDAYS = 2,    // 0000010
-    WEDNESDAYS = 4,  // 0000100
-    THURSDAYS = 8,   // 0001000
-    FRIDAYS = 16,    // 0010000
-    SATURDAYS = 32,  // 0100000
-    SUNDAYS = 64,    // 1000000
-    WEEKDAYS = 31,   // 0011111 (shorthand)
-    WEEKENDS = 96,   // 1100000 (shorthand)
-    ALL_WEEK = 127   // 1111111 (shorthand)
-  };
+    inline ServiceDate operator++(ServiceDate& lh)
+    {
+        ServiceDate ret = lh + 1;
+        lh.setDay(ret.getDay());
+        lh.setMonth(ret.getMonth());
+        lh.setYear(ret.getYear());
+        return ret;
+    }
 
-  string id;
-  uint8_t serviceDays;
-  ServiceDate begin, end;
-};
+    struct Calendar
+    {
+        enum SERVICE_DAY : uint8_t
+        {
+            NEVER = 0,         // 0000000
+            MONDAYS = 1,       // 0000001
+            TUESDAYS = 2,      // 0000010
+            WEDNESDAYS = 4,    // 0000100
+            THURSDAYS = 8,     // 0001000
+            FRIDAYS = 16,      // 0010000
+            SATURDAYS = 32,    // 0100000
+            SUNDAYS = 64,      // 1000000
+            WEEKDAYS = 31,     // 0011111 (shorthand)
+            WEEKENDS = 96,     // 1100000 (shorthand)
+            ALL_WEEK = 127     // 1111111 (shorthand)
+        };
 
-struct CalendarDate {
-  enum EXCEPTION_TYPE : uint8_t {
-    NOT_SET = 0,
-    SERVICE_ADDED = 1,
-    SERVICE_REMOVED = 2
-  };
+        string id;
+        uint8_t serviceDays;
+        ServiceDate begin, end;
+    };
 
-  string id;
-  EXCEPTION_TYPE type;
-  ServiceDate date;
-};
+    struct CalendarDate
+    {
+        enum EXCEPTION_TYPE : uint8_t
+        {
+            NOT_SET = 0,
+            SERVICE_ADDED = 1,
+            SERVICE_REMOVED = 2
+        };
 
-}  // namespace flat
-}  // namespace gtfs
-}  // namespace cppgtfs
-}  // namespace ad
+        string id;
+        EXCEPTION_TYPE type;
+        ServiceDate date;
+    };
 
-#endif  // AD_CPPGTFS_GTFS_SERVICE_H_
+}    // namespace ad
+
+#endif    // AD_CPPGTFS_GTFS_SERVICE_H_

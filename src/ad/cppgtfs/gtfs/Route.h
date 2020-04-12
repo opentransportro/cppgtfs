@@ -15,96 +15,93 @@
 #include "flat/Route.h"
 
 using std::exception;
-using std::string;
 
-namespace ad {
-namespace cppgtfs {
-namespace gtfs {
+namespace ad::cppgtfs::gtfs
+{
+    template<typename AgencyT>
+    class RouteB
+    {
+    public:
+        typedef RouteB<AgencyT>* Ref;
 
-template <typename AgencyT>
-class RouteB {
- public:
-  typedef RouteB<AgencyT>* Ref;
-  static std::string getId(Ref r) { return r->getId(); }
+        static std::string getId(Ref r) { return r->getId(); }
 
-  typedef flat::Route::TYPE TYPE;
+        typedef flat::Route::TYPE TYPE;
 
-  RouteB() {}
+        RouteB() {}
 
-  RouteB(const string& id, typename AgencyT::Ref agency,
-         const string& short_name, const string& long_name, const string& desc,
-         flat::Route::TYPE type, const string& url, uint32_t color,
-         uint32_t text_color)
-      : _id(id),
-        _agency(agency),
-        _short_name(short_name),
-        _long_name(long_name),
-        _desc(desc),
-        _type(type),
-        _url(url),
-        _color(color),
-        _text_color(text_color) {}
+        RouteB(const std::string& id, typename AgencyT::Ref agency, const std::string& short_name, const std::string& long_name, const std::string& desc, flat::Route::TYPE type, const std::string& url, uint32_t color, uint32_t text_color) :
+            _id(id),
+            _agency(agency),
+            _short_name(short_name),
+            _long_name(long_name),
+            _desc(desc),
+            _type(type),
+            _url(url),
+            _color(color),
+            _text_color(text_color) {}
 
-  const std::string& getId() const { return _id; }
+        const std::string& getId() const { return _id; }
 
-  const typename AgencyT::Ref getAgency() const { return _agency; }
+        const typename AgencyT::Ref getAgency() const { return _agency; }
 
-  typename AgencyT::Ref getAgency() { return _agency; }
+        typename AgencyT::Ref getAgency() { return _agency; }
 
-  const std::string& getShortName() const { return _short_name; }
+        const std::string& getShortName() const { return _short_name; }
 
-  const std::string& getLongName() const { return _long_name; }
+        const std::string& getLongName() const { return _long_name; }
 
-  const std::string& getDesc() const { return _desc; }
+        const std::string& getDesc() const { return _desc; }
 
-  flat::Route::TYPE getType() const { return _type; }
+        flat::Route::TYPE getType() const { return _type; }
 
-  const std::string& getUrl() const { return _url; }
+        const std::string& getUrl() const { return _url; }
 
-  uint32_t getColor() const { return _color; }
+        uint32_t getColor() const { return _color; }
 
-  std::string getColorString() const {
-    return flat::Route::getHexColorString(_color);
-  }
+        std::string getColorString() const
+        {
+            return flat::Route::getHexColorString(_color);
+        }
 
-  uint32_t getTextColor() const { return _text_color; }
+        uint32_t getTextColor() const { return _text_color; }
 
-  std::string getTextColorString() const {
-    return flat::Route::getHexColorString(_text_color);
-  }
+        std::string getTextColorString() const
+        {
+            return flat::Route::getHexColorString(_text_color);
+        }
 
-  flat::Route getFlat() const {
-    flat::Route r;
-    r.id = _id;
-    r.agency = _agency->getId();
-    r.short_name = _short_name;
-    r.long_name = _long_name;
-    r.desc = _desc;
-    r.type = _type;
-    r.url = _url;
-    r.color = _color;
-    r.text_color = _text_color;
-    return r;
-  }
+        flat::Route getFlat() const
+        {
+            flat::Route r;
+            r.id = _id;
+            r.agency = _agency->getId();
+            r.short_name = _short_name;
+            r.long_name = _long_name;
+            r.desc = _desc;
+            r.type = _type;
+            r.url = _url;
+            r.color = _color;
+            r.text_color = _text_color;
+            return r;
+        }
 
-  // TODO(patrick): implement setters
+        // TODO(patrick): implement setters
 
- private:
-  string _id;
-  typename AgencyT::Ref _agency;
-  string _short_name;
-  string _long_name;
-  string _desc;
-  flat::Route::TYPE _type;
-  string _url;
-  uint32_t _color;
-  uint32_t _text_color;
-};
+    private:
+        std::string _id;
+        typename AgencyT::Ref _agency;
+        std::string _short_name;
+        std::string _long_name;
+        std::string _desc;
+        flat::Route::TYPE _type;
+        std::string _url;
+        uint32_t _color;
+        uint32_t _text_color;
+    };
 
-typedef RouteB<Agency> Route;
+    typedef RouteB<Agency> Route;
 
-}  // namespace gtfs
-}  // namespace cppgtfs
-}  // namespace ad
+}    // namespace ad::cppgtfs::gtfs
 
-#endif  // AD_CPPGTFS_GTFS_ROUTE_H_
+#endif    // AD_CPPGTFS_GTFS_ROUTE_H_

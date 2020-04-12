@@ -7,22 +7,29 @@
 
 #include <string>
 
-namespace ad {
-namespace cppgtfs {
-namespace gtfs {
+namespace ad::cppgtfs::gtfs
+{
+    template<typename T>
+    class NullContainer
+    {
+    public:
+        NullContainer() {}
 
-template <typename T>
-class NullContainer {
- public:
-  NullContainer(){}
-  std::string add(const T& obj) const {return obj.getId();}
-  T* get(const std::string& id) const {do { (void)(id); } while (0); return 0;}
-  std::string getRef(const std::string& id) const {return id;}
-  void finalize() {};
-};
+        std::string add(const T& obj) const { return obj.getId(); }
 
-}  // namespace gtfs
-}  // namespace cppgtfs
-}  // namespace ad
+        T* get(const std::string& id) const
+        {
+            do {
+                (void) (id);
+            } while (0);
+            return 0;
+        }
 
-#endif  // AD_CPPGTFS_GTFS_NULLCONTAINER_H_
+        std::string getRef(const std::string& id) const { return id; }
+
+        void finalize(){};
+    };
+
+}    // namespace ad::cppgtfs::gtfs
+
+#endif    // AD_CPPGTFS_GTFS_NULLCONTAINER_H_

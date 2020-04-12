@@ -12,57 +12,64 @@
 using std::exception;
 using std::string;
 
-namespace ad {
-namespace cppgtfs {
-namespace gtfs {
+namespace ad::cppgtfs::gtfs
+{
+    struct ShapePoint
+    {
+        ShapePoint(float lat, float ln, float dist, uint32_t seq) :
+            lat(lat), lng(ln), travelDist(dist), seq(seq) {}
 
-struct ShapePoint {
-  ShapePoint(float lat, float ln, float dist, uint32_t seq)
-      : lat(lat), lng(ln), travelDist(dist), seq(seq) {}
-  ShapePoint() : lat(0), lng(0), travelDist(-1), seq(0) {}
-  float lat, lng;
-  float travelDist;
-  uint32_t seq;
-};
+        ShapePoint() :
+            lat(0), lng(0), travelDist(-1), seq(0) {}
 
-struct ShapePointCompare {
-  bool operator()(const ShapePoint& lh, const ShapePoint& rh) const {
-    return lh.seq < rh.seq;
-  }
-};
+        float lat, lng;
+        float travelDist;
+        uint32_t seq;
+    };
 
-typedef std::vector<ShapePoint> ShapePoints;
+    struct ShapePointCompare
+    {
+        bool operator()(const ShapePoint& lh, const ShapePoint& rh) const
+        {
+            return lh.seq < rh.seq;
+        }
+    };
 
-class Shape {
- public:
-  typedef Shape* Ref;
-  static std::string getId(Ref r) { return r->getId(); }
-  Shape() {}
+    typedef std::vector<ShapePoint> ShapePoints;
 
-  explicit Shape(const string& id) : _id(id) {}
+    class Shape
+    {
+    public:
+        typedef Shape* Ref;
 
-  const std::string& getId() const { return _id; }
+        static std::string getId(Ref r) { return r->getId(); }
 
-  const ShapePoints& getPoints() const { return _shapePoints; }
+        Shape() {}
 
-  bool addPoint(const ShapePoint& p) {
-    for (size_t i = 0; i < _shapePoints.size(); i++) {
-      if (_shapePoints[i].seq == p.seq) return false;
-    }
-    _shapePoints.reserve(_shapePoints.size() + 1);
-    _shapePoints.push_back(p);
-    auto cmp = ShapePointCompare();
-    std::sort(_shapePoints.begin(), _shapePoints.end(), cmp);
-    return true;
-  }
+        explicit Shape(const string& id) :
+            _id(id) {}
 
- private:
-  string _id;
-  ShapePoints _shapePoints;
-};
+        const std::string& getId() const { return _id; }
 
-}  // namespace gtfs
-}  // namespace cppgtfs
-}  // namespace ad
+        const ShapePoints& getPoints() const { return _shapePoints; }
 
-#endif  // AD_CPPGTFS_GTFS_SHAPE_H_
+        bool addPoint(const ShapePoint& p)
+        {
+            for (size_t i = 0; i < _shapePoints.size(); i++) {
+                if (_shapePoints[i].seq == p.seq) return false;
+            }
+            _shapePoints.reserve(_shapePoints.size() + 1);
+            _shapePoints.push_back(p);
+            auto cmp = ShapePointCompare();
+            std::sort(_shapePoints.begin(), _shapePoints.end(), cmp);
+            return true;
+        }
+
+    private:
+        string _id;
+        ShapePoints _shapePoints;
+    };
+
+}    // namespace ad::cppgtfs::gtfs
+
+#endif    // AD_CPPGTFS_GTFS_SHAPE_H_
