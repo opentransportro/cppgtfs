@@ -31,15 +31,15 @@ namespace ad::cppgtfs::gtfs
     FEEDTPL
     class FeedB
     {
-        typedef AContainerT<AgencyT> Agencies;
-        typedef StContainerT<StopT> Stops;
-        typedef RContainerT<RouteT> Routes;
-        typedef TContainerT<TripB<StopTimeT<StopT>, ServiceT, RouteT, ShapeT>> Trips;
-        typedef ShContainerT<ShapeT> Shapes;
-        typedef SContainerT<ServiceT> Services;
-        typedef FContainerT<FareT<RouteT>> Fares;
-        typedef std::vector<Transfer> Transfers;
-        typedef std::set<std::string> Zones;
+        using Agencies = AContainerT<AgencyT>;
+        using Stops = StContainerT<StopT>;
+        using Routes = RContainerT<RouteT>;
+        using Trips = TContainerT<TripB<StopTimeT<StopT>, ServiceT, RouteT, ShapeT> >;
+        using Shapes = ShContainerT<ShapeT>;
+        using Services = SContainerT<ServiceT>;
+        using Fares = FContainerT<FareT<RouteT> >;
+        using Transfers = std::vector<Transfer>;
+        using Zones = std::set<std::string>;
 
     public:
         FeedB() :
@@ -114,8 +114,8 @@ namespace ad::cppgtfs::gtfs
         ServiceDate _startDate, _endDate;
     };
 
-    typedef FeedB<Agency, Route, Stop, Service, StopTime, Shape, Fare, Container, Container, Container, Container, Container, Container, Container> Feed;
-    typedef FeedB<Agency, Route, Stop, Service, StopTime, Shape, Fare, ContContainer, ContContainer, ContContainer, ContContainer, ContContainer, ContContainer, ContContainer> ContFeed;
+    using Feed = FeedB<Agency, Route, Stop, Service, StopTime, Shape, Fare, Container, Container, Container, Container, Container, Container, Container>;
+    using ContFeed = FeedB<Agency, Route, Stop, Service, StopTime, Shape, Fare, ContContainer, ContContainer, ContContainer, ContContainer, ContContainer, ContContainer, ContContainer>;
 
 #include "Feed.tpp"
 

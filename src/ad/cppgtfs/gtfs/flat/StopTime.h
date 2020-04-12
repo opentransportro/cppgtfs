@@ -100,7 +100,7 @@ namespace ad::cppgtfs::gtfs::flat
         PU_DO_TYPE pickupType;
         PU_DO_TYPE dropOffType;
         bool isTimepoint;
-        float shapeDistTravelled;
+        double shapeDistTravelled;
     };
 
 }    // namespace ad

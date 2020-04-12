@@ -17,7 +17,7 @@ namespace ad::cppgtfs::gtfs
     class Transfer
     {
     public:
-        typedef flat::Transfer::TYPE TYPE;
+        using TYPE = flat::Transfer::TYPE;
 
         Transfer() {}
 

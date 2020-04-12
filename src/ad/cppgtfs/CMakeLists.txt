@@ -5,4 +5,4 @@ include_directories(
 )
 
 add_library(cppgtfs ${cppgtfs_SOURCES})
-target_link_libraries(cppgtfs csvparser)
+target_link_libraries(cppgtfs csvparser project_options project_warnings)

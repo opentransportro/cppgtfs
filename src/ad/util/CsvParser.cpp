@@ -46,8 +46,9 @@ bool CsvParser::readNextLine()
     _currentLine.erase(remove(_currentLine.begin(), _currentLine.end(), '\r'), _currentLine.end());
     _currentLine.erase(remove(_currentLine.begin(), _currentLine.end(), '\n'), _currentLine.end());
 
-    if (_currentLine.empty())
+    if (_currentLine.empty()) {
         return readNextLine();    // skip empty lines
+    }
     size_t pos = 0;
     size_t lastPos = pos;
     bool firstChar = false;

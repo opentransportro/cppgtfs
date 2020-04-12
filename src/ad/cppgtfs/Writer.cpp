@@ -521,14 +521,13 @@ bool Writer::writeCalendar(const gtfs::flat::Calendar& s,
     CsvWriter* csvw) const
 {
     csvw->writeString(s.id);
-    csvw->writeInt((bool) (s.serviceDays & gtfs::Service::SERVICE_DAY::MONDAYS));
-    csvw->writeInt((bool) (s.serviceDays & gtfs::Service::SERVICE_DAY::TUESDAYS));
-    csvw->writeInt(
-        (bool) (s.serviceDays & gtfs::Service::SERVICE_DAY::WEDNESDAYS));
-    csvw->writeInt((bool) (s.serviceDays & gtfs::Service::SERVICE_DAY::THURSDAYS));
-    csvw->writeInt((bool) (s.serviceDays & gtfs::Service::SERVICE_DAY::FRIDAYS));
-    csvw->writeInt((bool) (s.serviceDays & gtfs::Service::SERVICE_DAY::SATURDAYS));
-    csvw->writeInt((bool) (s.serviceDays & gtfs::Service::SERVICE_DAY::SUNDAYS));
+    csvw->writeInt(static_cast<bool>(s.serviceDays & gtfs::Service::SERVICE_DAY::MONDAYS));
+    csvw->writeInt(static_cast<bool>(s.serviceDays & gtfs::Service::SERVICE_DAY::TUESDAYS));
+    csvw->writeInt(static_cast<bool>(s.serviceDays & gtfs::Service::SERVICE_DAY::WEDNESDAYS));
+    csvw->writeInt(static_cast<bool>(s.serviceDays & gtfs::Service::SERVICE_DAY::THURSDAYS));
+    csvw->writeInt(static_cast<bool>(s.serviceDays & gtfs::Service::SERVICE_DAY::FRIDAYS));
+    csvw->writeInt(static_cast<bool>(s.serviceDays & gtfs::Service::SERVICE_DAY::SATURDAYS));
+    csvw->writeInt(static_cast<bool>(s.serviceDays & gtfs::Service::SERVICE_DAY::SUNDAYS));
     csvw->writeInt(s.begin.getYYYYMMDD());
     csvw->writeInt(s.end.getYYYYMMDD());
     csvw->flushLine();

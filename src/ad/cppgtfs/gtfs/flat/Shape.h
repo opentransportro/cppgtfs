@@ -24,8 +24,8 @@ namespace ad::cppgtfs::gtfs::flat
     struct ShapePoint
     {
         std::string id;
-        float lat, lng;
-        float travelDist;
+        double lat, lng;
+        double travelDist;
         uint32_t seq;
     };
 

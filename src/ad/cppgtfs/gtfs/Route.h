@@ -22,13 +22,13 @@ namespace ad::cppgtfs::gtfs
     class RouteB
     {
     public:
-        typedef RouteB<AgencyT>* Ref;
+        using Ref = RouteB<AgencyT> *;
 
         static std::string getId(Ref r) { return r->getId(); }
 
-        typedef flat::Route::TYPE TYPE;
+        using TYPE = flat::Route::TYPE;
 
-        RouteB() {}
+        RouteB() = default;
 
         RouteB(const std::string& id, typename AgencyT::Ref agency, const std::string& short_name, const std::string& long_name, const std::string& desc, flat::Route::TYPE type, const std::string& url, uint32_t color, uint32_t text_color) :
             _id(id),
@@ -100,7 +100,7 @@ namespace ad::cppgtfs::gtfs
         uint32_t _text_color;
     };
 
-    typedef RouteB<Agency> Route;
+    using Route = RouteB<Agency>;
 
 }    // namespace ad::cppgtfs::gtfs
 

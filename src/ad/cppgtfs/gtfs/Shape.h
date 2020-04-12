@@ -35,16 +35,16 @@ namespace ad::cppgtfs::gtfs
         }
     };
 
-    typedef std::vector<ShapePoint> ShapePoints;
+    using ShapePoints = std::vector<ShapePoint>;
 
     class Shape
     {
     public:
-        typedef Shape* Ref;
+        using Ref = Shape *;
 
         static std::string getId(Ref r) { return r->getId(); }
 
-        Shape() {}
+        Shape() = default;
 
         explicit Shape(const string& id) :
             _id(id) {}

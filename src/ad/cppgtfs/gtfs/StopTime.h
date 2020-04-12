@@ -17,7 +17,7 @@ using std::string;
 
 namespace ad::cppgtfs::gtfs
 {
-    typedef flat::Time Time;
+    using Time = flat::Time;
 
     template<typename StopT>
     class StopTime

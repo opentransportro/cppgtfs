@@ -18,14 +18,14 @@ namespace ad::cppgtfs::gtfs
     class Stop
     {
     public:
-        typedef Stop* Ref;
+        using Ref = Stop *;
 
         static std::string getId(Ref r) { return r->getId(); }
 
-        typedef flat::Stop::LOCATION_TYPE LOCATION_TYPE;
-        typedef flat::Stop::WHEELCHAIR_BOARDING WHEELCHAIR_BOARDING;
+        using LOCATION_TYPE = flat::Stop::LOCATION_TYPE;
+        using WHEELCHAIR_BOARDING = flat::Stop::WHEELCHAIR_BOARDING;
 
-        Stop() {}
+        Stop() = default;
 
         Stop(const string& id, const string& code, const string& name, const string& desc, float lat, float lng, string zone_id, const string& stop_url, flat::Stop::LOCATION_TYPE location_type, Stop* parent_station, const string& stop_timezone, flat::Stop::WHEELCHAIR_BOARDING wheelchair_boarding, const std::string& platform_code) :
             _id(id),
@@ -86,7 +86,7 @@ namespace ad::cppgtfs::gtfs
             r.stop_url = _stop_url;
             r.stop_timezone = _stop_timezone;
             r.platform_code = _platform_code;
-            r.parent_station = (_parent_station ? _parent_station->getId() : "");
+            r.parent_station = (_parent_station != nullptr ? _parent_station->getId() : "");
             r.lat = _lat;
             r.lng = _lng;
             r.wheelchair_boarding = _wheelchair_boarding;

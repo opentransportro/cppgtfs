@@ -39,8 +39,9 @@ namespace ad::util
         {
             std::stringstream ss;
             ss << _msg;
-            if (_index > -1)
+            if (_index > -1) {
                 ss << " for field #" << (_index + 1) << " (" << _fieldName << ")   ";
+            }
             _what_msg = ss.str();
             return _what_msg.c_str();
         }
@@ -121,11 +122,11 @@ namespace ad::util
         const string getFieldName(size_t i) const;
 
     private:
-        int32_t _curLine;
-        size_t _offset, _nextOffset;
+        int32_t _curLine{};
+        size_t _offset{}, _nextOffset{};
 
         // The handle to the file.
-        std::istream* _stream;
+        std::istream* _stream{};
 
         // Current line (pointers returned by readNextLine will refer to parts of it.
         std::string _currentLine;

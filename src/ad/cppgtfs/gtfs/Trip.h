@@ -26,16 +26,16 @@ namespace ad::cppgtfs::gtfs
     class TripB
     {
         // typedef std::set<StopTimeT, StopTimeCompare<StopTimeT>> StopTimes;
-        typedef std::vector<StopTimeT> StopTimes;
-        typedef std::vector<Frequency> Frequencies;
+        using StopTimes = std::vector<StopTimeT>;
+        using Frequencies = std::vector<Frequency>;
 
     public:
-        typedef TripB<StopTimeT, ServiceT, RouteT, ShapeT>* Ref;
+        using Ref = TripB<StopTimeT, ServiceT, RouteT, ShapeT> *;
 
         static std::string getId(Ref r) { return r->getId(); }
 
-        typedef flat::Trip::WC_BIKE_ACCESSIBLE WC_BIKE_ACCESSIBLE;
-        typedef flat::Trip::DIRECTION DIRECTION;
+        using WC_BIKE_ACCESSIBLE = flat::Trip::WC_BIKE_ACCESSIBLE;
+        using DIRECTION = flat::Trip::DIRECTION;
 
         TripB() {}
 
