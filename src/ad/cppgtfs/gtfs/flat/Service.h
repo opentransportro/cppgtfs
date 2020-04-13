@@ -183,7 +183,8 @@ namespace ad::cppgtfs::gtfs::flat
 
         string id;
         uint8_t serviceDays;
-        ServiceDate begin, end;
+        ServiceDate begin;
+        ServiceDate end;
     };
 
     struct CalendarDate

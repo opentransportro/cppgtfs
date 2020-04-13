@@ -5,13 +5,11 @@
 #ifndef AD_CPPGTFS_GTFS_STOP_H_
 #define AD_CPPGTFS_GTFS_STOP_H_
 
-#include <stdint.h>
+#include <cstdint>
 #include <cassert>
 #include <string>
+#include <utility>
 #include "flat/Stop.h"
-
-using std::exception;
-using std::string;
 
 namespace ad::cppgtfs::gtfs
 {
@@ -27,55 +25,55 @@ namespace ad::cppgtfs::gtfs
 
         Stop() = default;
 
-        Stop(const string& id, const string& code, const string& name, const string& desc, float lat, float lng, string zone_id, const string& stop_url, flat::Stop::LOCATION_TYPE location_type, Stop* parent_station, const string& stop_timezone, flat::Stop::WHEELCHAIR_BOARDING wheelchair_boarding, const std::string& platform_code) :
-            _id(id),
-            _code(code),
-            _name(name),
-            _desc(desc),
-            _zone_id(zone_id),
-            _stop_url(stop_url),
-            _stop_timezone(stop_timezone),
-            _platform_code(platform_code),
+        Stop(std::string  id, std::string  code, std::string  name, std::string  desc, float lat, float lng, std::string  zone_id, std::string  stop_url, flat::Stop::LOCATION_TYPE location_type, Stop* parent_station, std::string  stop_timezone, flat::Stop::WHEELCHAIR_BOARDING wheelchair_boarding, std::string  platform_code) :
+            _id(std::move(id)),
+            _code(std::move(code)),
+            _name(std::move(name)),
+            _desc(std::move(desc)),
+            _zone_id(std::move(zone_id)),
+            _stop_url(std::move(stop_url)),
+            _stop_timezone(std::move(stop_timezone)),
+            _platform_code(std::move(platform_code)),
             _parent_station(parent_station),
             _lat(lat),
             _lng(lng),
             _wheelchair_boarding(wheelchair_boarding),
             _location_type(location_type) {}
 
-        const std::string& getId() const { return _id; }
+        [[nodiscard]] const std::string& getId() const { return _id; }
 
-        const std::string& getCode() const { return _code; }
+        [[nodiscard]] const std::string& getCode() const { return _code; }
 
-        const std::string& getName() const { return _name; }
+        [[nodiscard]] const std::string& getName() const { return _name; }
 
-        const std::string& getPlatformCode() const { return _platform_code; }
+        [[nodiscard]] const std::string& getPlatformCode() const { return _platform_code; }
 
-        const std::string& getDesc() const { return _desc; }
+        [[nodiscard]] const std::string& getDesc() const { return _desc; }
 
-        float getLat() const { return _lat; }
+        [[nodiscard]] float getLat() const { return _lat; }
 
-        float getLng() const { return _lng; }
+        [[nodiscard]] float getLng() const { return _lng; }
 
-        const std::string& getZoneId() const { return _zone_id; }
+        [[nodiscard]] const std::string& getZoneId() const { return _zone_id; }
 
-        const std::string& getStopUrl() const { return _stop_url; }
+        [[nodiscard]] const std::string& getStopUrl() const { return _stop_url; }
 
-        flat::Stop::LOCATION_TYPE getLocationType() const { return _location_type; }
+        [[nodiscard]] flat::Stop::LOCATION_TYPE getLocationType() const { return _location_type; }
 
-        const Stop* getParentStation() const { return _parent_station; }
+        [[nodiscard]] const Stop* getParentStation() const { return _parent_station; }
 
         Stop* getParentStation() { return _parent_station; }
 
         void setParentStation(Stop* p) { _parent_station = p; }
 
-        const std::string& getStopTimezone() const { return _stop_timezone; }
+        [[nodiscard]] const std::string& getStopTimezone() const { return _stop_timezone; }
 
-        flat::Stop::WHEELCHAIR_BOARDING getWheelchairBoarding() const
+        [[nodiscard]] flat::Stop::WHEELCHAIR_BOARDING getWheelchairBoarding() const
         {
             return _wheelchair_boarding;
         }
 
-        flat::Stop getFlat() const
+        [[nodiscard]] flat::Stop getFlat() const
         {
             flat::Stop r;
             r.id = _id;
@@ -97,10 +95,17 @@ namespace ad::cppgtfs::gtfs
         // TODO(patrick): implement setters
 
     private:
-        string _id, _code, _name, _desc, _zone_id, _stop_url, _stop_timezone,
-            _platform_code;
-        Stop* _parent_station;
-        float _lat, _lng;
+        std::string _id{};
+        std::string _code{};
+        std::string _name{};
+        std::string _desc{};
+        std::string _zone_id{};
+        std::string _stop_url{};
+        std::string _stop_timezone{};
+        std::string _platform_code{};
+        Stop* _parent_station{};
+        float _lat{};
+        float _lng{};
         flat::Stop::WHEELCHAIR_BOARDING _wheelchair_boarding;
         flat::Stop::LOCATION_TYPE _location_type;
     };

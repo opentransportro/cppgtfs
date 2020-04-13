@@ -11,7 +11,8 @@ target_link_libraries(catch_main PUBLIC CONAN_PKG::catch2)
 
 add_executable(tests tests.cpp)
 target_link_libraries(tests PRIVATE project_warnings project_options
-                                    catch_main)
+                                    catch_main
+        cppgtfs)
 
 
 # automatically discover tests that are defined in catch based test files you

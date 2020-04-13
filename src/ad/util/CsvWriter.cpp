@@ -2,12 +2,12 @@
 // Chair of Algorithms and Data Structures.
 // Authors: Patrick Brosi <brosi@informatik.uni-freiburg.de>
 
-#include <algorithm>
 #include <cstring>
 #include <functional>
 #include <iomanip>
 #include <iostream>
 #include <string>
+#include <utility>
 #include "CsvWriter.h"
 
 using ad::util::CsvWriter;
@@ -15,8 +15,8 @@ using std::remove;
 using std::string;
 
 // _____________________________________________________________________________
-CsvWriter::CsvWriter(std::ostream* str, const HeaderList& headers) :
-    _stream(str), _headers(headers), _hWritten(false), _delim(',') {}
+CsvWriter::CsvWriter(std::ostream* str, HeaderList  headers) :
+    _stream(str), _headers(std::move(headers)), _hWritten(false), _delim(',') {}
 
 // _____________________________________________________________________________
 bool CsvWriter::writeDouble(double d)
@@ -47,11 +47,12 @@ bool CsvWriter::writeString(const std::string& str)
 std::string CsvWriter::escStr(const std::string& str) const
 {
     std::stringstream ret;
-    for (size_t i = 0; i < str.size(); i++) {
-        if (str[i] == '\"')
+    for (char i : str) {
+        if (i == '\"') {
             ret << "\"\"";
-        else
-            ret << str[i];
+        } else {
+            ret << i;
+        }
     }
 
     return ret.str();
@@ -88,10 +89,10 @@ void CsvWriter::flushLine()
 // _____________________________________________________________________________
 void CsvWriter::writeStrArr(const std::vector<std::string>& arr)
 {
-    if (!arr.size()) return;
+    if (arr.empty()) { return; }
     bool first = false;
     for (const auto& str : arr) {
-        if (first) (*_stream) << _delim;
+        if (first) { (*_stream) << _delim;}
         first = true;
         (*_stream) << str.c_str();
     }

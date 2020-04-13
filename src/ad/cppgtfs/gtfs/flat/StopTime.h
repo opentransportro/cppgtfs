@@ -11,9 +11,6 @@
 #include <vector>
 #include "Stop.h"
 
-using std::exception;
-using std::string;
-
 namespace ad::cppgtfs::gtfs::flat
 {
     struct StopTimeFlds

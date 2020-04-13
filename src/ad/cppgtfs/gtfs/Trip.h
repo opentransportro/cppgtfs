@@ -37,7 +37,7 @@ namespace ad::cppgtfs::gtfs
         using WC_BIKE_ACCESSIBLE = flat::Trip::WC_BIKE_ACCESSIBLE;
         using DIRECTION = flat::Trip::DIRECTION;
 
-        TripB() {}
+        TripB() = default;
 
         TripB(const std::string& id, typename RouteT::Ref r, typename ServiceT::Ref s, const std::string& hs, const std::string& short_name, DIRECTION dir, const std::string& blockid, typename ShapeT::Ref shp, WC_BIKE_ACCESSIBLE wc, WC_BIKE_ACCESSIBLE ba);
 
@@ -113,7 +113,7 @@ namespace ad::cppgtfs::gtfs
         Frequencies _frequencies;
     };
 
-    typedef TripB<StopTime<Stop>, Service, Route, Shape> Trip;
+    using Trip = TripB<StopTime<Stop>, Service, Route, Shape>;
 
 #include "Trip.tpp"
 

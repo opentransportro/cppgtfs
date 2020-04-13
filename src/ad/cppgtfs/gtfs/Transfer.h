@@ -19,7 +19,7 @@ namespace ad::cppgtfs::gtfs
     public:
         using TYPE = flat::Transfer::TYPE;
 
-        Transfer() {}
+        Transfer() = default;
 
         Transfer(Stop* fromStop, Stop* toStop, TYPE type, int32_t tTime) :
             _fromStop(fromStop), _toStop(toStop), _type(type), _tTime(tTime) {}

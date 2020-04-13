@@ -12,9 +12,6 @@
 #include <iostream>
 #include "flat/Service.h"
 
-using std::exception;
-using std::string;
-
 namespace ad::cppgtfs::gtfs
 {
     using ServiceDate = flat::ServiceDate;
@@ -22,45 +19,41 @@ namespace ad::cppgtfs::gtfs
     class Service
     {
     public:
-        typedef Service* Ref;
+        using Ref = Service *;
+        using SERVICE_DAY = flat::Calendar::SERVICE_DAY;
+        using EXCEPTION_TYPE = flat::CalendarDate::EXCEPTION_TYPE;
 
         static std::string getId(Ref r) { return r->getId(); }
-
-        typedef flat::Calendar::SERVICE_DAY SERVICE_DAY;
-        typedef flat::CalendarDate::EXCEPTION_TYPE EXCEPTION_TYPE;
 
         explicit Service(const string& id);
 
         Service(const string& id, uint8_t serviceDays, ServiceDate start, ServiceDate end);
 
-        const std::string& getId() const;
+        [[nodiscard]] const std::string& getId() const;
 
-        const std::map<ServiceDate, Service::EXCEPTION_TYPE>& getExceptions() const;
+        [[nodiscard]] const std::map<ServiceDate, Service::EXCEPTION_TYPE>& getExceptions() const;
 
         void addException(const ServiceDate& d, EXCEPTION_TYPE t);
 
-        bool isActiveOn(const ServiceDate& d) const;
+        [[nodiscard]] bool isActiveOn(const ServiceDate& d) const;
 
         static SERVICE_DAY getServiceDay(const ServiceDate& d);
 
-        uint8_t getServiceDates() const;
+        [[nodiscard]] uint8_t getServiceDates() const;
 
-        EXCEPTION_TYPE getExceptionOn(const ServiceDate& d) const;
+        [[nodiscard]] EXCEPTION_TYPE getExceptionOn(const ServiceDate& d) const;
 
-        const ServiceDate& getBeginDate() const;
+        [[nodiscard]] const ServiceDate& getBeginDate() const;
 
-        const ServiceDate& getEndDate() const;
+        [[nodiscard]] const ServiceDate& getEndDate() const;
 
-        bool hasServiceDays() const;
+        [[nodiscard]] bool hasServiceDays() const;
 
-        flat::Calendar getFlat() const
+        [[nodiscard]] flat::Calendar getFlat() const
         {
-            flat::Calendar c;
-            c.id = _id;
-            c.serviceDays = _serviceDays;
-            c.begin = _begin;
-            c.end = _end;
-            return c;
+            return {
+                _id, _serviceDays, _begin, _end
+            };
         }
 
     private:

@@ -8,9 +8,6 @@
 #include "StopTime.h"
 #include "flat/Frequency.h"
 
-using std::exception;
-using std::string;
-
 namespace ad::cppgtfs::gtfs
 {
     class Frequency
@@ -22,13 +19,30 @@ namespace ad::cppgtfs::gtfs
             _headwaySecs(headwaySecs),
             _exactTimes(exactTimes) {}
 
-        const Time& getStartTime() const { return _startTime; }
+        [[nodiscard]] const Time& getStartTime() const { return _startTime; }
 
-        const Time& getEndTime() const { return _endTime; }
+        [[nodiscard]] const Time& getEndTime() const { return _endTime; }
 
-        uint16_t getHeadwaySecs() const { return _headwaySecs; }
+        [[nodiscard]] uint16_t getHeadwaySecs() const { return _headwaySecs; }
 
-        bool hasExactTimes() const { return _exactTimes; }
+        [[nodiscard]] bool hasExactTimes() const { return _exactTimes; }
+
+        void setStartTime(const Time& startTime)
+        {
+            _startTime = startTime;
+        }
+        void setEndTime(const Time& endTime)
+        {
+            _endTime = endTime;
+        }
+        void setHeadwaySecs(uint16_t headwaySecs)
+        {
+            _headwaySecs = headwaySecs;
+        }
+        void setExactTimes(bool exactTimes)
+        {
+            _exactTimes = exactTimes;
+        }
 
     private:
         Time _startTime, _endTime;

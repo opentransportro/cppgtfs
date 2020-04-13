@@ -5,7 +5,7 @@
 #ifndef AD_CPPGTFS_PARSER_H_
 #define AD_CPPGTFS_PARSER_H_
 
-#include <stdint.h>
+#include <cstdint>
 #include <cstring>
 #include <exception>
 #include <iostream>
@@ -15,14 +15,15 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+
 #include "ad/util/CsvParser.h"
-#include "gtfs/Feed.h"
-#include "gtfs/flat/Agency.h"
-#include "gtfs/flat/Frequency.h"
-#include "gtfs/flat/Route.h"
-#include "gtfs/flat/Service.h"
-#include "gtfs/flat/Shape.h"
-#include "gtfs/flat/Transfer.h"
+#include "ad/cppgtfs/gtfs/Feed.h"
+#include "ad/cppgtfs/gtfs/flat/Agency.h"
+#include "ad/cppgtfs/gtfs/flat/Frequency.h"
+#include "ad/cppgtfs/gtfs/flat/Route.h"
+#include "ad/cppgtfs/gtfs/flat/Service.h"
+#include "ad/cppgtfs/gtfs/flat/Shape.h"
+#include "ad/cppgtfs/gtfs/flat/Transfer.h"
 
 using ad::cppgtfs::gtfs::Agency;
 using ad::cppgtfs::gtfs::Fare;
@@ -39,7 +40,6 @@ using ad::cppgtfs::gtfs::Transfer;
 using ad::cppgtfs::gtfs::TripB;
 using ad::util::CsvParser;
 using ad::util::CsvParserException;
-using std::string;
 
 // A GTFS parser
 namespace ad::cppgtfs

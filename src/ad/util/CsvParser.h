@@ -6,17 +6,15 @@
 #ifndef AD_UTIL_CSVPARSER_H_
 #define AD_UTIL_CSVPARSER_H_
 
-#include <stdint.h>
+#include <cstdint>
 #include <exception>
 #include <iostream>
 #include <istream>
 #include <sstream>
 #include <string>
 #include <unordered_map>
+#include <utility>
 #include <vector>
-
-using std::exception;
-using std::string;
 
 /**
  * A parser for CSV files, as defined at
@@ -27,15 +25,15 @@ using std::string;
  */
 namespace ad::util
 {
-    class CsvParserException : public exception
+    class CsvParserException : public std::exception
     {
     public:
         CsvParserException(std::string msg, int index, std::string fieldName, uint64_t line) :
-            _msg(msg), _index(index), _fieldName(fieldName), _line(line) {}
+            _msg(std::move(msg)), _index(index), _fieldName(std::move(fieldName)), _line(line) {}
 
-        ~CsvParserException() throw() {}
+        ~CsvParserException() noexcept override = default;
 
-        virtual const char* what() const throw()
+        const char* what() const noexcept override
         {
             std::stringstream ss;
             ss << _msg;
@@ -80,13 +78,13 @@ namespace ad::util
         // Second arguments are default values.
 
         // returns the i-th column as a trimmed string
-        const char* getTString(const size_t i) const;
+        const char* getTString(size_t i) const;
 
         // returns the i-th column as a double
-        double getDouble(const size_t i) const;
+        double getDouble(size_t i) const;
 
         // returns the i-th columns as a 32bit integer
-        int32_t getLong(const size_t i) const;
+        int32_t getLong(size_t i) const;
 
         // returns the column with given field name.
         // these methods behave exactly the same as the ones above, except that
@@ -115,11 +113,11 @@ namespace ad::util
         size_t getNumColumns() const;
 
         // returns the index number of a field name
-        size_t getFieldIndex(const string& fieldName) const;
+        size_t getFieldIndex(const std::string& fieldName) const;
 
-        size_t getOptFieldIndex(const string& fieldName) const;
+        size_t getOptFieldIndex(const std::string& fieldName) const;
 
-        const string getFieldName(size_t i) const;
+        const std::string getFieldName(size_t i) const;
 
     private:
         int32_t _curLine{};
@@ -151,23 +149,23 @@ namespace ad::util
         // modified, quote-escaped strings
         std::vector<std::string> _currentModItems;
 
-        bool lineIsEmpty(string* line) const;
+        bool lineIsEmpty(std::string* line) const;
 
         bool lineIsEmpty(const char* line) const;
 
-        bool isDouble(string line) const;
+        bool isDouble(std::string line) const;
 
-        bool isLong(string line, bool notEmpty) const;
+        bool isLong(std::string line, bool notEmpty) const;
 
-        bool isLong(string line) const;
+        bool isLong(std::string line) const;
 
-        void strtrim(string* s) const;
+        void strtrim(std::string* s) const;
 
-        void rtrim(string* s) const;
+        void rtrim(std::string* s) const;
 
-        void ltrim(string* s) const;
+        void ltrim(std::string* s) const;
 
-        bool isDouble(string line, bool notEmpty) const;
+        bool isDouble(std::string line, bool notEmpty) const;
     };
 }    // namespace ad::util
 

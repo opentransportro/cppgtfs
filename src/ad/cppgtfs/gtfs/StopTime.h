@@ -23,7 +23,7 @@ namespace ad::cppgtfs::gtfs
     class StopTime
     {
     public:
-        typedef flat::StopTime::PU_DO_TYPE PU_DO_TYPE;
+        using PU_DO_TYPE = flat::StopTime::PU_DO_TYPE;
 
         StopTime(const Time& at, const Time& dt, typename StopT::Ref s, uint32_t seq, const std::string& hs, PU_DO_TYPE put, PU_DO_TYPE dot, float distTrav, bool isTp) :
             _at(at),

@@ -8,9 +8,6 @@
 #include <string>
 #include <vector>
 
-using std::exception;
-using std::string;
-
 namespace ad::cppgtfs::gtfs::flat
 {
     struct FareRuleFlds

@@ -7,10 +7,8 @@
 
 #include <set>
 #include <string>
+#include <utility>
 #include <vector>
-
-using std::exception;
-using std::string;
 
 namespace ad::cppgtfs::gtfs
 {
@@ -22,9 +20,10 @@ namespace ad::cppgtfs::gtfs
         ShapePoint() :
             lat(0), lng(0), travelDist(-1), seq(0) {}
 
-        float lat, lng;
-        float travelDist;
-        uint32_t seq;
+        float lat {0.F};
+        float lng {0.F};
+        float travelDist {-1.F};
+        uint32_t seq {0};
     };
 
     struct ShapePointCompare
@@ -46,17 +45,19 @@ namespace ad::cppgtfs::gtfs
 
         Shape() = default;
 
-        explicit Shape(const string& id) :
-            _id(id) {}
+        explicit Shape(std::string  id) :
+            _id(std::move(id)) {}
 
-        const std::string& getId() const { return _id; }
+        [[nodiscard]] const std::string& getId() const { return _id; }
 
-        const ShapePoints& getPoints() const { return _shapePoints; }
+        [[nodiscard]] const ShapePoints& getPoints() const { return _shapePoints; }
 
         bool addPoint(const ShapePoint& p)
         {
-            for (size_t i = 0; i < _shapePoints.size(); i++) {
-                if (_shapePoints[i].seq == p.seq) return false;
+            for (auto & _shapePoint : _shapePoints) {
+                if (_shapePoint.seq == p.seq) {
+                    return false;
+                }
             }
             _shapePoints.reserve(_shapePoints.size() + 1);
             _shapePoints.push_back(p);
@@ -66,7 +67,7 @@ namespace ad::cppgtfs::gtfs
         }
 
     private:
-        string _id;
+        std::string _id;
         ShapePoints _shapePoints;
     };
 

@@ -16,10 +16,9 @@ namespace ad::cppgtfs::gtfs
     class ContContainer
     {
     public:
-        ContContainer() :
-            _final(false){};
+        ContContainer() = default;
 
-        T* add(const T& obj);
+        T* add(const T& ent);
 
         bool remove(const std::string& id);
 
@@ -31,7 +30,7 @@ namespace ad::cppgtfs::gtfs
 
         T* getRef(const std::string& id);
 
-        size_t size() const;
+        [[nodiscard]] size_t size() const;
 
         void finalize();
 
@@ -45,7 +44,7 @@ namespace ad::cppgtfs::gtfs
 
     private:
         std::vector<T> _vec;
-        bool _final;
+        bool _final{false};
     };
 
     template<typename T>

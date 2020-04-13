@@ -7,9 +7,6 @@
 
 #include <string>
 
-using std::exception;
-using std::string;
-
 namespace ad::cppgtfs::gtfs::flat
 {
     struct AgencyFlds
@@ -26,7 +23,14 @@ namespace ad::cppgtfs::gtfs::flat
 
     struct Agency
     {
-        std::string id, name, url, timezone, lang, phone, fare_url, agency_email;
+        std::string id;
+        std::string name;
+        std::string url;
+        std::string timezone;
+        std::string lang;
+        std::string phone;
+        std::string fare_url;
+        std::string agency_email;
     };
 
 }    // namespace ad::cppgtfs::gtfs::flat

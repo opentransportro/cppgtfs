@@ -29,7 +29,7 @@ namespace ad::util
     {
     public:
         // Initializes the parser by opening the file
-        CsvWriter(std::ostream* str, const HeaderList& headers);
+        CsvWriter(std::ostream* str, HeaderList  headers);
 
         bool writeDouble(double d);
 

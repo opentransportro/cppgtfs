@@ -7,9 +7,6 @@
 
 #include <string>
 
-using std::exception;
-using std::string;
-
 namespace ad::cppgtfs::gtfs::flat
 {
     struct ShapeFlds
