@@ -1,0 +1,2 @@
+agency_id,agency_name,agency_url,agency_timezone,agency_lang,agency_phone,agency_fare_url
+ro.stpt,STPT,https://www.stpt.ro,Europe/Bucharest,ro,0040 356 803720,http://stpt.ro/taxare/ticketing.html

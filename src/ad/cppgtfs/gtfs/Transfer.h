@@ -9,9 +9,6 @@
 #include "Stop.h"
 #include "flat/Transfer.h"
 
-using std::exception;
-using std::string;
-
 namespace ad::cppgtfs::gtfs
 {
     class Transfer

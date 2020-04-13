@@ -124,15 +124,15 @@ namespace ad::cppgtfs::gtfs
         }
 
     private:
-        std::string _id;
-        typename AgencyT::Ref _agency;
-        std::string _short_name;
-        std::string _long_name;
-        std::string _desc;
-        flat::Route::TYPE _type;
-        std::string _url;
-        uint32_t _color;
-        uint32_t _text_color;
+        std::string _id {};
+        typename AgencyT::Ref _agency {nullptr};
+        std::string _short_name{};
+        std::string _long_name{};
+        std::string _desc{};
+        flat::Route::TYPE _type{};
+        std::string _url{};
+        uint32_t _color{};
+        uint32_t _text_color{};
     };
 
     using Route = RouteB<Agency>;

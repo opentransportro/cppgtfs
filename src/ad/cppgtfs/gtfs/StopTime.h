@@ -12,9 +12,6 @@
 #include "Stop.h"
 #include "flat/StopTime.h"
 
-using std::exception;
-using std::string;
-
 namespace ad::cppgtfs::gtfs
 {
     using Time = flat::Time;

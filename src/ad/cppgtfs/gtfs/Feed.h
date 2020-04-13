@@ -24,12 +24,12 @@
 #define FEEDTPL \
     template<typename AgencyT, typename RouteT, typename StopT, typename ServiceT, template<typename> class StopTimeT, typename ShapeT, template<typename> class FareT, template<typename> class AContainerT, template<typename> class RContainerT, template<typename> class SContainerT, template<typename> class StContainerT, template<typename> class TContainerT, template<typename> class ShContainerT, template<typename> class FContainerT>
 #define FEEDB \
-    FeedB<AgencyT, RouteT, StopT, ServiceT, StopTimeT, ShapeT, FareT, AContainerT, RContainerT, SContainerT, StContainerT, TContainerT, ShContainerT, FContainerT>
+    FeedBase<AgencyT, RouteT, StopT, ServiceT, StopTimeT, ShapeT, FareT, AContainerT, RContainerT, SContainerT, StContainerT, TContainerT, ShContainerT, FContainerT>
 
 namespace ad::cppgtfs::gtfs
 {
     FEEDTPL
-    class FeedB
+    class FeedBase
     {
         using Agencies = AContainerT<AgencyT>;
         using Stops = StContainerT<StopT>;
@@ -42,7 +42,7 @@ namespace ad::cppgtfs::gtfs
         using Zones = std::set<std::string>;
 
     public:
-        FeedB() :
+        FeedBase() :
             _maxLat(std::numeric_limits<double>::lowest()),
             _maxLon(std::numeric_limits<double>::lowest()),
             _minLat(std::numeric_limits<double>::max()),
@@ -65,21 +65,21 @@ namespace ad::cppgtfs::gtfs
         const Services& getServices() const;
         Services& getServices();
 
-        const Transfers& getTransfers() const;
+        [[nodiscard]] const Transfers& getTransfers() const;
         Transfers& getTransfers();
 
-        const Zones& getZones() const;
+        [[nodiscard]] const Zones& getZones() const;
         Zones& getZones();
 
         const Fares& getFares() const;
         Fares& getFares();
 
-        const std::string& getPublisherName() const;
-        const std::string& getPublisherUrl() const;
-        const std::string& getLang() const;
-        const std::string& getVersion() const;
-        const ServiceDate& getStartDate() const;
-        const ServiceDate& getEndDate() const;
+        [[nodiscard]] const std::string& getPublisherName() const;
+        [[nodiscard]] const std::string& getPublisherUrl() const;
+        [[nodiscard]] const std::string& getLang() const;
+        [[nodiscard]] const std::string& getVersion() const;
+        [[nodiscard]] const ServiceDate& getStartDate() const;
+        [[nodiscard]] const ServiceDate& getEndDate() const;
 
         void setPublisherName(const std::string& name);
         void setPublisherUrl(const std::string& url);
@@ -89,12 +89,12 @@ namespace ad::cppgtfs::gtfs
         void setEndDate(const ServiceDate& end);
 
         void updateBox(double lat, double lon);
-        double getMinLat() const;
-        double getMinLon() const;
-        double getMaxLat() const;
-        double getMaxLon() const;
+        [[nodiscard]] double getMinLat() const;
+        [[nodiscard]] double getMinLon() const;
+        [[nodiscard]] double getMaxLat() const;
+        [[nodiscard]] double getMaxLon() const;
 
-        const std::string& getPath() const { return _path; }
+        [[nodiscard]] const std::string& getPath() const { return _path; }
         void setPath(const std::string& p) { _path = p; }
 
     private:
@@ -114,8 +114,8 @@ namespace ad::cppgtfs::gtfs
         ServiceDate _startDate, _endDate;
     };
 
-    using Feed = FeedB<Agency, Route, Stop, Service, StopTime, Shape, Fare, Container, Container, Container, Container, Container, Container, Container>;
-    using ContFeed = FeedB<Agency, Route, Stop, Service, StopTime, Shape, Fare, ContContainer, ContContainer, ContContainer, ContContainer, ContContainer, ContContainer, ContContainer>;
+    using Feed = FeedBase<Agency, Route, Stop, Service, StopTime, Shape, Fare, Container, Container, Container, Container, Container, Container, Container>;
+    using ContFeed = FeedBase<Agency, Route, Stop, Service, StopTime, Shape, Fare, ContContainer, ContContainer, ContContainer, ContContainer, ContContainer, ContContainer, ContContainer>;
 
 #include "Feed.tpp"
 

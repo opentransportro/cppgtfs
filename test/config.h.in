@@ -1,0 +1,10 @@
+//
+// Created by vlad on 13.04.2020.
+//
+
+#ifndef CPPGTFS_CONFIG_H_CMAKE_H
+#define CPPGTFS_CONFIG_H_CMAKE_H
+
+#cmakedefine DATA_FOLDER "@DATA_FOLDER@"
+
+#endif    //CPPGTFS_CONFIG_H_CMAKE_H

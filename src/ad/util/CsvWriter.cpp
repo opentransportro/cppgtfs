@@ -12,7 +12,6 @@
 
 using ad::util::CsvWriter;
 using std::remove;
-using std::string;
 
 // _____________________________________________________________________________
 CsvWriter::CsvWriter(std::ostream* str, HeaderList  headers) :

@@ -1,0 +1,2 @@
+feed_publisher_name,feed_publisher_url,feed_lang,feed_start_date,feed_end_date,feed_version
+Societatea de transport public Timisoara,https://www.stpt.ro,ro,,,1586769405

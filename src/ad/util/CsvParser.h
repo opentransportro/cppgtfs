@@ -15,6 +15,7 @@
 #include <unordered_map>
 #include <utility>
 #include <vector>
+#include <any>
 
 /**
  * A parser for CSV files, as defined at
@@ -61,9 +62,6 @@ namespace ad::util
     class CsvParser
     {
     public:
-        // Default initialization.
-        CsvParser();
-
         // Initializes the parser by opening the file and reading the table header.
         explicit CsvParser(std::istream* stream);
 

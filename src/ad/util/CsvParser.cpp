@@ -13,19 +13,21 @@ using ad::util::CsvParser;
 using std::remove;
 
 // _____________________________________________________________________________
-CsvParser::CsvParser() {}
 
 CsvParser::CsvParser(std::istream* stream) :
     _stream(stream)
 {
-    readNextLine();
-    parseHeader();
+    if(readNextLine()) {
+        parseHeader();
+    }
 }
 
 // _____________________________________________________________________________
 bool CsvParser::readNextLine()
 {
-    if (!_stream->good()) return false;
+    if (_stream == nullptr || !_stream->good()) {
+        return false;
+    }
     _offset = _nextOffset;
     _currentLine.clear();
     char buff[200];
@@ -234,7 +236,9 @@ size_t CsvParser::getCurOffset() const { return _offset; }
 // _____________________________________________________________________________
 const std::string CsvParser::getFieldName(size_t i) const
 {
-    if (i < _headerVec.size()) return _headerVec[i].c_str();
+    if (i < _headerVec.size()) {
+        return _headerVec[i].c_str();
+    }
     return "(no field name given)";
 }
 
@@ -318,4 +322,8 @@ inline bool CsvParser::isDouble(std::string line) const
     char* p{ nullptr };
     strtod(line.c_str(), &p);
     return *p == 0;
+}
+bool ad::util::CsvParser::eof() const
+{
+    return _stream != nullptr ? !_stream->eof() : true;
 }

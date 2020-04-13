@@ -120,13 +120,13 @@ namespace ad::cppgtfs::gtfs
         }
 
     private:
-        std::string _id;
-        double _price;
-        std::string _currencyType;
-        PAYMENT_METHOD _paymentMethod;
-        NUM_TRANSFERS _numTransfers;
-        Agency* _agency;
-        int64_t _duration;
+        std::string _id {};
+        double _price {0.0};
+        std::string _currencyType{};
+        PAYMENT_METHOD _paymentMethod{};
+        NUM_TRANSFERS _numTransfers{};
+        Agency* _agency{ nullptr };
+        int64_t _duration{0};
 
         std::vector<FareRule<RouteT>> _fareRules;
     };

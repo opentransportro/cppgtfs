@@ -1,0 +1,5 @@
+service_id,monday,tuesday,wednesday,thursday,friday,saturday,sunday,start_date,end_date
+lv,1,1,1,1,1,0,0,20200101,20201231
+lv-vacanta,1,1,1,1,1,0,0,20200615,20200915
+s,0,0,0,0,0,1,0,20200101,20201231
+sd,0,0,0,0,0,1,1,20200101,20201231

@@ -17,9 +17,6 @@
 #include "StopTime.h"
 #include "flat/Trip.h"
 
-using std::exception;
-using std::string;
-
 namespace ad::cppgtfs::gtfs
 {
     template<typename StopTimeT, typename ServiceT, typename RouteT, typename ShapeT>

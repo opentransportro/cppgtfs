@@ -11,9 +11,6 @@
 #include <vector>
 #include <iostream>
 
-using std::exception;
-using std::string;
-
 namespace ad::cppgtfs::gtfs::flat
 {
     struct CalendarFlds
@@ -181,7 +178,7 @@ namespace ad::cppgtfs::gtfs::flat
             ALL_WEEK = 127     // 1111111 (shorthand)
         };
 
-        string id;
+        std::string id;
         uint8_t serviceDays;
         ServiceDate begin;
         ServiceDate end;
@@ -196,7 +193,7 @@ namespace ad::cppgtfs::gtfs::flat
             SERVICE_REMOVED = 2
         };
 
-        string id;
+        std::string id;
         EXCEPTION_TYPE type;
         ServiceDate date;
     };

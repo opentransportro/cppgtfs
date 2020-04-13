@@ -25,7 +25,6 @@
 #include "gtfs/flat/StopTime.h"
 
 using ad::util::CsvWriter;
-using std::string;
 
 // A GTFS writer
 namespace ad::cppgtfs

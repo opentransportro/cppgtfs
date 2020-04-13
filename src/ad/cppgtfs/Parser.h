@@ -88,7 +88,7 @@ namespace ad::cppgtfs
         Parser() :
             _strict(false) {}
 
-        Parser(bool strict) :
+        explicit Parser(bool strict) :
             _strict(strict) {}
 
         // parse a zip/folder into a GtfsFeed

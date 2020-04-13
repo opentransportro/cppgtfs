@@ -5,14 +5,16 @@ else()
   include(${CONAN_CATCH2_ROOT}/lib/cmake/Catch2/Catch.cmake)
 endif()
 
+set(DATA_FOLDER ${CMAKE_CURRENT_SOURCE_DIR}/data)
+configure_file(config.h.in config.h @ONLY)
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 add_library(catch_main STATIC catch_main.cpp)
 target_link_libraries(catch_main PUBLIC CONAN_PKG::catch2)
 
-add_executable(tests tests.cpp)
+add_executable(tests tests.cpp csv/csvparser_tests.cpp csv/csvfield_tests.cpp)
 target_link_libraries(tests PRIVATE project_warnings project_options
-                                    catch_main
-        cppgtfs)
+                                    catch_main cppgtfs)
 
 
 # automatically discover tests that are defined in catch based test files you
