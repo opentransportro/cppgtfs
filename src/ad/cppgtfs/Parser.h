@@ -823,11 +823,10 @@ namespace ad::cppgtfs
             if (flds.shapeDistTraveledFld < csvp->getNumColumns()) {
                 if (!getString(*csvp, flds.shapeDistTraveledFld, "").empty()) {
                     c->travelDist = getDouble(*csvp, flds.shapeDistTraveledFld);
-                    if (c->travelDist < -0.01) {    // TODO(patrick): better double comp
+
+                    if (std::isless(c->travelDist, -0.01)) {
                         throw ParserException(
-                            "negative values not supported for distances"
-                            " (value was: "
-                            + std::to_string(c->travelDist),
+                            "negative values not supported for distances - value was: " + std::to_string(c->travelDist),
                             "shape_dist_traveled",
                             csvp->getCurLine());
                     }
@@ -1151,9 +1150,7 @@ namespace ad::cppgtfs
             if (shape) {
                 if (!shape->addPoint(ShapePoint(fp.lat, fp.lng, fp.travelDist, fp.seq))) {
                     throw ParserException(
-                        "shape_pt_sequence collision,"
-                        "shape_pt_sequence has "
-                        "to be increasing for a single shape.",
+                        "shape_pt_sequence collision, shape_pt_sequence has to be increasing for a single shape.",
                         "shape_pt_sequence",
                         csvp.getCurLine());
                 }
@@ -1193,11 +1190,10 @@ namespace ad::cppgtfs
             if (flds.shapeDistTraveledFld < csvp->getNumColumns()) {
                 if (!getString(*csvp, flds.shapeDistTraveledFld, "").empty()) {
                     s->shapeDistTravelled = getDouble(*csvp, flds.shapeDistTraveledFld);
-                    if (s->shapeDistTravelled < -0.01) {    // TODO(patrick): better double comp
+
+                    if (std::isless(s->shapeDistTravelled, -0.01)) {
                         throw ParserException(
-                            "negative values not supported for distances"
-                            " (value was: "
-                            + std::to_string(s->shapeDistTravelled),
+                            "negative values not supported for distances (value was: " + std::to_string(s->shapeDistTravelled),
                             "shape_dist_traveled",
                             csvp->getCurLine());
                     }
@@ -1420,8 +1416,9 @@ namespace ad::cppgtfs
         size_t p;
         const char* val = csv.getTString(field);
 
-        // TODO(patrick): null value
-        if (val[0] == 0) return Time();
+        if (val == nullptr || val[0] == 0) {
+            return Time();
+        }
 
         try {
             uint64_t h = std::stoul(val, &p, 10);
