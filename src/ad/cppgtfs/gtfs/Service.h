@@ -25,9 +25,9 @@ namespace ad::cppgtfs::gtfs
 
         static std::string getId(Ref r) { return r->getId(); }
 
-        explicit Service(const std::string& id);
+        explicit Service(std::string  id);
 
-        Service(const std::string& id, uint8_t serviceDays, ServiceDate start, ServiceDate end);
+        Service(std::string  id, uint8_t serviceDays, ServiceDate start, ServiceDate end);
 
         [[nodiscard]] const std::string& getId() const;
 

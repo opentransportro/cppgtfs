@@ -8,24 +8,29 @@
 #include <stdint.h>
 #include <cassert>
 #include <string>
+#include <ad/util/CsvParser.h>
+
+using namespace ad::util;
 
 namespace ad::cppgtfs::gtfs::flat
 {
     struct StopFlds
     {
-        size_t stopIdFld;
-        size_t stopNameFld;
-        size_t stopLatFld;
-        size_t stopLonFld;
-        size_t parentStationFld;
-        size_t stopCodeFld;
-        size_t stopDescFld;
-        size_t zoneIdFld;
-        size_t stopUrlFld;
-        size_t stopTimezoneFld;
-        size_t wheelchairBoardingFld;
-        size_t locationTypeFld;
-        size_t platformCodeFld;
+        fieldId stopIdFld;
+        fieldId stopNameFld;
+        fieldId stopLatFld;
+        fieldId stopLonFld;
+        fieldId parentStationFld;
+        fieldId stopCodeFld;
+        fieldId stopDescFld;
+        fieldId zoneIdFld;
+        fieldId stopUrlFld;
+        fieldId stopTimezoneFld;
+        fieldId wheelchairBoardingFld;
+        fieldId locationTypeFld;
+        fieldId platformCodeFld;
+
+        static StopFlds fromCsvParser(const ad::util::CsvParser& csvp);
     };
 
     struct Stop
@@ -44,8 +49,15 @@ namespace ad::cppgtfs::gtfs::flat
             BOARDING_NOT_POSSIBLE = 2
         };
 
-        std::string id, code, name, desc, zone_id, stop_url, stop_timezone,
-            platform_code, parent_station;
+        std::string id;
+        std::string code;
+        std::string name;
+        std::string desc;
+        std::string zone_id;
+        std::string stop_url;
+        std::string stop_timezone;
+        std::string platform_code;
+        std::string parent_station;
         float lat, lng;
         Stop::WHEELCHAIR_BOARDING wheelchair_boarding;
         Stop::LOCATION_TYPE location_type;

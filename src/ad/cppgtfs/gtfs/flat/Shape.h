@@ -6,16 +6,22 @@
 #define AD_CPPGTFS_GTFS_FLAT_SHAPE_H_
 
 #include <string>
+#include <ad/util/CsvParser.h>
+
+using namespace ad::util;
 
 namespace ad::cppgtfs::gtfs::flat
 {
     struct ShapeFlds
     {
-        size_t shapeIdFld;
-        size_t shapePtSequenceFld;
-        size_t shapePtLonFld;
-        size_t shapePtLatFld;
-        size_t shapeDistTraveledFld;
+        fieldId shapeIdFld;
+        fieldId shapePtSequenceFld;
+        fieldId shapePtLonFld;
+        fieldId shapePtLatFld;
+        fieldId shapeDistTraveledFld;
+
+        // ____________________________________________________________________________
+        static ShapeFlds fromCsvParser(const util::CsvParser& csvp);
     };
 
     struct ShapePoint

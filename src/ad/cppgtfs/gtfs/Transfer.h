@@ -21,15 +21,15 @@ namespace ad::cppgtfs::gtfs
         Transfer(Stop* fromStop, Stop* toStop, TYPE type, int32_t tTime) :
             _fromStop(fromStop), _toStop(toStop), _type(type), _tTime(tTime) {}
 
-        Stop* getFromStop() const { return _fromStop; }
+        [[nodiscard]] Stop* getFromStop() const { return _fromStop; }
 
-        Stop* getToStop() const { return _toStop; }
+        [[nodiscard]] Stop* getToStop() const { return _toStop; }
 
-        TYPE getType() const { return _type; }
+        [[nodiscard]] TYPE getType() const { return _type; }
 
-        int32_t getMinTransferTime() const { return _tTime; }
+        [[nodiscard]] int32_t getMinTransferTime() const { return _tTime; }
 
-        flat::Transfer getFlat() const
+        [[nodiscard]] flat::Transfer getFlat() const
         {
             return flat::Transfer{ getFromStop()->getId(), getToStop()->getId(), getType(), getMinTransferTime() };
         }

@@ -6,21 +6,27 @@
 #define AD_CPPGTFS_GTFS_FLAT_TRIP_H_
 
 #include <string>
+#include <ad/util/CsvParser.h>
+
+using namespace ad::util;
 
 namespace ad::cppgtfs::gtfs::flat
 {
     struct TripFlds
     {
-        size_t shapeIdFld;
-        size_t tripIdFld;
-        size_t serviceIdFld;
-        size_t routeIdFld;
-        size_t blockIdFld;
-        size_t tripHeadsignFld;
-        size_t tripShortNameFld;
-        size_t bikesAllowedFld;
-        size_t wheelchairAccessibleFld;
-        size_t directionIdFld;
+        fieldId shapeIdFld;
+        fieldId tripIdFld;
+        fieldId serviceIdFld;
+        fieldId routeIdFld;
+        fieldId blockIdFld;
+        fieldId tripHeadsignFld;
+        fieldId tripShortNameFld;
+        fieldId bikesAllowedFld;
+        fieldId wheelchairAccessibleFld;
+        fieldId directionIdFld;
+
+        // ____________________________________________________________________________
+        static TripFlds fromCsvParser(const util::CsvParser& csvp);
     };
 
     struct Trip

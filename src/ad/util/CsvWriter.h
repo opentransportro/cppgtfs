@@ -42,17 +42,17 @@ namespace ad::util
         void flushLine();
 
     private:
-        std::ostream* _stream;
-        HeaderList _headers;
-        Line _curL;
-        bool _hWritten;
-        char _delim;
+        std::ostream* _stream{};
+        HeaderList _headers{};
+        Line _curL{};
+        bool _hWritten{};
+        char _delim{};
 
         bool writeRawString(const std::string& str);
 
         void writeStrArr(const std::vector<std::string>& arr);
 
-        std::string escStr(const std::string& str) const;
+        [[nodiscard]] static std::string escStr(const std::string& str) ;
     };
 }    // namespace ad::util
 

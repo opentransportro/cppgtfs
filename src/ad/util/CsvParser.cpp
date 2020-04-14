@@ -128,14 +128,14 @@ bool CsvParser::readNextLine()
 }
 
 // _____________________________________________________________________________
-const char* CsvParser::getTString(const size_t i) const
+const char* CsvParser::getTString(const fieldId i) const
 {
     if (i >= _currentItems.size()) { return ""; }
     return _currentItems[i];
 }
 
 // _____________________________________________________________________________
-double CsvParser::getDouble(const size_t i) const
+double CsvParser::getDouble(const fieldId i) const
 {
     if (i >= _currentItems.size() || !isDouble(_currentItems[i]))
         throw CsvParserException("expected float number", i, getFieldName(i), _curLine);
@@ -162,7 +162,7 @@ bool CsvParser::lineIsEmpty(const char* line) const
 }
 
 // _____________________________________________________________________________
-int32_t CsvParser::getLong(const size_t i) const
+int32_t CsvParser::getLong(const fieldId i) const
 {
     if (i >= _currentItems.size() || !isLong(_currentItems[i])) {
         throw CsvParserException("expected integer number", i, getFieldName(i), _curLine);
@@ -183,7 +183,7 @@ bool CsvParser::fieldIsEmpty(const std::string& fieldName) const
 }
 
 // _____________________________________________________________________________
-bool CsvParser::fieldIsEmpty(size_t field) const
+bool CsvParser::fieldIsEmpty(fieldId field) const
 {
     return strlen(getTString(field)) == 0;
 }
@@ -234,10 +234,10 @@ int32_t CsvParser::getCurLine() const { return _curLine; }
 size_t CsvParser::getCurOffset() const { return _offset; }
 
 // _____________________________________________________________________________
-const std::string CsvParser::getFieldName(size_t i) const
+std::string CsvParser::getFieldName(fieldId i) const
 {
     if (i < _headerVec.size()) {
-        return _headerVec[i].c_str();
+        return _headerVec[i];
     }
     return "(no field name given)";
 }
@@ -255,7 +255,7 @@ void CsvParser::parseHeader()
 }
 
 // _____________________________________________________________________________
-const char* CsvParser::inlineRightTrim(const char* t) const
+const char* CsvParser::inlineRightTrim(const char* t)
 {
     char* s = const_cast<char*>(t);
     char* end = s + std::strlen(s) - 1;
@@ -267,37 +267,36 @@ const char* CsvParser::inlineRightTrim(const char* t) const
 }
 
 // ___________________________________________________________________________
-inline bool CsvParser::isDouble(std::string line, bool notEmpty) const
+inline bool CsvParser::isDouble(std::string line, bool notEmpty)
 {
     strtrim(&line);
-    if (line.size() == 0 && notEmpty) return false;
+    if (line.empty() && notEmpty) {
+        return false;
+    }
     return isDouble(line);
 }
 
 // ___________________________________________________________________________
-inline void CsvParser::ltrim(std::string* s) const
+inline void CsvParser::ltrim(std::string* s)
 {
-    s->erase(s->begin(),
-        std::find_if(s->begin(), s->end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
+    s->erase(s->begin(), std::find_if(s->begin(), s->end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
 }
 
 // ___________________________________________________________________________
-inline void CsvParser::rtrim(std::string* s) const
+inline void CsvParser::rtrim(std::string* s)
 {
-    s->erase(std::find_if(s->rbegin(), s->rend(), std::not1(std::ptr_fun<int, int>(std::isspace)))
-                 .base(),
-        s->end());
+    s->erase(std::find_if(s->rbegin(), s->rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s->end());
 }
 
 // ___________________________________________________________________________
-inline void CsvParser::strtrim(std::string* s) const
+inline void CsvParser::strtrim(std::string* s)
 {
     ltrim(s);
     rtrim(s);
 }
 
 // ___________________________________________________________________________
-inline bool CsvParser::isLong(std::string line) const
+inline bool CsvParser::isLong(std::string line)
 {
     strtrim(&line);
     char* p{ nullptr };
@@ -306,7 +305,7 @@ inline bool CsvParser::isLong(std::string line) const
 }
 
 // ___________________________________________________________________________
-inline bool CsvParser::isLong(std::string line, bool notEmpty) const
+inline bool CsvParser::isLong(std::string line, bool notEmpty)
 {
     strtrim(&line);
     if (line.empty() && notEmpty) {
@@ -316,7 +315,7 @@ inline bool CsvParser::isLong(std::string line, bool notEmpty) const
 }
 
 // ___________________________________________________________________________
-inline bool CsvParser::isDouble(std::string line) const
+inline bool CsvParser::isDouble(std::string line)
 {
     strtrim(&line);
     char* p{ nullptr };

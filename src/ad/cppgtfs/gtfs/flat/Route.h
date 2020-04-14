@@ -8,20 +8,28 @@
 #include <sstream>
 #include <string>
 #include <iomanip>
+#include <set>
+#include <algorithm>
+
+#include <ad/util/CsvParser.h>
+using namespace ad::util;
 
 namespace ad::cppgtfs::gtfs::flat
 {
     struct RouteFlds
     {
-        size_t routeIdFld;
-        size_t routeLongNameFld;
-        size_t routeShortNameFld;
-        size_t routeTypeFld;
-        size_t routeUrlFld;
-        size_t routeDescFld;
-        size_t agencyIdFld;
-        size_t routeColorFld;
-        size_t routeTextColorFld;
+        fieldId routeIdFld;
+        fieldId routeLongNameFld;
+        fieldId routeShortNameFld;
+        fieldId routeTypeFld;
+        fieldId routeUrlFld;
+        fieldId routeDescFld;
+        fieldId agencyIdFld;
+        fieldId routeColorFld;
+        fieldId routeTextColorFld;
+
+        static flat::RouteFlds fromCsvParser(const ad::util::CsvParser& csvp);
+
     };
 
     struct Route

@@ -26,6 +26,8 @@
  */
 namespace ad::util
 {
+    using fieldId = size_t;
+
     class CsvParserException : public std::exception
     {
     public:
@@ -76,13 +78,13 @@ namespace ad::util
         // Second arguments are default values.
 
         // returns the i-th column as a trimmed string
-        const char* getTString(size_t i) const;
+        const char* getTString(fieldId i) const;
 
         // returns the i-th column as a double
-        double getDouble(size_t i) const;
+        double getDouble(fieldId i) const;
 
         // returns the i-th columns as a 32bit integer
-        int32_t getLong(size_t i) const;
+        int32_t getLong(fieldId i) const;
 
         // returns the column with given field name.
         // these methods behave exactly the same as the ones above, except that
@@ -105,27 +107,28 @@ namespace ad::util
         // checks whether the field is empty in the current line
         bool fieldIsEmpty(const std::string& fieldName) const;
 
-        bool fieldIsEmpty(size_t field) const;
+        bool fieldIsEmpty(fieldId field) const;
 
         // Get the number of columns. Will be zero before openFile has been called.
         size_t getNumColumns() const;
 
         // returns the index number of a field name
-        size_t getFieldIndex(const std::string& fieldName) const;
+        fieldId getFieldIndex(const std::string& fieldName) const;
 
-        size_t getOptFieldIndex(const std::string& fieldName) const;
+        fieldId getOptFieldIndex(const std::string& fieldName) const;
 
-        const std::string getFieldName(size_t i) const;
+        std::string getFieldName(fieldId i) const;
 
     private:
         int32_t _curLine{};
-        size_t _offset{}, _nextOffset{};
+        size_t _offset{};
+        size_t _nextOffset{};
 
         // The handle to the file.
         std::istream* _stream{};
 
         // Current line (pointers returned by readNextLine will refer to parts of it.
-        std::string _currentLine;
+        std::string _currentLine{};
 
         // Parses the header row and fills the header map.
         void parseHeader();
@@ -134,7 +137,7 @@ namespace ad::util
         //
         // careful: this function is not idempotent. it will leave t
         // right-trimmed.
-        const char* inlineRightTrim(const char* t) const;
+        static const char* inlineRightTrim(const char* t) ;
 
         // Map of field names to column indices. Parsed from the
         // table header (first row in a CSV file).
@@ -151,19 +154,19 @@ namespace ad::util
 
         bool lineIsEmpty(const char* line) const;
 
-        bool isDouble(std::string line) const;
+        static bool isDouble(std::string line) ;
 
-        bool isLong(std::string line, bool notEmpty) const;
+        static bool isLong(std::string line, bool notEmpty) ;
 
-        bool isLong(std::string line) const;
+        static bool isLong(std::string line) ;
 
-        void strtrim(std::string* s) const;
+        static void strtrim(std::string* s) ;
 
-        void rtrim(std::string* s) const;
+        static void rtrim(std::string* s) ;
 
-        void ltrim(std::string* s) const;
+        static void ltrim(std::string* s) ;
 
-        bool isDouble(std::string line, bool notEmpty) const;
+        static bool isDouble(std::string line, bool notEmpty) ;
     };
 }    // namespace ad::util
 

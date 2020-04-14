@@ -11,155 +11,88 @@
 #include <vector>
 #include <iostream>
 
+#include <ad/util/CsvParser.h>
+using namespace ad::util;
+
 namespace ad::cppgtfs::gtfs::flat
 {
     struct CalendarFlds
     {
-        size_t serviceIdFld;
-        size_t mondayFld;
-        size_t tuesdayFld;
-        size_t wednesdayFld;
-        size_t thursdayFld;
-        size_t fridayFld;
-        size_t saturdayFld;
-        size_t sundayFld;
-        size_t startDateFld;
-        size_t endDateFld;
+        fieldId serviceIdFld;
+        fieldId mondayFld;
+        fieldId tuesdayFld;
+        fieldId wednesdayFld;
+        fieldId thursdayFld;
+        fieldId fridayFld;
+        fieldId saturdayFld;
+        fieldId sundayFld;
+        fieldId startDateFld;
+        fieldId endDateFld;
+
+        static CalendarFlds fromCsvParser(const util::CsvParser& csvp);
     };
 
     struct CalendarDateFlds
     {
-        size_t serviceIdFld;
-        size_t exceptionTypeFld;
-        size_t dateFld;
+        fieldId serviceIdFld;
+        fieldId exceptionTypeFld;
+        fieldId dateFld;
+
+        static CalendarDateFlds fromCsvParser(const util::CsvParser& csvp);
+
     };
 
     class ServiceDate
     {
     public:
-        ServiceDate(uint8_t day, uint8_t month, uint16_t year) :
-            _yyyymmdd((year * 10000 + month * 100 + day) - (1900 * 10000)) {}
+        ServiceDate();
 
-        explicit ServiceDate(uint32_t yyyymmdd) :
-            _yyyymmdd(yyyymmdd - (1900 * 10000)) {}
+        explicit ServiceDate(uint8_t day, uint8_t month, uint16_t year);
 
-        ServiceDate() :
-            _yyyymmdd(0) {}
+        explicit ServiceDate(uint32_t yyyymmdd);
 
-        uint32_t getYYYYMMDD() const { return _yyyymmdd + (1900 * 10000); }
+        uint32_t getYYYYMMDD() const;
 
-        uint16_t getYear() const { return (_yyyymmdd / 10000) + 1900; }
+        uint16_t getYear() const;
 
-        uint8_t getMonth() const
-        {
-            return (_yyyymmdd - ((getYear() - 1900) * 10000)) / 100;
-        }
+        uint8_t getMonth() const;
 
-        uint8_t getDay() const
-        {
-            return _yyyymmdd - ((getYear() - 1900) * 10000) - (getMonth() * 100);
-        }
+        uint8_t getDay() const;
 
-        void setDay(uint8_t day) { _yyyymmdd = _yyyymmdd - getDay() + day; }
+        void setDay(uint8_t day);
 
-        void setMonth(uint8_t month)
-        {
-            _yyyymmdd = _yyyymmdd - getMonth() * 100 + month * 100;
-        }
+        void setMonth(uint8_t month);
 
-        void setYear(uint16_t year)
-        {
-            _yyyymmdd = _yyyymmdd - (getYear() - 1900) * 10000 + (year - 1900) * 10000;
-        }
+        void setYear(uint16_t year);
 
-        bool empty() const
-        {
-            return _yyyymmdd == 0;
-        }
+        bool empty() const;
 
         // returns a time struct of this date at 12:00
-        tm getTimeStrc() const
-        {
-            tm ret;
-            ret.tm_year = getYear() - 1900;
-            ret.tm_mon = getMonth() - 1;
-            ret.tm_mday = getDay();
-            ret.tm_hour = 12;
-            mktime(&ret);
-            return ret;
-        }
+        tm getTimeStrc() const;
 
     private:
         uint32_t _yyyymmdd : 24;
     };
 
-    inline bool operator>(const ServiceDate& lh,
-        const ServiceDate& rh)
-    {
-        return lh.getYYYYMMDD() > rh.getYYYYMMDD();
-    }
+    bool operator>(const ServiceDate& lh, const ServiceDate& rh);
 
-    inline bool operator<(const ServiceDate& lh,
-        const ServiceDate& rh)
-    {
-        return rh > lh;
-    }
+    bool operator<(const ServiceDate& lh, const ServiceDate& rh);
 
-    inline bool operator==(const ServiceDate& lh,
-        const ServiceDate& rh)
-    {
-        return !(lh > rh) && !(lh < rh);
-    }
+    bool operator==(const ServiceDate& lh, const ServiceDate& rh);
 
-    inline bool operator!=(const ServiceDate& lh,
-        const ServiceDate& rh)
-    {
-        return !(lh == rh);
-    }
+    bool operator!=(const ServiceDate& lh, const ServiceDate& rh);
 
-    inline bool operator>=(const ServiceDate& lh,
-        const ServiceDate& rh)
-    {
-        return lh > rh || lh == rh;
-    }
+    bool operator>=(const ServiceDate& lh, const ServiceDate& rh);
 
-    inline bool operator<=(const ServiceDate& lh,
-        const ServiceDate& rh)
-    {
-        return rh > lh || lh == rh;
-    }
+    bool operator<=(const ServiceDate& lh, const ServiceDate& rh);
 
-    inline ServiceDate operator+(const ServiceDate& lh, int i)
-    {
-        tm tStrc = lh.getTimeStrc();
-        tStrc.tm_mday += i;
-        mktime(&tStrc);
+    ServiceDate operator+(const ServiceDate& lh, int i);
 
-        return ServiceDate(tStrc.tm_mday, tStrc.tm_mon + 1, tStrc.tm_year + 1900);
-    }
+    ServiceDate operator-(const ServiceDate& lh, int i);
 
-    inline ServiceDate operator-(const ServiceDate& lh, int i)
-    {
-        return lh + (-i);
-    }
+    ServiceDate operator--(ServiceDate& lh);
 
-    inline ServiceDate operator--(ServiceDate& lh)
-    {
-        ServiceDate ret = lh - 1;
-        lh.setDay(ret.getDay());
-        lh.setMonth(ret.getMonth());
-        lh.setYear(ret.getYear());
-        return ret;
-    }
-
-    inline ServiceDate operator++(ServiceDate& lh)
-    {
-        ServiceDate ret = lh + 1;
-        lh.setDay(ret.getDay());
-        lh.setMonth(ret.getMonth());
-        lh.setYear(ret.getYear());
-        return ret;
-    }
+    ServiceDate operator++(ServiceDate& lh);
 
     struct Calendar
     {

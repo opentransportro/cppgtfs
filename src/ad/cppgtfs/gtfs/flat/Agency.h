@@ -6,19 +6,23 @@
 #define AD_CPPGTFS_GTFS_FLAT_AGENCY_H_
 
 #include <string>
+#include <ad/util/CsvParser.h>
+using namespace ad::util;
 
 namespace ad::cppgtfs::gtfs::flat
 {
     struct AgencyFlds
     {
-        size_t agencyNameFld;
-        size_t agencyUrlFld;
-        size_t agencyTimezoneFld;
-        size_t agencyEmailFld;
-        size_t agencyFareUrlFld;
-        size_t agencyLangFld;
-        size_t agencyPhoneFld;
-        size_t agencyIdFld;
+        fieldId agencyNameFld;
+        fieldId agencyUrlFld;
+        fieldId agencyTimezoneFld;
+        fieldId agencyEmailFld;
+        fieldId agencyFareUrlFld;
+        fieldId agencyLangFld;
+        fieldId agencyPhoneFld;
+        fieldId agencyIdFld;
+
+        static AgencyFlds fromCsvParser(const ad::util::CsvParser& csvp);
     };
 
     struct Agency

@@ -106,8 +106,8 @@ namespace ad::cppgtfs::gtfs
         Stop* _parent_station{};
         float _lat{};
         float _lng{};
-        flat::Stop::WHEELCHAIR_BOARDING _wheelchair_boarding;
-        flat::Stop::LOCATION_TYPE _location_type;
+        flat::Stop::WHEELCHAIR_BOARDING _wheelchair_boarding{};
+        flat::Stop::LOCATION_TYPE _location_type{};
     };
 
 }    // namespace ad::cppgtfs::gtfs

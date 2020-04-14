@@ -6,16 +6,21 @@
 #define AD_CPPGTFS_GTFS_FLAT_FREQUENCY_H_
 
 #include <string>
+#include <ad/util/CsvParser.h>
+#include <ad/cppgtfs/gtfs/flat/StopTime.h>
+using namespace ad::util;
 
 namespace ad::cppgtfs::gtfs::flat
 {
     struct FrequencyFlds
     {
-        size_t tripIdFld;
-        size_t startTimeFld;
-        size_t endTimeFld;
-        size_t headwaySecsFld;
-        size_t exactTimesFld;
+        fieldId tripIdFld;
+        fieldId startTimeFld;
+        fieldId endTimeFld;
+        fieldId headwaySecsFld;
+        fieldId exactTimesFld;
+
+        static FrequencyFlds fromCsvParser(const util::CsvParser& csvp);
     };
 
     struct Frequency

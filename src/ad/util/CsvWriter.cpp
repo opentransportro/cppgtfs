@@ -2,7 +2,6 @@
 // Chair of Algorithms and Data Structures.
 // Authors: Patrick Brosi <brosi@informatik.uni-freiburg.de>
 
-#include <cstring>
 #include <functional>
 #include <iomanip>
 #include <iostream>
@@ -15,7 +14,7 @@ using std::remove;
 
 // _____________________________________________________________________________
 CsvWriter::CsvWriter(std::ostream* str, HeaderList  headers) :
-    _stream(str), _headers(std::move(headers)), _hWritten(false), _delim(',') {}
+    _stream(str), _headers(std::move(headers)), _delim(',') {}
 
 // _____________________________________________________________________________
 bool CsvWriter::writeDouble(double d)
@@ -43,7 +42,7 @@ bool CsvWriter::writeString(const std::string& str)
 }
 
 // _____________________________________________________________________________
-std::string CsvWriter::escStr(const std::string& str) const
+std::string CsvWriter::escStr(const std::string& str)
 {
     std::stringstream ret;
     for (char i : str) {

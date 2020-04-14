@@ -4,21 +4,22 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <utility>
 #include "Service.h"
 
 using ad::cppgtfs::gtfs::Service;
 using ad::cppgtfs::gtfs::ServiceDate;
 
 // _____________________________________________________________________________
-Service::Service(const std::string& id) :
-    _id(id),
+Service::Service(std::string  id) :
+    _id(std::move(id)),
     _serviceDays(Service::SERVICE_DAY::NEVER),
     _begin(),
     _end() {}
 
 // _____________________________________________________________________________
-Service::Service(const std::string& id, uint8_t serviceDays, ServiceDate start, ServiceDate end) :
-    _id(id),
+Service::Service(std::string  id, uint8_t serviceDays, ServiceDate start, ServiceDate end) :
+    _id(std::move(id)),
     _serviceDays(serviceDays),
     _begin(start),
     _end(end) {}
@@ -73,7 +74,9 @@ Service::SERVICE_DAY Service::getServiceDay(const ServiceDate& d)
 Service::EXCEPTION_TYPE Service::getExceptionOn(const ServiceDate& d) const
 {
     auto ex = _exceptions.find(d);
-    if (ex != _exceptions.end()) return ex->second;
+    if (ex != _exceptions.end()) {
+        return ex->second;
+    }
     return EXCEPTION_TYPE::NOT_SET;
 }
 

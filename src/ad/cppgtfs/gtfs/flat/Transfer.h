@@ -6,16 +6,23 @@
 #define AD_CPPGTFS_GTFS_FLAT_TRANSFER_H_
 
 #include <string>
-#include "../StopTime.h"
+#include <ad/cppgtfs/gtfs/StopTime.h>
+#include <ad/util/CsvParser.h>
+
+using namespace ad::util;
 
 namespace ad::cppgtfs::gtfs::flat
 {
     struct TransfersFlds
     {
-        size_t fromStopIdFld;
-        size_t toStopIdFld;
-        size_t transferTypeFld;
-        size_t minTransferTimeFld;
+        fieldId fromStopIdFld;
+        fieldId toStopIdFld;
+        fieldId transferTypeFld;
+        fieldId minTransferTimeFld;
+
+        // ____________________________________________________________________________
+        static TransfersFlds fromCsvParser(const util::CsvParser& csvp);
+
     };
 
     struct Transfer

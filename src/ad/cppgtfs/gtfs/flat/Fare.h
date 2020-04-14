@@ -7,16 +7,20 @@
 
 #include <string>
 #include <vector>
+#include <ad/util/CsvParser.h>
+using namespace ad::util;
 
 namespace ad::cppgtfs::gtfs::flat
 {
     struct FareRuleFlds
     {
-        size_t fareIdFld;
-        size_t routeIdFld;
-        size_t originIdFld;
-        size_t destinationIdFld;
-        size_t containsIdFld;
+        fieldId fareIdFld;
+        fieldId routeIdFld;
+        fieldId originIdFld;
+        fieldId destinationIdFld;
+        fieldId containsIdFld;
+
+        static FareRuleFlds fromCsvParser(const util::CsvParser& csvp);
     };
 
     struct FareRule
@@ -30,13 +34,16 @@ namespace ad::cppgtfs::gtfs::flat
 
     struct FareFlds
     {
-        size_t fareIdFld;
-        size_t priceFld;
-        size_t currencyTypeFld;
-        size_t paymentMethodFld;
-        size_t transfersFld;
-        size_t agencyFld;
-        size_t transferDurationFld;
+        fieldId fareIdFld;
+        fieldId priceFld;
+        fieldId currencyTypeFld;
+        fieldId paymentMethodFld;
+        fieldId transfersFld;
+        fieldId agencyFld;
+        fieldId transferDurationFld;
+
+        // ____________________________________________________________________________
+        static FareFlds fromCsvParser(const util::CsvParser& csvp);
     };
 
     struct Fare

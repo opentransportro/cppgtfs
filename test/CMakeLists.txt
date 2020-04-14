@@ -12,7 +12,7 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 add_library(catch_main STATIC catch_main.cpp)
 target_link_libraries(catch_main PUBLIC CONAN_PKG::catch2)
 
-add_executable(tests tests.cpp csv/csvparser_tests.cpp csv/csvfield_tests.cpp)
+add_executable(tests tests.cpp csv/csvparser_tests.cpp csv/csvfield_tests.cpp gtfs/parser_tests.cpp)
 target_link_libraries(tests PRIVATE project_warnings project_options
                                     catch_main cppgtfs)
 
