@@ -29,16 +29,16 @@ using ad::util::CsvWriter;
 // A GTFS writer
 namespace ad::cppgtfs
 {
-    class WriterException : public std::exception
+    class WriteException : public std::exception
     {
     public:
-        WriterException(std::string msg, std::string file_name) :
+        WriteException(std::string msg, std::string file_name) :
             _msg(msg), _file_name(file_name) {}
 
-        WriterException(std::string msg) :
+        WriteException(std::string msg) :
             _msg(msg), _file_name("?") {}
 
-        ~WriterException() throw() {}
+        ~WriteException() throw() {}
 
         virtual const char* what() const throw()
         {

@@ -1,6 +1,6 @@
 #include <catch2/catch.hpp>
 
-#include <ad/cppgtfs/Parser.h>
+#include <ad/cppgtfs/Reader.h>
 
 unsigned int Factorial(unsigned int number)
 {
@@ -9,7 +9,7 @@ unsigned int Factorial(unsigned int number)
 
 //TEST_CASE("Test", "[test]")
 //{
-//    ad::cppgtfs::Parser parser;
+//    ad::cppgtfs::Reader parser;
 //    ad::cppgtfs::gtfs::Feed feed;
 //
 //    parser.parse(&feed, "path/to/gtfs/folder");

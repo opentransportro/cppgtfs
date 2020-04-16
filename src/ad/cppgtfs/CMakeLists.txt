@@ -17,7 +17,10 @@ add_library(cppgtfs
 		gtfs/flat/Stop.cpp
 		gtfs/flat/StopTime.cpp
 		gtfs/flat/Transfer.cpp
-		gtfs/flat/Trip.cpp)
+		gtfs/flat/Trip.cpp DataExtractor.cpp
+		exceptions/ParseException.cpp
+		exceptions/FileNotFoundException.cpp
+		Reader.cpp)
 
 target_include_directories(cppgtfs PUBLIC ${CPPGTFS_INCLUDE_DIR})
 target_link_libraries(cppgtfs csvparser project_options project_warnings)

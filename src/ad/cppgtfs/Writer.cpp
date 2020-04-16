@@ -624,5 +624,5 @@ bool Writer::writeFrequencies(gtfs::Feed* f, std::ostream* os) const
 // ___________________________________________________________________________
 void Writer::cannotWrite(const std::string& file)
 {
-    throw WriterException("Could not write to file.", file);
+    throw WriteException("Could not write to file.", file);
 }

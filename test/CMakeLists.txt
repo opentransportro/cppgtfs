@@ -16,8 +16,6 @@ add_executable(tests tests.cpp csv/csvparser_tests.cpp csv/csvfield_tests.cpp gt
 target_link_libraries(tests PRIVATE project_warnings project_options
                                     catch_main cppgtfs)
 
-
-# automatically discover tests that are defined in catch based test files you
 # can modify the unittests. TEST_PREFIX to whatever you want, or use different
 # for different binaries
 catch_discover_tests(

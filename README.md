@@ -5,11 +5,11 @@ Parses GTFS feeds into memory. Extensive validation is applied. Currently used b
 ## Usage
 
 ```
-#include "ad/cppgtfs/Parser.h"
+#include "ad/cppgtfs/Reader.h"
 
 [...]
 
-ad::cppgtfs::Parser parser;
+ad::cppgtfs::Reader parser;
 ad::cppgtfs::gtfs::Feed feed;
 
 parser.parse(&feed, "path/to/gtfs/folder");

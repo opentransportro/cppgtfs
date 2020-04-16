@@ -22,7 +22,22 @@
 #include "Trip.h"
 
 #define FEEDTPL \
-    template<typename AgencyT, typename RouteT, typename StopT, typename ServiceT, template<typename> class StopTimeT, typename ShapeT, template<typename> class FareT, template<typename> class AContainerT, template<typename> class RContainerT, template<typename> class SContainerT, template<typename> class StContainerT, template<typename> class TContainerT, template<typename> class ShContainerT, template<typename> class FContainerT>
+    template< \
+        typename AgencyT, \
+        typename RouteT, \
+        typename StopT, \
+        typename ServiceT, \
+        template<typename> class StopTimeT, \
+        typename ShapeT, \
+        template<typename> class FareT, \
+        template<typename> class AContainerT, \
+        template<typename> class RContainerT, \
+        template<typename> class SContainerT, \
+        template<typename> class StContainerT, \
+        template<typename> class TContainerT, \
+        template<typename> class ShContainerT, \
+        template<typename> class FContainerT\
+    >
 #define FEEDB \
     FeedBase<AgencyT, RouteT, StopT, ServiceT, StopTimeT, ShapeT, FareT, AContainerT, RContainerT, SContainerT, StContainerT, TContainerT, ShContainerT, FContainerT>
 
