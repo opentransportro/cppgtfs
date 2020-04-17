@@ -9,6 +9,7 @@
 #include <cppgtfs/gtfs/Service.h>
 #include <cppgtfs/gtfs/StopTime.h>
 #include <cppgtfs/gtfs/Transfer.h>
+#include <cppgtfs/exceptions/WriteException.h>
 
 #include <fstream>
 #include <map>
@@ -624,5 +625,5 @@ bool Writer::writeFrequencies(gtfs::Feed* f, std::ostream* os) const
 // ___________________________________________________________________________
 void Writer::cannotWrite(const std::string& file)
 {
-    throw WriteException("Could not write to file.", file);
+    throw exceptions::WriteException("Could not write to file.", file);
 }
