@@ -1,19 +1,9 @@
 #include <catch2/catch.hpp>
 
-#include <ad/cppgtfs/Reader.h>
-
 unsigned int Factorial(unsigned int number)
 {
   return number <= 1 ? number : Factorial(number - 1) * number;
 }
-
-//TEST_CASE("Test", "[test]")
-//{
-//    ad::cppgtfs::Reader parser;
-//    ad::cppgtfs::gtfs::Feed feed;
-//
-//    parser.parse(&feed, "path/to/gtfs/folder");
-//}
 
 TEST_CASE("Factorials are computed", "[factorial]")
 {

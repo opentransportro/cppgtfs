@@ -9,8 +9,8 @@ Parses GTFS feeds into memory. Extensive validation is applied. Currently used b
 
 [...]
 
-ad::cppgtfs::Reader parser;
+ad::cppgtfs::Reader parser("path/to/gtfs/folder");
 ad::cppgtfs::gtfs::Feed feed;
 
-parser.parse(&feed, "path/to/gtfs/folder");
+parser.parse(&feed);
 ```

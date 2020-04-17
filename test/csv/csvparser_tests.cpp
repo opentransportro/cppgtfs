@@ -1,6 +1,6 @@
 #include <catch2/catch.hpp>
-#include <ad/util/CsvParser.h>
-#include <ad/util/CsvField.h>
+#include <csv/CsvParser.h>
+#include <csv/CsvField.h>
 
 #include <fstream>
 #include "config.h"
@@ -15,7 +15,7 @@ TEST_CASE("Test CSV Parser file reading", "[CsvParser]")
 
     fs.open(curFile.c_str());
     if (fs.good()) {
-        ad::util::CsvParser csvp(&fs);
+        csv::CsvParser csvp(&fs);
 
         size_t longField = csvp.getOptFieldIndex("long");
         size_t doubleField = csvp.getOptFieldIndex("double");
@@ -45,7 +45,7 @@ TEST_CASE("Test CSV Parser file reading", "[CsvParser]")
 }
 TEST_CASE("Opening parser with null stream", "[CsvParser]")
 {
-    ad::util::CsvParser csvp(nullptr);
+    csv::CsvParser csvp(nullptr);
     REQUIRE(csvp.getNumColumns() == 0);
     REQUIRE(csvp.getCurLine() == 0);
     REQUIRE(csvp.eof());

@@ -1,2 +1,3 @@
-set(CPPGTFS_INCLUDE_DIR ${CMAKE_CURRENT_LIST_DIR} ${CMAKE_CURRENT_BINARY_DIR})
-add_subdirectory (ad)
+#set(CPPGTFS_INCLUDE_DIR ${CMAKE_CURRENT_LIST_DIR} ${CMAKE_CURRENT_BINARY_DIR})
+add_subdirectory (cppgtfs)
+add_subdirectory (csv)

@@ -80,4 +80,7 @@ if(ENABLE_FUZZING)
 endif()
 
 
+set(CPPGTFS_INCLUDE_DIR ${CMAKE_CURRENT_LIST_DIR}/include ${CMAKE_CURRENT_BINARY_DIR})
+include_directories(${CPPGTFS_INCLUDE_DIR})
 add_subdirectory(src)
+
