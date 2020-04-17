@@ -98,4 +98,4 @@ namespace csv
 
         (*_stream) << '\n';
     }
-}
+}    // namespace csv

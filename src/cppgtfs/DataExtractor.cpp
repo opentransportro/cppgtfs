@@ -38,7 +38,7 @@ namespace cppgtfs
         return csv.getDouble(field);
     }
 
-// ___________________________________________________________________________
+    // ___________________________________________________________________________
     double DataExtractor::getDouble(const CsvParser& csv, size_t field, double ret) const
     {
         if (field < csv.getNumColumns() && !csv.fieldIsEmpty(field)) {
@@ -48,7 +48,7 @@ namespace cppgtfs
         return ret;
     }
 
-// ___________________________________________________________________________
+    // ___________________________________________________________________________
     int64_t DataExtractor::getRangeInteger(const CsvParser& csv, size_t field, int64_t minv, int64_t maxv) const
     {
         int64_t ret = csv.getLong(field);
@@ -62,7 +62,7 @@ namespace cppgtfs
         return ret;
     }
 
-// ___________________________________________________________________________
+    // ___________________________________________________________________________
     int64_t DataExtractor::getRangeInteger(const CsvParser& csv, size_t field, int64_t minv, int64_t maxv, int64_t def) const
     {
         int64_t ret;
@@ -133,7 +133,7 @@ namespace cppgtfs
     }
 
 
-// ____________________________________________________________________________
+    // ____________________________________________________________________________
     gtfs::ServiceDateFlat DataExtractor::getServiceDate(const CsvParser& csv, size_t field, bool req) const
     {
         size_t p;
@@ -228,4 +228,4 @@ namespace cppgtfs
     }
 
 
-}
+}    // namespace cppgtfs

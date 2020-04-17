@@ -35,4 +35,4 @@ namespace cppgtfs::exceptions
     {
         _file_name = fn;
     }
-}
+}    // namespace cppgtfs::exceptions

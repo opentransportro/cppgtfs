@@ -19,4 +19,4 @@ namespace cppgtfs::gtfs
         r.platformCodeFld = csvp.getOptFieldIndex("platform_code");
         return r;
     }
-}
+}    // namespace cppgtfs::gtfs

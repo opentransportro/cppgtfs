@@ -28,9 +28,9 @@ bool CsvField::toBool() const noexcept
 std::string CsvField::toString() const noexcept
 {
     auto str = toType<std::string>();
-    if(str.empty()) {
-        const auto *ptr = toType<const char*>();
-        str = ptr != nullptr ? ptr: "";
+    if (str.empty()) {
+        const auto* ptr = toType<const char*>();
+        str = ptr != nullptr ? ptr : "";
     }
     return str;
 }

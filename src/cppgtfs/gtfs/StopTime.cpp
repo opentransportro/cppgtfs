@@ -20,4 +20,4 @@ namespace cppgtfs::gtfs
         s.dropOffTypeFld = csvp.getOptFieldIndex("drop_off_type");
         return s;
     }
-}
+}    // namespace cppgtfs::gtfs

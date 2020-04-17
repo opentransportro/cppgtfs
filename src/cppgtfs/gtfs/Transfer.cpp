@@ -11,4 +11,4 @@ namespace cppgtfs::gtfs
         t.minTransferTimeFld = csvp.getOptFieldIndex("min_transfer_time");
         return t;
     }
-}
+}    // namespace cppgtfs::gtfs

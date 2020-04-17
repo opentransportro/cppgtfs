@@ -52,4 +52,4 @@ namespace cppgtfs::util
     {
         return lh < rh || lh == rh;
     }
-}
+}    // namespace cppgtfs::util

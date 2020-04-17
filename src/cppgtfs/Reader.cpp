@@ -241,10 +241,10 @@ namespace cppgtfs
     {
         struct stat info;
 
-        if( stat( path.c_str(), &info ) != 0 )
-            throw exceptions::ParseException("Cannot access",path, -1);
-        else if(!(info.st_mode & S_IFDIR ))  // S_ISDIR() doesn't exist on my windows
-            throw exceptions::ParseException("Is no directory",path, -1);
+        if (stat(path.c_str(), &info) != 0)
+            throw exceptions::ParseException("Cannot access", path, -1);
+        else if (!(info.st_mode & S_IFDIR))    // S_ISDIR() doesn't exist on my windows
+            throw exceptions::ParseException("Is no directory", path, -1);
     }
 
     Reader::Reader(const std::string& path) :
@@ -262,4 +262,4 @@ namespace cppgtfs
     }
 
 
-}
+}    // namespace cppgtfs

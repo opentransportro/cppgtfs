@@ -25,4 +25,4 @@ namespace cppgtfs::gtfs
         f.transferDurationFld = csvp.getOptFieldIndex("transfer_duration");
         return f;
     }
-}
+}    // namespace cppgtfs::gtfs

@@ -14,4 +14,4 @@ namespace cppgtfs::exceptions
         _what_msg = ss.str();
         return _what_msg.c_str();
     }
-}
+}    // namespace cppgtfs::exceptions

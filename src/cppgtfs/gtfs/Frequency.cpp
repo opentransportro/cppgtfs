@@ -38,4 +38,4 @@ namespace cppgtfs::gtfs
     {
         _exactTimes = exactTimes;
     }
-}
+}    // namespace cppgtfs::gtfs

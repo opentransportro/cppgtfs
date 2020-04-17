@@ -326,4 +326,4 @@ namespace csv
     {
         return _stream != nullptr ? !_stream->eof() : true;
     }
-}
+}    // namespace csv

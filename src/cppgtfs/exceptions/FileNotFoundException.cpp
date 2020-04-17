@@ -19,4 +19,4 @@ namespace cppgtfs::exceptions
     {
         return _file_name;
     }
-}
+}    // namespace cppgtfs::exceptions

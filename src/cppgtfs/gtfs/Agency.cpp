@@ -80,4 +80,4 @@ namespace cppgtfs::gtfs
         r.agencyIdFld = csvp.getOptFieldIndex("agency_id");
         return r;
     }
-}
+}    // namespace cppgtfs::gtfs

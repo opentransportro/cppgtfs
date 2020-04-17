@@ -201,4 +201,4 @@ namespace cppgtfs::gtfs
         lh.setYear(ret.getYear());
         return ret;
     }
-}
+}    // namespace cppgtfs::gtfs
