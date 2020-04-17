@@ -22,6 +22,6 @@ namespace cppgtfs::exceptions
         std::string _msg;
         std::string _file_name;
     };
-}
+}    // namespace cppgtfs::exceptions
 
 #endif    //CPPGTFS_FILENOTFOUNDEXCEPTION_H

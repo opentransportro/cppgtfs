@@ -42,7 +42,6 @@ namespace cppgtfs::gtfs
     class Agency
     {
     public:
-
         using Ref = Agency*;
 
         static std::string getId(Ref r) { return r->getId(); }

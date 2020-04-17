@@ -11,6 +11,7 @@ add_library(cppgtfs
 		util/Time.cpp
 		exceptions/ParseException.cpp
 		exceptions/FileNotFoundException.cpp
+		exceptions/WriteException.cpp
 		gtfs/Service.cpp
 		gtfs/Agency.cpp
         gtfs/Fare.cpp

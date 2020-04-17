@@ -67,7 +67,7 @@ namespace cppgtfs::gtfs
     class Stop
     {
     public:
-        using Ref = Stop *;
+        using Ref = Stop*;
 
         static std::string getId(Ref r) { return r->getId(); }
 
@@ -76,7 +76,7 @@ namespace cppgtfs::gtfs
 
         Stop() = default;
 
-        Stop(std::string  id, std::string  code, std::string  name, std::string  desc, float lat, float lng, std::string  zone_id, std::string  stop_url, StopFlat::LOCATION_TYPE location_type, Stop* parent_station, std::string  stop_timezone, StopFlat::WHEELCHAIR_BOARDING wheelchair_boarding, std::string  platform_code) :
+        Stop(std::string id, std::string code, std::string name, std::string desc, float lat, float lng, std::string zone_id, std::string stop_url, StopFlat::LOCATION_TYPE location_type, Stop* parent_station, std::string stop_timezone, StopFlat::WHEELCHAIR_BOARDING wheelchair_boarding, std::string platform_code) :
             _id(std::move(id)),
             _code(std::move(code)),
             _name(std::move(name)),

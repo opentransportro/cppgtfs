@@ -48,7 +48,6 @@ namespace cppgtfs::gtfs
             r.routeTextColorFld = csvp.getOptFieldIndex("route_text_color");
             return r;
         }
-
     };
 
     struct RouteFlat
@@ -87,8 +86,7 @@ namespace cppgtfs::gtfs
 
         static std::string getTypeString(RouteFlat::TYPE t)
         {
-            if (t == TYPE::COACH)
-            {
+            if (t == TYPE::COACH) {
                 return "coach";
             }
             std::string names[8] = { "tram", "subway", "rail", "bus", "ferry", "cablecar", "gondola", "funicular" };
@@ -284,13 +282,13 @@ namespace cppgtfs::gtfs
     class RouteB
     {
     public:
-        using Ref = RouteB<AgencyT> *;
+        using Ref = RouteB<AgencyT>*;
 
         static std::string getId(Ref r) { return r->getId(); }
 
         RouteB() = default;
 
-        explicit RouteB(std::string  id, typename AgencyT::Ref agency, std::string  short_name, std::string  long_name, std::string  desc, typename RouteFlat::TYPE type, std::string  url, uint32_t color, uint32_t text_color) :
+        explicit RouteB(std::string id, typename AgencyT::Ref agency, std::string short_name, std::string long_name, std::string desc, typename RouteFlat::TYPE type, std::string url, uint32_t color, uint32_t text_color) :
             _id(std::move(id)),
             _agency(agency),
             _short_name(std::move(short_name)),
@@ -384,8 +382,8 @@ namespace cppgtfs::gtfs
         }
 
     private:
-        std::string _id {};
-        typename AgencyT::Ref _agency {nullptr};
+        std::string _id{};
+        typename AgencyT::Ref _agency{ nullptr };
         std::string _short_name{};
         std::string _long_name{};
         std::string _desc{};

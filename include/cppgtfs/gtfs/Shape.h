@@ -51,10 +51,10 @@ namespace cppgtfs::gtfs
         ShapePoint() :
             lat(0), lng(0), travelDist(-1), seq(0) {}
 
-        float lat {0.F};
-        float lng {0.F};
-        float travelDist {-1.F};
-        uint32_t seq {0};
+        float lat{ 0.F };
+        float lng{ 0.F };
+        float travelDist{ -1.F };
+        uint32_t seq{ 0 };
     };
 
     struct ShapePointCompare
@@ -70,13 +70,13 @@ namespace cppgtfs::gtfs
     class Shape
     {
     public:
-        using Ref = Shape *;
+        using Ref = Shape*;
 
         static std::string getId(Ref r) { return r->getId(); }
 
         Shape() = default;
 
-        explicit Shape(std::string  id) :
+        explicit Shape(std::string id) :
             _id(std::move(id)) {}
 
         [[nodiscard]] const std::string& getId() const { return _id; }
@@ -85,7 +85,7 @@ namespace cppgtfs::gtfs
 
         bool addPoint(const ShapePoint& p)
         {
-            for (auto & _shapePoint : _shapePoints) {
+            for (auto& _shapePoint : _shapePoints) {
                 if (_shapePoint.seq == p.seq) {
                     return false;
                 }

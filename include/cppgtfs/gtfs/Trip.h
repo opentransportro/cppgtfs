@@ -86,7 +86,7 @@ namespace cppgtfs::gtfs
         using Frequencies = std::vector<Frequency>;
 
     public:
-        using Ref = TripB<StopTimeT, ServiceT, RouteT, ShapeT> *;
+        using Ref = TripB<StopTimeT, ServiceT, RouteT, ShapeT>*;
 
         static std::string getId(Ref r) { return r->getId(); }
 

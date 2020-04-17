@@ -29,7 +29,7 @@ namespace csv
     {
     public:
         // Initializes the parser by opening the file
-        CsvWriter(std::ostream* str, HeaderList  headers);
+        CsvWriter(std::ostream* str, HeaderList headers);
 
         bool writeDouble(double d);
 
@@ -52,8 +52,8 @@ namespace csv
 
         void writeStrArr(const std::vector<std::string>& arr);
 
-        [[nodiscard]] static std::string escStr(const std::string& str) ;
+        [[nodiscard]] static std::string escStr(const std::string& str);
     };
-}    // namespace util
+}    // namespace csv
 
 #endif    // AD_UTIL_CSVWRITER_H_

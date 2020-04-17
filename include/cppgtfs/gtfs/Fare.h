@@ -78,7 +78,7 @@ namespace cppgtfs::gtfs
     public:
         FareRule() = default;
 
-        FareRule(typename RouteT::Ref route, std::string  originId, std::string  destId, std::string  containsId) :
+        FareRule(typename RouteT::Ref route, std::string originId, std::string destId, std::string containsId) :
             _route(route),
             _originId(std::move(originId)),
             _destId(std::move(destId)),
@@ -101,7 +101,6 @@ namespace cppgtfs::gtfs
     };
 
 
-
     template<typename RouteT>
     class Fare
     {
@@ -115,7 +114,7 @@ namespace cppgtfs::gtfs
 
         Fare() = default;
 
-        explicit Fare(std::string  id, double price, std::string  currencyType, PAYMENT_METHOD paymentMethod, NUM_TRANSFERS numTransfers, Agency* agency, int64_t dur) :
+        explicit Fare(std::string id, double price, std::string currencyType, PAYMENT_METHOD paymentMethod, NUM_TRANSFERS numTransfers, Agency* agency, int64_t dur) :
             _id(std::move(id)),
             _price(price),
             _currencyType(std::move(currencyType)),
@@ -180,13 +179,13 @@ namespace cppgtfs::gtfs
         }
 
     private:
-        std::string _id {};
-        double _price {0.0};
+        std::string _id{};
+        double _price{ 0.0 };
         std::string _currencyType{};
         PAYMENT_METHOD _paymentMethod{};
         NUM_TRANSFERS _numTransfers{};
         Agency* _agency{ nullptr };
-        int64_t _duration{0};
+        int64_t _duration{ 0 };
 
         std::vector<FareRule<RouteT>> _fareRules;
     };

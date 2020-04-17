@@ -21,7 +21,6 @@ namespace cppgtfs::gtfs
 
         // ____________________________________________________________________________
         static TransfersFields fromCsvParser(const csv::CsvParser& csvp);
-
     };
     struct TransferFlat
     {

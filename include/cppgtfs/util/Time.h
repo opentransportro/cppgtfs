@@ -38,8 +38,7 @@ namespace cppgtfs::util
     bool operator>=(const Time& lh, const Time& rh);
 
     bool operator<=(const Time& lh, const Time& rh);
-}
-
+}    // namespace cppgtfs::util
 
 
 #endif    //CPPGTFS_TIME_H

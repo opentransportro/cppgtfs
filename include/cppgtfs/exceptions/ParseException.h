@@ -28,5 +28,5 @@ namespace cppgtfs::exceptions
         int64_t _line;
         std::string _file_name;
     };
-}
+}    // namespace cppgtfs::exceptions
 #endif    //CPPGTFS_PARSEEXCEPTION_H

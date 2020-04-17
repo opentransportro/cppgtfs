@@ -239,8 +239,7 @@ namespace cppgtfs
     }
 
 
-
-// ____________________________________________________________________________
+    // ____________________________________________________________________________
     FEEDTPL
     void Reader::parseFrequencies(FEEDB* targetFeed, std::istream* s) const
     {
@@ -263,7 +262,7 @@ namespace cppgtfs
         }
     }
 
-// ____________________________________________________________________________
+    // ____________________________________________________________________________
     FEEDTPL
     void Reader::parseFareAttributes(FEEDB* targetFeed, std::istream* s) const
     {
@@ -289,7 +288,7 @@ namespace cppgtfs
         }
     }
 
-// ____________________________________________________________________________
+    // ____________________________________________________________________________
     FEEDTPL
     void Reader::parseFareRules(FEEDB* targetFeed, std::istream* s) const
     {
@@ -347,7 +346,7 @@ namespace cppgtfs
         targetFeed->getFares().finalize();
     }
 
-// ____________________________________________________________________________
+    // ____________________________________________________________________________
     FEEDTPL
     void Reader::parseFeedInfo(FEEDB* targetFeed, std::istream* s) const
     {
@@ -371,8 +370,7 @@ namespace cppgtfs
     }
 
 
-
-// ____________________________________________________________________________
+    // ____________________________________________________________________________
     FEEDTPL
     void Reader::parseAgencies(FEEDB* targetFeed, std::istream* s) const
     {
@@ -384,21 +382,20 @@ namespace cppgtfs
         while (nextAgency(csvp, &fa, flds)) {
             if ((typename AgencyT::Ref()) == (a = targetFeed->getAgencies().add(Agency(fa.id, fa.name, fa.url, fa.timezone, fa.lang, fa.phone, fa.fare_url, fa.agency_email)))) {
                 std::stringstream msg;
-                msg << "'agency_id' must be dataset unique. Collision with id '"<< a->getId() << "')";
+                msg << "'agency_id' must be dataset unique. Collision with id '" << a->getId() << "')";
                 throw ParseException(msg.str(), "agency_id", csvp.getCurLine());
             }
         }
 
         if ((typename AgencyT::Ref()) == a) {
-            throw ParseException("the feed has no agency defined. This is a required field.","",1);
+            throw ParseException("the feed has no agency defined. This is a required field.", "", 1);
         }
 
         targetFeed->getAgencies().finalize();
     }
 
 
-
-// ____________________________________________________________________________
+    // ____________________________________________________________________________
     FEEDTPL
     void Reader::parseStops(FEEDB* targetFeed, std::istream* s) const
     {
@@ -456,8 +453,7 @@ namespace cppgtfs
     }
 
 
-
-// ____________________________________________________________________________
+    // ____________________________________________________________________________
     FEEDTPL
     void Reader::parseRoutes(FEEDB* targetFeed, std::istream* s) const
     {
@@ -491,8 +487,7 @@ namespace cppgtfs
     }
 
 
-
-// ____________________________________________________________________________
+    // ____________________________________________________________________________
     FEEDTPL
     void Reader::parseCalendar(FEEDB* targetFeed, std::istream* s) const
     {
@@ -512,8 +507,7 @@ namespace cppgtfs
     }
 
 
-
-// ____________________________________________________________________________
+    // ____________________________________________________________________________
     FEEDTPL
     void Reader::parseCalendarDates(FEEDB* targetFeed, std::istream* s) const
     {
@@ -536,7 +530,7 @@ namespace cppgtfs
         targetFeed->getServices().finalize();
     }
 
-// ____________________________________________________________________________
+    // ____________________________________________________________________________
     FEEDTPL
     void Reader::parseTrips(FEEDB* targetFeed, std::istream* s) const
     {
@@ -946,8 +940,8 @@ namespace cppgtfs
 
             if (st.getArrivalTime() > st.getDepartureTime()) {
                 throw ParseException("arrival time '" + st.getArrivalTime().toString() + "' is later than departure time '" + st.getDepartureTime().toString() + "'. You cannot depart earlier than you arrive.",
-                                      "departure_time",
-                                      csvp.getCurLine());
+                    "departure_time",
+                    csvp.getCurLine());
             }
 
             if (!trip->addStopTime(st)) {

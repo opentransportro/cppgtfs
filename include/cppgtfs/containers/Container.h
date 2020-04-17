@@ -32,7 +32,7 @@ namespace cppgtfs::gtfs
         T* getRef(const std::string& id) { return get(id); }
         [[nodiscard]] size_t size() const;
 
-        void finalize(){}
+        void finalize() {}
 
         typename std::unordered_map<std::string, T*>::const_iterator begin() const;
         typename std::unordered_map<std::string, T*>::iterator begin();
@@ -41,7 +41,7 @@ namespace cppgtfs::gtfs
         typename std::unordered_map<std::string, T*>::iterator end();
 
     private:
-        std::unordered_map<std::string, T*> _map {};
+        std::unordered_map<std::string, T*> _map{};
     };
 
     // ____________________________________________________________________________
@@ -101,7 +101,7 @@ namespace cppgtfs::gtfs
     // ____________________________________________________________________________
     template<typename T>
     typename std::unordered_map<std::string, T*>::const_iterator
-    Container<T>::begin() const
+        Container<T>::begin() const
     {
         return _map.begin();
     }
@@ -116,7 +116,7 @@ namespace cppgtfs::gtfs
     // ____________________________________________________________________________
     template<typename T>
     typename std::unordered_map<std::string, T*>::const_iterator Container<T>::end()
-    const
+        const
     {
         return _map.end();
     }

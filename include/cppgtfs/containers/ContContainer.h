@@ -44,7 +44,7 @@ namespace cppgtfs::gtfs
 
     private:
         std::vector<T> _vec;
-        bool _final{false};
+        bool _final{ false };
     };
 
     template<typename T>
@@ -131,7 +131,7 @@ namespace cppgtfs::gtfs
         return &*i;
     }
 
-// ____________________________________________________________________________
+    // ____________________________________________________________________________
     template<typename T>
     const T* ContContainer<T>::get(const std::string& id) const
     {

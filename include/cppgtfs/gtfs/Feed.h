@@ -21,23 +21,31 @@
 #include "Transfer.h"
 #include "Trip.h"
 
-#define FEEDTPL \
-    template< \
-        typename AgencyT, \
-        typename RouteT, \
-        typename StopT, \
-        typename ServiceT, \
-        template<typename> class StopTimeT, \
-        typename ShapeT, \
-        template<typename> class FareT, \
-        template<typename> class AContainerT, \
-        template<typename> class RContainerT, \
-        template<typename> class SContainerT, \
-        template<typename> class StContainerT, \
-        template<typename> class TContainerT, \
-        template<typename> class ShContainerT, \
-        template<typename> class FContainerT\
-    >
+#define FEEDTPL             \
+    template<               \
+        typename AgencyT,   \
+        typename RouteT,    \
+        typename StopT,     \
+        typename ServiceT,  \
+        template<typename>  \
+        class StopTimeT,    \
+        typename ShapeT,    \
+        template<typename>  \
+        class FareT,        \
+        template<typename>  \
+        class AContainerT,  \
+        template<typename>  \
+        class RContainerT,  \
+        template<typename>  \
+        class SContainerT,  \
+        template<typename>  \
+        class StContainerT, \
+        template<typename>  \
+        class TContainerT,  \
+        template<typename>  \
+        class ShContainerT, \
+        template<typename>  \
+        class FContainerT>
 #define FEEDB \
     FeedBase<AgencyT, RouteT, StopT, ServiceT, StopTimeT, ShapeT, FareT, AContainerT, RContainerT, SContainerT, StContainerT, TContainerT, ShContainerT, FContainerT>
 
@@ -49,10 +57,10 @@ namespace cppgtfs::gtfs
         using Agencies = AContainerT<AgencyT>;
         using Stops = StContainerT<StopT>;
         using Routes = RContainerT<RouteT>;
-        using Trips = TContainerT<TripB<StopTimeT<StopT>, ServiceT, RouteT, ShapeT> >;
+        using Trips = TContainerT<TripB<StopTimeT<StopT>, ServiceT, RouteT, ShapeT>>;
         using Shapes = ShContainerT<ShapeT>;
         using Services = SContainerT<ServiceT>;
-        using Fares = FContainerT<FareT<RouteT> >;
+        using Fares = FContainerT<FareT<RouteT>>;
         using Transfers = std::vector<Transfer>;
         using Zones = std::set<std::string>;
 

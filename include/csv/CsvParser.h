@@ -137,7 +137,7 @@ namespace csv
         //
         // careful: this function is not idempotent. it will leave t
         // right-trimmed.
-        static const char* inlineRightTrim(const char* t) ;
+        static const char* inlineRightTrim(const char* t);
 
         // Map of field names to column indices. Parsed from the
         // table header (first row in a CSV file).
@@ -154,20 +154,20 @@ namespace csv
 
         bool lineIsEmpty(const char* line) const;
 
-        static bool isDouble(std::string line) ;
+        static bool isDouble(std::string line);
 
-        static bool isLong(std::string line, bool notEmpty) ;
+        static bool isLong(std::string line, bool notEmpty);
 
-        static bool isLong(std::string line) ;
+        static bool isLong(std::string line);
 
-        static void strtrim(std::string* s) ;
+        static void strtrim(std::string* s);
 
-        static void rtrim(std::string* s) ;
+        static void rtrim(std::string* s);
 
-        static void ltrim(std::string* s) ;
+        static void ltrim(std::string* s);
 
-        static bool isDouble(std::string line, bool notEmpty) ;
+        static bool isDouble(std::string line, bool notEmpty);
     };
-}    // namespace util
+}    // namespace csv
 
 #endif    // AD_UTIL_CSVPARSER_H_

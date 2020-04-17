@@ -15,11 +15,10 @@ namespace csv
 }
 namespace cppgtfs
 {
-
     class DataExtractor
     {
     public:
-        explicit DataExtractor(bool strict):
+        explicit DataExtractor(bool strict) :
             _strict(strict)
         {}
         std::string getString(const csv::CsvParser& csv, size_t field) const;
@@ -48,6 +47,6 @@ namespace cppgtfs
         bool _strict;
     };
 
-}
+}    // namespace cppgtfs
 
 #endif    //CPPGTFS_DATAEXTRACTOR_H

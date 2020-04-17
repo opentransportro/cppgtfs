@@ -38,7 +38,6 @@ namespace cppgtfs::gtfs
         fieldId dateFld;
 
         static CalendarDateFields fromCsvParser(const csv::CsvParser& csvp);
-
     };
     class ServiceDateFlat
     {
@@ -123,15 +122,15 @@ namespace cppgtfs::gtfs
     class Service
     {
     public:
-        using Ref = Service *;
+        using Ref = Service*;
         using SERVICE_DAY = CalendarFlat::SERVICE_DAY;
         using EXCEPTION_TYPE = CalendarDateFlat::EXCEPTION_TYPE;
 
         static std::string getId(Ref r) { return r->getId(); }
 
-        explicit Service(std::string  id);
+        explicit Service(std::string id);
 
-        Service(std::string  id, uint8_t serviceDays, ServiceDate start, ServiceDate end);
+        Service(std::string id, uint8_t serviceDays, ServiceDate start, ServiceDate end);
 
         [[nodiscard]] const std::string& getId() const;
 

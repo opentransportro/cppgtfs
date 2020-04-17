@@ -27,15 +27,15 @@ namespace csv
         {
             try {
                 if (has_value()) {
-                    if(success != nullptr) {*success = true;}
+                    if (success != nullptr) { *success = true; }
                     return std::any_cast<T>(_value);
                 }
             } catch (std::bad_any_cast& e) {
             }
 
-            if(success != nullptr) {*success = false;}
+            if (success != nullptr) { *success = false; }
 
-            if(std::is_pointer<T>::value) {
+            if (std::is_pointer<T>::value) {
                 return 0;
             }
             return T{};
@@ -53,8 +53,7 @@ namespace csv
         const std::string& _name{};
         std::any _value{};
     };
-}
-
+}    // namespace csv
 
 
 #endif    //CPPGTFS_CSVFIELD_H
