@@ -13,7 +13,6 @@ using std::remove;
 
 namespace csv
 {
-
     CsvWriter::CsvWriter(std::ostream* str, HeaderList headers) :
         _stream(str), _headers(std::move(headers)), _delim(',') {}
 

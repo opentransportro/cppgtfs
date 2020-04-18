@@ -262,13 +262,6 @@ namespace cppgtfs
     }
 
 
-
-
-
-
-
-
-
     // ____________________________________________________________________________
     bool Reader::parse(Feed& targetFeed) const
     {
@@ -1003,8 +996,8 @@ namespace cppgtfs
 
             if (st.getArrivalTime() > st.getDepartureTime()) {
                 throw ParseException("arrival time '" + st.getArrivalTime().toString() + "' is later than departure time '" + st.getDepartureTime().toString() + "'. You cannot depart earlier than you arrive.",
-                                     "departure_time",
-                                     csvp.getCurLine());
+                    "departure_time",
+                    csvp.getCurLine());
             }
 
             if (!trip->addStopTime(st)) {

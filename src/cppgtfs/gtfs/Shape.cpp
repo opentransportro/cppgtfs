@@ -32,4 +32,4 @@ namespace cppgtfs::gtfs
         std::sort(_shapePoints.begin(), _shapePoints.end(), cmp);
         return true;
     }
-}
+}    // namespace cppgtfs::gtfs

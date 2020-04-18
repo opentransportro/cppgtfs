@@ -82,6 +82,7 @@ namespace cppgtfs::gtfs
     {
         using StopTimes = std::vector<StopTime>;
         using Frequencies = std::vector<Frequency>;
+
     public:
         using Ref = Trip*;
 

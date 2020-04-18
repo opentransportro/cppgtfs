@@ -17,7 +17,7 @@ namespace cppgtfs::gtfs
      * Utility class used to define common smart pointer types available for the wrapped object
      * @tparam WrappedObject - wrapped object type
      */
-    template< typename WrappedObject>
+    template<typename WrappedObject>
     class PointerWrapper
     {
     public:
@@ -34,13 +34,12 @@ namespace cppgtfs::gtfs
      */
     template<
         typename WrappedObject,
-        template<typename> class ContainerType
-    >
+        template<typename>
+        class ContainerType>
     class ContainerWrapper
     {
     public:
         using Container = ContainerType<WrappedObject>;
-
     };
 
     /**
@@ -50,29 +49,33 @@ namespace cppgtfs::gtfs
      */
     template<
         typename WrappedFields,
-        typename WrappedObject
-    >
-    class ModelWrapper:  public WrappedObject
+        typename WrappedObject>
+    class ModelWrapper : public WrappedObject
     {
     public:
         using Fields = WrappedFields;
         using Object = WrappedObject;
 
 
-        template<class ... Types>
+        template<class... Types>
         static Object create(Types&&... args)
         {
-            return Object{std::forward<Types>(args)...};
+            return Object{ std::forward<Types>(args)... };
         }
 
-        template<class ... Types>
-        ModelWrapper(Types ... args): Object(args...) { }
+        template<class... Types>
+        ModelWrapper(Types... args) :
+            Object(args...)
+        {}
 
-        ModelWrapper(): Object() {}
+        ModelWrapper() :
+            Object() {}
 
-        ModelWrapper(const WrappedObject& object): Object(object) { }
+        ModelWrapper(const WrappedObject& object) :
+            Object(object) {}
 
-        ModelWrapper(const Object&& object): Object(object) { }
+        ModelWrapper(const Object&& object) :
+            Object(object) {}
 
         const Object& object() const
         {
@@ -86,7 +89,7 @@ namespace cppgtfs::gtfs
 
         static Fields& fields()
         {
-            return ModelWrapper<Fields ,Object>::flds;
+            return ModelWrapper<Fields, Object>::flds;
         }
 
     private:
@@ -95,27 +98,25 @@ namespace cppgtfs::gtfs
 
     template<
         typename WrappedFields,
-        typename WrappedObject
-    >
+        typename WrappedObject>
     WrappedFields ModelWrapper<WrappedFields, WrappedObject>::flds = ModelWrapper::Fields();
 
 
     template<
         typename WrappedObject,
-        template<typename> class ContainerT = Container
-    >
-    class Model:
-        public ModelWrapper<typename WrappedObject::Fields, WrappedObject>,
-        public PointerWrapper<WrappedObject>,
-        public ContainerWrapper<WrappedObject, ContainerT>
+        template<typename> class ContainerT = Container>
+    class Model : public ModelWrapper<typename WrappedObject::Fields, WrappedObject>
+        , public PointerWrapper<WrappedObject>
+        , public ContainerWrapper<WrappedObject, ContainerT>
     {
     public:
-        template<class ... Types>
-        Model(Types ... args): ModelWrapper<typename WrappedObject::Fields,WrappedObject>(args...) { }
+        template<class... Types>
+        Model(Types... args) :
+            ModelWrapper<typename WrappedObject::Fields, WrappedObject>(args...)
+        {}
     };
 
-}
-
+}    // namespace cppgtfs::gtfs
 
 
 #endif    //CPPGTFS_MODEL_H

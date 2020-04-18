@@ -71,7 +71,6 @@ namespace cppgtfs::gtfs
     }
 
 
-
     bool Service::hasServiceDays() const
     {
         return !_begin.empty() && !_end.empty();

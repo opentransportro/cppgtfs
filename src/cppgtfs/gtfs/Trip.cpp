@@ -2,8 +2,7 @@
 
 namespace cppgtfs::gtfs
 {
-    Trip::Trip(const std::string& id, Route::Ref r, Service::Ref s, const std::string& hs, const std::string& short_name, DIRECTION dir,
-        const std::string& blockid, Shape::Ref shp, WC_BIKE_ACCESSIBLE wc, WC_BIKE_ACCESSIBLE ba) :
+    Trip::Trip(const std::string& id, Route::Ref r, Service::Ref s, const std::string& hs, const std::string& short_name, DIRECTION dir, const std::string& blockid, Shape::Ref shp, WC_BIKE_ACCESSIBLE wc, WC_BIKE_ACCESSIBLE ba) :
         _id(id),
         _route(r),
         _service(s),
@@ -23,12 +22,10 @@ namespace cppgtfs::gtfs
     }
 
 
-
     Route::Ref Trip::getRoute()
     {
         return _route;
     }
-
 
 
     Route::Ref Trip::getRoute() const
@@ -37,12 +34,10 @@ namespace cppgtfs::gtfs
     }
 
 
-
     Service::Ref Trip::getService()
     {
         return _service;
     }
-
 
 
     Service::Ref Trip::getService() const
@@ -51,13 +46,11 @@ namespace cppgtfs::gtfs
     }
 
 
-
     const std::string& Trip::getHeadsign()
-    const
+        const
     {
         return _headsign;
     }
-
 
 
     const std::string& Trip::getShortname() const
@@ -66,19 +59,16 @@ namespace cppgtfs::gtfs
     }
 
 
-
     Trip::DIRECTION Trip::getDirection() const
     {
         return _dir;
     }
 
 
-
     const std::string& Trip::getBlockId() const
     {
         return _block_id;
     }
-
 
 
     Shape::Ref Trip::getShape()
@@ -93,12 +83,10 @@ namespace cppgtfs::gtfs
     }
 
 
-
     void Trip::setShape(Shape::Ref shp)
     {
         _shape = shp;
     }
-
 
 
     Trip::WC_BIKE_ACCESSIBLE Trip::getWheelchairAccessibility() const
@@ -107,12 +95,10 @@ namespace cppgtfs::gtfs
     }
 
 
-
     Trip::WC_BIKE_ACCESSIBLE Trip::getBikesAllowed() const
     {
         return _ba;
     }
-
 
 
     const typename Trip::StopTimes& Trip::getStopTimes() const
@@ -121,12 +107,10 @@ namespace cppgtfs::gtfs
     }
 
 
-
     typename Trip::StopTimes& Trip::getStopTimes()
     {
         return _stoptimes;
     }
-
 
 
     const typename Trip::Frequencies& Trip::getFrequencies() const
@@ -135,12 +119,10 @@ namespace cppgtfs::gtfs
     }
 
 
-
-    Trip::Frequencies & Trip::getFrequencies()
+    Trip::Frequencies& Trip::getFrequencies()
     {
         return _frequencies;
     }
-
 
 
     bool Trip::addStopTime(const StopTime& t)
@@ -156,7 +138,6 @@ namespace cppgtfs::gtfs
     }
 
 
-
     void Trip::addFrequency(const Frequency& t)
     {
         _frequencies.push_back(t);
@@ -164,16 +145,16 @@ namespace cppgtfs::gtfs
     gtfs::TripFlat Trip::getFlat() const
     {
         return gtfs::TripFlat{
-                _id,
-                _route->getId(),
-                _service->getId(),
-                _headsign,
-                _short_name,
-                _dir,
-                _block_id,
-                _shape->getId(),
-                _wc,
-                _ba
+            _id,
+            _route->getId(),
+            _service->getId(),
+            _headsign,
+            _short_name,
+            _dir,
+            _block_id,
+            _shape->getId(),
+            _wc,
+            _ba
         };
     }
-}
+}    // namespace cppgtfs::gtfs

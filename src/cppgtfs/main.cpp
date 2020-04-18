@@ -2,7 +2,6 @@
 #include <cppgtfs/gtfs/Model.h>
 int main()
 {
-
     using Test = Model<Agency>;
 
 
@@ -20,7 +19,9 @@ int main()
     int x = fields.agencyEmailFld;
     printf("%x", x);
 
-    cppgtfs::Reader reader("/home/vvesa/Projects/ot/cppgtfs/test/data" "/correct");
+    cppgtfs::Reader reader(
+        "/home/vvesa/Projects/ot/cppgtfs/test/data"
+        "/correct");
     cppgtfs::gtfs::Feed targetFeed;
 
     reader.parseFeedInfo(targetFeed);
@@ -36,7 +37,7 @@ int main()
     //reader.parseTransfers(targetFeed);
     reader.parseFareAttributes(targetFeed);
     reader.parseFareRules(targetFeed);
-//    cppgtfs::gtfs::Feed::Routes routes = targetFeed.getRoutes();
+    //    cppgtfs::gtfs::Feed::Routes routes = targetFeed.getRoutes();
 
     return 0;
 }

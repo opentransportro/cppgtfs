@@ -21,7 +21,6 @@ namespace cppgtfs::gtfs
     class StopTime
     {
     public:
-
         struct Fields
         {
             fieldId stopIdFld;

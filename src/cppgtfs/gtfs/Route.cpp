@@ -224,7 +224,6 @@ namespace cppgtfs::gtfs
         _text_color(text_color),
         _agency(agency)
     {
-
     }
     std::string Route::getColorString() const
     {
@@ -290,4 +289,4 @@ namespace cppgtfs::gtfs
         r.agency = _agency->getId();
         return r;
     }
-}
+}    // namespace cppgtfs::gtfs
