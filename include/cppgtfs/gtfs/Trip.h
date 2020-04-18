@@ -88,8 +88,6 @@ namespace cppgtfs::gtfs
     public:
         using Ref = TripB<StopTimeT, ServiceT, RouteT, ShapeT>*;
 
-        static std::string getId(Ref r) { return r->getId(); }
-
         using WC_BIKE_ACCESSIBLE = TripFlat::WC_BIKE_ACCESSIBLE;
         using DIRECTION = TripFlat::DIRECTION;
 
@@ -141,13 +139,13 @@ namespace cppgtfs::gtfs
         {
             return gtfs::TripFlat{
                 _id,
-                RouteT::getId(_route),
-                ServiceT::getId(_service),
+                _route->getId(),
+                _service->getId(),
                 _headsign,
                 _short_name,
                 _dir,
                 _block_id,
-                ShapeT::getId(_shape),
+                _shape->getId(),
                 _wc,
                 _ba
             };

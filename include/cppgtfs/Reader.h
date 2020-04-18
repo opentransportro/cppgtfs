@@ -93,99 +93,99 @@ namespace cppgtfs
 
         // parse a zip/folder into a GtfsFeed
         FEEDTPL
-        bool parse(FEEDB* targetFeed) const;
+        bool parse(FEEDB& targetFeed) const;
 
         FEEDTPL
-        void parseAgencies(FEEDB* targetFeed) const;
+        void parseAgencies(FEEDB& targetFeed) const;
 
         FEEDTPL
-        void parseStops(FEEDB* targetFeed) const;
+        void parseStops(FEEDB& targetFeed) const;
 
         FEEDTPL
-        void parseRoutes(FEEDB* targetFeed) const;
+        void parseRoutes(FEEDB& targetFeed) const;
 
         FEEDTPL
-        void parseTrips(FEEDB* targetFeed) const;
+        void parseTrips(FEEDB& targetFeed) const;
 
         FEEDTPL
-        void parseStopTimes(FEEDB* targetFeed) const;
+        void parseStopTimes(FEEDB& targetFeed) const;
 
         FEEDTPL
-        void parseCalendar(FEEDB* targetFeed) const;
+        void parseCalendar(FEEDB& targetFeed) const;
 
         FEEDTPL
-        void parseCalendarDates(FEEDB* targetFeed) const;
+        void parseCalendarDates(FEEDB& targetFeed) const;
 
         FEEDTPL
-        void parseFareAttributes(FEEDB* targetFeed) const;
+        void parseFareAttributes(FEEDB& targetFeed) const;
 
         FEEDTPL
-        void parseFareRules(FEEDB* targetFeed) const;
+        void parseFareRules(FEEDB& targetFeed) const;
 
         FEEDTPL
-        void parseShapes(FEEDB* targetFeed) const;
+        void parseShapes(FEEDB& targetFeed) const;
 
         FEEDTPL
-        void parseFrequencies(FEEDB* targetFeed) const;
+        void parseFrequencies(FEEDB& targetFeed) const;
 
         FEEDTPL
-        void parseTransfers(FEEDB* targetFeed) const;
+        void parseTransfers(FEEDB& targetFeed) const;
 
         FEEDTPL
-        void parseFeedInfo(FEEDB* targetFeed) const;
+        void parseFeedInfo(FEEDB& targetFeed) const;
 
     private:
         std::string _path;
 
         FEEDTPL
-        void parseAgencies(FEEDB* targetFeed, std::istream*) const;
+        void parseAgencies(FEEDB& targetFeed, std::istream*) const;
 
         FEEDTPL
-        void parseStops(FEEDB* targetFeed, std::istream*) const;
+        void parseStops(FEEDB& targetFeed, std::istream*) const;
 
         FEEDTPL
-        void parseRoutes(FEEDB* targetFeed, std::istream*) const;
+        void parseRoutes(FEEDB& targetFeed, std::istream*) const;
 
         FEEDTPL
-        void parseTrips(FEEDB* targetFeed, std::istream*) const;
+        void parseTrips(FEEDB& targetFeed, std::istream*) const;
 
         FEEDTPL
-        void parseStopTimes(FEEDB* targetFeed, std::istream*) const;
+        void parseStopTimes(FEEDB& targetFeed, std::istream*) const;
 
         FEEDTPL
-        void parseCalendar(FEEDB* targetFeed, std::istream*) const;
+        void parseCalendar(FEEDB& targetFeed, std::istream*) const;
 
         FEEDTPL
-        void parseCalendarDates(FEEDB* targetFeed, std::istream*) const;
+        void parseCalendarDates(FEEDB& targetFeed, std::istream*) const;
 
         FEEDTPL
-        void parseFareAttributes(FEEDB* targetFeed, std::istream*) const;
+        void parseFareAttributes(FEEDB& targetFeed, std::istream*) const;
 
         FEEDTPL
-        void parseFareRules(FEEDB* targetFeed, std::istream*) const;
+        void parseFareRules(FEEDB& targetFeed, std::istream*) const;
 
         FEEDTPL
-        void parseShapes(FEEDB* targetFeed, std::istream*) const;
+        void parseShapes(FEEDB& targetFeed, std::istream*) const;
 
         FEEDTPL
-        void parseFrequencies(FEEDB* targetFeed, std::istream*) const;
+        void parseFrequencies(FEEDB& targetFeed, std::istream*) const;
 
         FEEDTPL
-        void parseTransfers(FEEDB* targetFeed, std::istream*) const;
+        void parseTransfers(FEEDB& targetFeed, std::istream*) const;
 
         FEEDTPL
-        void parseFeedInfo(FEEDB* targetFeed, std::istream*) const;
+        void parseFeedInfo(FEEDB& targetFeed, std::istream*) const;
     };
 
 
     // ____________________________________________________________________________
     FEEDTPL
-    bool Reader::parse(FEEDB* targetFeed) const
+    bool Reader::parse(FEEDB& targetFeed) const
     {
         std::ifstream fs;
         std::string curFile;
 
-        targetFeed->setPath(_path);
+        targetFeed.setPath(_path);
 
         parseFeedInfo(targetFeed);
         parseAgencies(targetFeed);
@@ -207,7 +207,7 @@ namespace cppgtfs
 
     // ____________________________________________________________________________
     FEEDTPL
-    void Reader::parseTransfers(FEEDB* targetFeed, std::istream* s) const
+    void Reader::parseTransfers(FEEDB& targetFeed, std::istream* s) const
     {
         CsvParser csvp(s);
 
@@ -215,8 +215,8 @@ namespace cppgtfs
         auto flds = TransfersFields::fromCsvParser(csvp);
 
         while (nextTransfer(csvp, &ft, flds)) {
-            StopT* fromStop = targetFeed->getStops().get(ft.fromStop);
-            StopT* toStop = targetFeed->getStops().get(ft.toStop);
+            StopT* fromStop = targetFeed.getStops().get(ft.fromStop);
+            StopT* toStop = targetFeed.getStops().get(ft.toStop);
 
             if (!fromStop) {
                 std::stringstream msg;
@@ -234,14 +234,14 @@ namespace cppgtfs
                 throw ParseException(msg.str(), "to_stop_id", csvp.getCurLine());
             }
             Transfer t(fromStop, toStop, ft.type, ft.tTime);
-            targetFeed->getTransfers().push_back(t);
+            targetFeed.getTransfers().push_back(t);
         }
     }
 
 
     // ____________________________________________________________________________
     FEEDTPL
-    void Reader::parseFrequencies(FEEDB* targetFeed, std::istream* s) const
+    void Reader::parseFrequencies(FEEDB& targetFeed, std::istream* s) const
     {
         CsvParser csvp(s);
 
@@ -251,7 +251,7 @@ namespace cppgtfs
         while (nextFrequency(csvp, &ff, flds)) {
             Frequency f(ff.startTime, ff.endTime, ff.headwaySecs, ff.exactTimes);
 
-            auto trip = targetFeed->getTrips().get(ff.tripId);
+            auto trip = targetFeed.getTrips().get(ff.tripId);
             if (!trip) {
                 std::stringstream msg;
                 msg << "trip '" << ff.tripId << "' not found.";
@@ -264,7 +264,7 @@ namespace cppgtfs
 
     // ____________________________________________________________________________
     FEEDTPL
-    void Reader::parseFareAttributes(FEEDB* targetFeed, std::istream* s) const
+    void Reader::parseFareAttributes(FEEDB& targetFeed, std::istream* s) const
     {
         CsvParser csvp(s);
 
@@ -275,7 +275,7 @@ namespace cppgtfs
             typename AgencyT::Ref agency = typename AgencyT::Ref();
 
             if (!ff.agency.empty()) {
-                agency = targetFeed->getAgencies().get(ff.agency);
+                agency = targetFeed.getAgencies().get(ff.agency);
                 if (!agency) {
                     std::stringstream msg;
                     msg << "no agency with id '" << ff.agency << "' defined, cannot "
@@ -283,14 +283,13 @@ namespace cppgtfs
                     throw ParseException(msg.str(), "agency_id", csvp.getCurLine());
                 }
             }
-
-            targetFeed->getFares().add(FareT<RouteT>(ff.id, ff.price, ff.currencyType, ff.paymentMethod, ff.numTransfers, agency, ff.duration));
+            targetFeed.getFares().add(Fare<RouteT>(ff.id, ff.price, ff.currencyType, ff.paymentMethod, ff.numTransfers, agency, ff.duration));
         }
     }
 
     // ____________________________________________________________________________
     FEEDTPL
-    void Reader::parseFareRules(FEEDB* targetFeed, std::istream* s) const
+    void Reader::parseFareRules(FEEDB& targetFeed, std::istream* s) const
     {
         CsvParser csvp(s);
 
@@ -298,8 +297,8 @@ namespace cppgtfs
         auto flds = FareRuleFields::fromCsvParser(csvp);
 
         while (nextFareRule(csvp, &fr, flds)) {
-            Fare<RouteT>* fare = targetFeed->getFares().get(fr.fare);
-            RouteT* route = targetFeed->getRoutes().get(fr.route);
+            FareT<RouteT>* fare = targetFeed.getFares().get(fr.fare);
+            RouteT* route = targetFeed.getRoutes().get(fr.route);
 
             if (!fare) {
                 std::stringstream msg;
@@ -315,7 +314,7 @@ namespace cppgtfs
                 throw ParseException(msg.str(), "route_id", csvp.getCurLine());
             }
 
-            if (!fr.originZone.empty() && !targetFeed->getZones().count(fr.originZone)) {
+            if (!fr.originZone.empty() && !targetFeed.getZones().count(fr.originZone)) {
                 std::stringstream msg;
                 msg << "no zone with id '" << fr.originZone
                     << "' defined in stops.txt, cannot "
@@ -323,7 +322,7 @@ namespace cppgtfs
                 throw ParseException(msg.str(), "origin_id", csvp.getCurLine());
             }
 
-            if (!fr.destZone.empty() && !targetFeed->getZones().count(fr.destZone)) {
+            if (!fr.destZone.empty() && !targetFeed.getZones().count(fr.destZone)) {
                 std::stringstream msg;
                 msg << "no zone with id '" << fr.destZone
                     << "' defined in stops.txt, cannot "
@@ -331,7 +330,7 @@ namespace cppgtfs
                 throw ParseException(msg.str(), "destination_id", csvp.getCurLine());
             }
 
-            if (!fr.containsZone.empty() && !targetFeed->getZones().count(fr.containsZone)) {
+            if (!fr.containsZone.empty() && !targetFeed.getZones().count(fr.containsZone)) {
                 std::stringstream msg;
                 msg << "no zone with id '" << fr.containsZone
                     << "' defined in stops.txt, cannot "
@@ -343,12 +342,12 @@ namespace cppgtfs
             fare->addFareRule(r);
         }
 
-        targetFeed->getFares().finalize();
+        targetFeed.getFares().finalize();
     }
 
     // ____________________________________________________________________________
     FEEDTPL
-    void Reader::parseFeedInfo(FEEDB* targetFeed, std::istream* s) const
+    void Reader::parseFeedInfo(FEEDB& targetFeed, std::istream* s) const
     {
         CsvParser csvp(s);
 
@@ -360,19 +359,19 @@ namespace cppgtfs
         size_t feedVersionFld = csvp.getOptFieldIndex("feed_version");
 
         while (csvp.readNextLine()) {
-            targetFeed->setPublisherName(_dataExtractor.getString(csvp, feedPublisherNameFld));
-            targetFeed->setPublisherUrl(_dataExtractor.getString(csvp, feedPublisherUrlFld));
-            targetFeed->setLang(_dataExtractor.getString(csvp, feedLangFld, ""));
-            targetFeed->setVersion(_dataExtractor.getString(csvp, feedVersionFld, ""));
-            targetFeed->setStartDate(_dataExtractor.getServiceDate(csvp, feedStartDateFld, false));
-            targetFeed->setEndDate(_dataExtractor.getServiceDate(csvp, feedEndDateFld, false));
+            targetFeed.setPublisherName(_dataExtractor.getString(csvp, feedPublisherNameFld));
+            targetFeed.setPublisherUrl(_dataExtractor.getString(csvp, feedPublisherUrlFld));
+            targetFeed.setLang(_dataExtractor.getString(csvp, feedLangFld, ""));
+            targetFeed.setVersion(_dataExtractor.getString(csvp, feedVersionFld, ""));
+            targetFeed.setStartDate(_dataExtractor.getServiceDate(csvp, feedStartDateFld, false));
+            targetFeed.setEndDate(_dataExtractor.getServiceDate(csvp, feedEndDateFld, false));
         }
     }
 
 
     // ____________________________________________________________________________
     FEEDTPL
-    void Reader::parseAgencies(FEEDB* targetFeed, std::istream* s) const
+    void Reader::parseAgencies(FEEDB& targetFeed, std::istream* s) const
     {
         CsvParser csvp(s);
         typename AgencyT::Ref a = (typename AgencyT::Ref());
@@ -380,7 +379,7 @@ namespace cppgtfs
         auto flds = AgencyFields::fromCsvParser(csvp);
 
         while (nextAgency(csvp, &fa, flds)) {
-            if ((typename AgencyT::Ref()) == (a = targetFeed->getAgencies().add(Agency(fa.id, fa.name, fa.url, fa.timezone, fa.lang, fa.phone, fa.fare_url, fa.agency_email)))) {
+            if ((typename AgencyT::Ref()) == (a = targetFeed.getAgencies().add(Agency(fa.id, fa.name, fa.url, fa.timezone, fa.lang, fa.phone, fa.fare_url, fa.agency_email)))) {
                 std::stringstream msg;
                 msg << "'agency_id' must be dataset unique. Collision with id '" << a->getId() << "')";
                 throw ParseException(msg.str(), "agency_id", csvp.getCurLine());
@@ -391,13 +390,13 @@ namespace cppgtfs
             throw ParseException("the feed has no agency defined. This is a required field.", "", 1);
         }
 
-        targetFeed->getAgencies().finalize();
+        targetFeed.getAgencies().finalize();
     }
 
 
     // ____________________________________________________________________________
     FEEDTPL
-    void Reader::parseStops(FEEDB* targetFeed, std::istream* s) const
+    void Reader::parseStops(FEEDB& targetFeed, std::istream* s) const
     {
         CsvParser csvp(s);
 
@@ -407,7 +406,7 @@ namespace cppgtfs
         auto flds = StopFields::fromCsvParser(csvp);
 
         while (nextStop(csvp, &fs, flds)) {
-            targetFeed->updateBox(fs.lat, fs.lng);
+            targetFeed.updateBox(fs.lat, fs.lng);
 
             const StopT& stop =
                 StopT(fs.id, fs.code, fs.name, fs.desc, fs.lat, fs.lng, fs.zone_id, fs.stop_url, fs.location_type, 0, fs.stop_timezone, fs.wheelchair_boarding, fs.platform_code);
@@ -425,9 +424,9 @@ namespace cppgtfs
                     std::pair<size_t, std::string>(csvp.getCurLine(), fs.parent_station);
             }
 
-            targetFeed->getZones().insert(fs.zone_id);
+            targetFeed.getZones().insert(fs.zone_id);
 
-            if (!targetFeed->getStops().add(stop)) {
+            if (!targetFeed.getStops().add(stop)) {
                 std::stringstream msg;
                 msg << "'stop_id' must be dataset unique. Collision with id '"
                     << stop.getId() << "')";
@@ -435,19 +434,19 @@ namespace cppgtfs
             }
         }
 
-        targetFeed->getStops().finalize();
+        targetFeed.getStops().finalize();
 
         // second pass to resolve parentStation pointers
         for (const auto& ps : parentStations) {
             StopT* parentStation = 0;
-            parentStation = targetFeed->getStops().get(ps.second.second);
+            parentStation = targetFeed.getStops().get(ps.second.second);
             if (!parentStation) {
                 std::stringstream msg;
                 msg << "no stop with id '" << ps.second.second << "' defined, cannot "
                     << "reference here.";
                 throw ParseException(msg.str(), "parent_station", ps.second.first);
             } else {
-                targetFeed->getStops().get(ps.first)->setParentStation(parentStation);
+                targetFeed.getStops().get(ps.first)->setParentStation(parentStation);
             }
         }
     }
@@ -455,7 +454,7 @@ namespace cppgtfs
 
     // ____________________________________________________________________________
     FEEDTPL
-    void Reader::parseRoutes(FEEDB* targetFeed, std::istream* s) const
+    void Reader::parseRoutes(FEEDB& targetFeed, std::istream* s) const
     {
         CsvParser csvp(s);
 
@@ -466,7 +465,7 @@ namespace cppgtfs
             typename AgencyT::Ref routeAgency = 0;
 
             if (!fr.agency.empty()) {
-                routeAgency = targetFeed->getAgencies().get(fr.agency);
+                routeAgency = targetFeed.getAgencies().get(fr.agency);
                 if ((typename AgencyT::Ref()) == routeAgency) {
                     std::stringstream msg;
                     msg << "no agency with id '" << fr.agency << "' defined, cannot "
@@ -475,7 +474,7 @@ namespace cppgtfs
                 }
             }
 
-            if (!targetFeed->getRoutes().add(RouteT(fr.id, routeAgency, fr.short_name, fr.long_name, fr.desc, fr.type, fr.url, fr.color, fr.text_color))) {
+            if (!targetFeed.getRoutes().add(RouteT(fr.id, routeAgency, fr.short_name, fr.long_name, fr.desc, fr.type, fr.url, fr.color, fr.text_color))) {
                 std::stringstream msg;
                 msg << "'route_id' must be dataset unique. Collision with id '" << fr.id
                     << "')";
@@ -483,13 +482,13 @@ namespace cppgtfs
             }
         }
 
-        targetFeed->getRoutes().finalize();
+        targetFeed.getRoutes().finalize();
     }
 
 
     // ____________________________________________________________________________
     FEEDTPL
-    void Reader::parseCalendar(FEEDB* targetFeed, std::istream* s) const
+    void Reader::parseCalendar(FEEDB& targetFeed, std::istream* s) const
     {
         CsvParser csvp(s);
 
@@ -497,7 +496,7 @@ namespace cppgtfs
         auto flds = CalendarFields::fromCsvParser(csvp);
 
         while (nextCalendar(csvp, &fc, flds)) {
-            if ((typename ServiceT::Ref()) == targetFeed->getServices().add(ServiceT(fc.id, fc.serviceDays, fc.begin, fc.end))) {
+            if ((typename ServiceT::Ref()) == targetFeed.getServices().add(ServiceT(fc.id, fc.serviceDays, fc.begin, fc.end))) {
                 std::stringstream msg;
                 msg << "'service_id' must be unique in calendars.txt. Collision with id '"
                     << fc.id << "')";
@@ -509,7 +508,7 @@ namespace cppgtfs
 
     // ____________________________________________________________________________
     FEEDTPL
-    void Reader::parseCalendarDates(FEEDB* targetFeed, std::istream* s) const
+    void Reader::parseCalendarDates(FEEDB& targetFeed, std::istream* s) const
     {
         CsvParser csvp(s);
 
@@ -517,22 +516,22 @@ namespace cppgtfs
         auto flds = CalendarDateFields::fromCsvParser(csvp);
 
         while (nextCalendarDate(csvp, &fc, flds)) {
-            ServiceT* e = targetFeed->getServices().get(fc.id);
+            ServiceT* e = targetFeed.getServices().get(fc.id);
 
             if (!e) {
-                targetFeed->getServices().add(ServiceT(fc.id));
-                e = targetFeed->getServices().get(fc.id);
+                targetFeed.getServices().add(ServiceT(fc.id));
+                e = targetFeed.getServices().get(fc.id);
             }
 
             if (e) e->addException(fc.date, fc.type);
         }
 
-        targetFeed->getServices().finalize();
+        targetFeed.getServices().finalize();
     }
 
     // ____________________________________________________________________________
     FEEDTPL
-    void Reader::parseTrips(FEEDB* targetFeed, std::istream* s) const
+    void Reader::parseTrips(FEEDB& targetFeed, std::istream* s) const
     {
         CsvParser csvp(s);
 
@@ -542,7 +541,7 @@ namespace cppgtfs
         while (nextTrip(csvp, &ft, flds)) {
             RouteT* tripRoute = 0;
 
-            tripRoute = targetFeed->getRoutes().get(ft.route);
+            tripRoute = targetFeed.getRoutes().get(ft.route);
             if (!tripRoute) {
                 std::stringstream msg;
                 msg << "no route with id '" << ft.route << "' defined, cannot "
@@ -553,7 +552,7 @@ namespace cppgtfs
             typename ShapeT::Ref tripShape = (typename ShapeT::Ref());
 
             if (!ft.shape.empty()) {
-                tripShape = targetFeed->getShapes().getRef(ft.shape);
+                tripShape = targetFeed.getShapes().getRef(ft.shape);
                 if (tripShape == (typename ShapeT::Ref())) {
                     std::stringstream msg;
                     msg << "no shape with id '" << ft.shape << "' defined, cannot "
@@ -563,7 +562,7 @@ namespace cppgtfs
             }
 
             typename ServiceT::Ref tripService =
-                targetFeed->getServices().getRef(ft.service);
+                targetFeed.getServices().getRef(ft.service);
 
             if ((typename ServiceT::Ref()) == tripService) {
                 std::stringstream msg;
@@ -572,7 +571,7 @@ namespace cppgtfs
                 throw ParseException(msg.str(), "service_id", csvp.getCurLine());
             }
 
-            if (typename TripB<StopTimeT<StopT>, ServiceT, RouteT, ShapeT>::Ref() == targetFeed->getTrips().add(TripB<StopTimeT<StopT>, ServiceT, RouteT, ShapeT>(ft.id, tripRoute, tripService, ft.headsign, ft.short_name, ft.dir, ft.block_id, tripShape, ft.wc, ft.ba))) {
+            if (typename TripB<StopTimeT<StopT>, ServiceT, RouteT, ShapeT>::Ref() == targetFeed.getTrips().add(TripB<StopTimeT<StopT>, ServiceT, RouteT, ShapeT>(ft.id, tripRoute, tripService, ft.headsign, ft.short_name, ft.dir, ft.block_id, tripShape, ft.wc, ft.ba))) {
                 std::stringstream msg;
                 msg << "'trip_id' must be dataset unique. Collision with id '"
                     << _dataExtractor.getString(csvp, flds.tripIdFld) << "')";
@@ -580,13 +579,13 @@ namespace cppgtfs
             }
         }
 
-        targetFeed->getTrips().finalize();
+        targetFeed.getTrips().finalize();
     }
 
 
     // ____________________________________________________________________________
     FEEDTPL
-    void Reader::parseStops(FEEDB* targetFeed) const
+    void Reader::parseStops(FEEDB& targetFeed) const
     {
         std::ifstream fs;
         std::string curFile = _path + "/stops.txt";
@@ -609,7 +608,7 @@ namespace cppgtfs
 
     // ____________________________________________________________________________
     FEEDTPL
-    void Reader::parseRoutes(FEEDB* targetFeed) const
+    void Reader::parseRoutes(FEEDB& targetFeed) const
     {
         std::ifstream fs;
         std::string curFile = _path + "/routes.txt";
@@ -632,7 +631,7 @@ namespace cppgtfs
 
     // ____________________________________________________________________________
     FEEDTPL
-    void Reader::parseCalendar(FEEDB* targetFeed) const
+    void Reader::parseCalendar(FEEDB& targetFeed) const
     {
         std::ifstream fs;
         std::string curFile = _path + "/calendar.txt";
@@ -654,7 +653,7 @@ namespace cppgtfs
 
     // ____________________________________________________________________________
     FEEDTPL
-    void Reader::parseCalendarDates(FEEDB* targetFeed) const
+    void Reader::parseCalendarDates(FEEDB& targetFeed) const
     {
         std::ifstream fs;
         std::string curFile = _path + "/calendar_dates.txt";
@@ -676,7 +675,7 @@ namespace cppgtfs
 
     // ____________________________________________________________________________
     FEEDTPL
-    void Reader::parseFeedInfo(FEEDB* targetFeed) const
+    void Reader::parseFeedInfo(FEEDB& targetFeed) const
     {
         std::ifstream fs;
         std::string curFile = _path + "/feed_info.txt";
@@ -699,7 +698,7 @@ namespace cppgtfs
 
     // ____________________________________________________________________________
     FEEDTPL
-    void Reader::parseAgencies(FEEDB* targetFeed) const
+    void Reader::parseAgencies(FEEDB& targetFeed) const
     {
         std::ifstream fs;
         std::string curFile = _path + "/agency.txt";
@@ -722,7 +721,7 @@ namespace cppgtfs
 
     // ____________________________________________________________________________
     FEEDTPL
-    void Reader::parseShapes(FEEDB* targetFeed) const
+    void Reader::parseShapes(FEEDB& targetFeed) const
     {
         std::ifstream fs;
         std::string curFile = _path + "/shapes.txt";
@@ -744,7 +743,7 @@ namespace cppgtfs
 
     // ____________________________________________________________________________
     FEEDTPL
-    void Reader::parseTrips(FEEDB* targetFeed) const
+    void Reader::parseTrips(FEEDB& targetFeed) const
     {
         std::ifstream fs;
         std::string curFile = _path + "/trips.txt";
@@ -766,7 +765,7 @@ namespace cppgtfs
 
     // ____________________________________________________________________________
     FEEDTPL
-    void Reader::parseStopTimes(FEEDB* targetFeed) const
+    void Reader::parseStopTimes(FEEDB& targetFeed) const
     {
         std::ifstream fs;
         std::string curFile = _path + "/stop_times.txt";
@@ -789,7 +788,7 @@ namespace cppgtfs
 
     // ____________________________________________________________________________
     FEEDTPL
-    void Reader::parseFareRules(FEEDB* targetFeed) const
+    void Reader::parseFareRules(FEEDB& targetFeed) const
     {
         std::ifstream fs;
         std::string curFile = _path + "/fare_rules.txt";
@@ -811,7 +810,7 @@ namespace cppgtfs
 
     // ____________________________________________________________________________
     FEEDTPL
-    void Reader::parseFareAttributes(FEEDB* targetFeed) const
+    void Reader::parseFareAttributes(FEEDB& targetFeed) const
     {
         std::ifstream fs;
         std::string curFile = _path + "/fare_attributes.txt";
@@ -833,7 +832,7 @@ namespace cppgtfs
 
     // ____________________________________________________________________________
     FEEDTPL
-    void Reader::parseTransfers(FEEDB* targetFeed) const
+    void Reader::parseTransfers(FEEDB& targetFeed) const
     {
         std::ifstream fs;
         std::string curFile = _path + "/transfers.txt";
@@ -855,7 +854,7 @@ namespace cppgtfs
 
     // ____________________________________________________________________________
     FEEDTPL
-    void Reader::parseFrequencies(FEEDB* targetFeed) const
+    void Reader::parseFrequencies(FEEDB& targetFeed) const
     {
         std::ifstream fs;
         std::string curFile = _path + "/frequencies.txt";
@@ -877,7 +876,7 @@ namespace cppgtfs
 
     // ____________________________________________________________________________
     FEEDTPL
-    void Reader::parseShapes(FEEDB* targetFeed, std::istream* s) const
+    void Reader::parseShapes(FEEDB& targetFeed, std::istream* s) const
     {
         CsvParser csvp(s);
 
@@ -885,11 +884,11 @@ namespace cppgtfs
         auto flds = ShapeFields::fromCsvParser(csvp);
 
         while (nextShapePoint(csvp, &fp, flds)) {
-            auto shape = targetFeed->getShapes().get(fp.id);
-            targetFeed->updateBox(fp.lat, fp.lng);
+            auto shape = targetFeed.getShapes().get(fp.id);
+            targetFeed.updateBox(fp.lat, fp.lng);
 
             if (!shape) {
-                shape = targetFeed->getShapes().add(ShapeT(fp.id));
+                shape = targetFeed.getShapes().add(ShapeT(fp.id));
             }
 
             if (shape) {
@@ -902,12 +901,12 @@ namespace cppgtfs
             }
         }
 
-        targetFeed->getShapes().finalize();
+        targetFeed.getShapes().finalize();
     }
 
     // ____________________________________________________________________________
     FEEDTPL
-    void Reader::parseStopTimes(FEEDB* targetFeed, std::istream* s) const
+    void Reader::parseStopTimes(FEEDB& targetFeed, std::istream* s) const
     {
         CsvParser csvp(s);
 
@@ -918,8 +917,8 @@ namespace cppgtfs
             StopT* stop = 0;
             TripB<StopTimeT<StopT>, ServiceT, RouteT, ShapeT>* trip = 0;
 
-            stop = targetFeed->getStops().get(fst.s);
-            trip = targetFeed->getTrips().get(fst.trip);
+            stop = targetFeed.getStops().get(fst.s);
+            trip = targetFeed.getTrips().get(fst.trip);
 
             if (!stop) {
                 std::stringstream msg;

@@ -17,6 +17,8 @@ namespace cppgtfs::gtfs
     {
     public:
         ContContainer() = default;
+        ContContainer(ContContainer&) = delete;
+        ContContainer& operator=(ContContainer&) = delete;
 
         T* add(const T& ent);
 

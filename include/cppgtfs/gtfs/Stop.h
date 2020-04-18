@@ -69,8 +69,6 @@ namespace cppgtfs::gtfs
     public:
         using Ref = Stop*;
 
-        static std::string getId(Ref r) { return r->getId(); }
-
         using LOCATION_TYPE = StopFlat::LOCATION_TYPE;
         using WHEELCHAIR_BOARDING = StopFlat::WHEELCHAIR_BOARDING;
 

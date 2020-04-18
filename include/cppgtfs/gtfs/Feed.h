@@ -27,95 +27,199 @@
         typename RouteT,    \
         typename StopT,     \
         typename ServiceT,  \
-        template<typename>  \
-        class StopTimeT,    \
-        typename ShapeT,    \
-        template<typename>  \
-        class FareT,        \
-        template<typename>  \
-        class AContainerT,  \
-        template<typename>  \
-        class RContainerT,  \
-        template<typename>  \
-        class SContainerT,  \
-        template<typename>  \
-        class StContainerT, \
-        template<typename>  \
-        class TContainerT,  \
-        template<typename>  \
-        class ShContainerT, \
-        template<typename>  \
-        class FContainerT>
+        template<typename> class StopTimeT,    \
+        typename ShapeT, \
+        template<typename> class FareT,        \
+        template<typename> class ContainerT>
 #define FEEDB \
-    FeedBase<AgencyT, RouteT, StopT, ServiceT, StopTimeT, ShapeT, FareT, AContainerT, RContainerT, SContainerT, StContainerT, TContainerT, ShContainerT, FContainerT>
+    FeedBase<AgencyT, RouteT, StopT, ServiceT, StopTimeT, ShapeT, FareT, ContainerT>
 
 namespace cppgtfs::gtfs
 {
-    FEEDTPL
+    template<
+        typename AgencyT,
+        typename RouteT,
+        typename StopT,
+        typename ServiceT,
+        template<typename> class StopTimeT,
+        typename ShapeT,
+        template<typename> class FareT,
+        template<typename> class ContainerT
+    >
     class FeedBase
     {
-        using Agencies = AContainerT<AgencyT>;
-        using Stops = StContainerT<StopT>;
-        using Routes = RContainerT<RouteT>;
-        using Trips = TContainerT<TripB<StopTimeT<StopT>, ServiceT, RouteT, ShapeT>>;
-        using Shapes = ShContainerT<ShapeT>;
-        using Services = SContainerT<ServiceT>;
-        using Fares = FContainerT<FareT<RouteT>>;
+    public:
+        using Agencies = ContainerT<AgencyT>;
+        using Stops = ContainerT<StopT>;
+        using Routes = ContainerT<RouteT>;
+        using Trips = ContainerT<TripB<StopTimeT<StopT>, ServiceT, RouteT, ShapeT>>;
+        using Shapes = ContainerT<ShapeT>;
+        using Services = ContainerT<ServiceT>;
+        using Fares = ContainerT<FareT<RouteT>>;
         using Transfers = std::vector<Transfer>;
         using Zones = std::set<std::string>;
 
-    public:
         FeedBase() :
             _maxLat(std::numeric_limits<double>::lowest()),
             _maxLon(std::numeric_limits<double>::lowest()),
             _minLat(std::numeric_limits<double>::max()),
-            _minLon(std::numeric_limits<double>::max()) {}
+            _minLon(std::numeric_limits<double>::max())
+        {}
 
-        const Agencies& getAgencies() const;
-        Agencies& getAgencies();
+        const Agencies& getAgencies() const
+        {
+            return _agencies;
+        }
 
-        const Stops& getStops() const;
-        Stops& getStops();
+        Agencies& getAgencies()
+        {
+            return _agencies;
+        }
 
-        const Routes& getRoutes() const;
-        Routes& getRoutes();
+        const Stops& getStops() const
+        {
+            return _stops;
+        }
+        Stops& getStops()
+        {
+            return _stops;
+        }
 
-        const Trips& getTrips() const;
-        Trips& getTrips();
+        const Routes& getRoutes() const
+        {
+            return _routes;
+        }
+        Routes& getRoutes()
+        {
+            return _routes;
+        }
 
-        const Shapes& getShapes() const;
-        Shapes& getShapes();
-        const Services& getServices() const;
-        Services& getServices();
+        const Trips& getTrips() const
+        {
+            return _trips;
+        }
+        Trips& getTrips()
+        {
+            return _trips;
+        }
 
-        [[nodiscard]] const Transfers& getTransfers() const;
-        Transfers& getTransfers();
+        const Shapes& getShapes() const
+        {
+            return _shapes;
+        }
+        Shapes& getShapes()
+        {
+            return _shapes;
+        }
+        const Services& getServices() const
+        {
+            return _services;
+        }
+        Services& getServices()
+        {
+            return _services;
+        }
 
-        [[nodiscard]] const Zones& getZones() const;
-        Zones& getZones();
+        const Transfers& getTransfers() const
+        {
+            return _transfers;
+        }
+        Transfers& getTransfers()
+        {
+            return _transfers;
+        }
 
-        const Fares& getFares() const;
-        Fares& getFares();
+        [[nodiscard]] const Zones& getZones() const
+        {
+            return _zones;
+        }
+        Zones& getZones()
+        {
+            return _zones;
+        }
 
-        [[nodiscard]] const std::string& getPublisherName() const;
-        [[nodiscard]] const std::string& getPublisherUrl() const;
-        [[nodiscard]] const std::string& getLang() const;
-        [[nodiscard]] const std::string& getVersion() const;
-        [[nodiscard]] const ServiceDate& getStartDate() const;
-        [[nodiscard]] const ServiceDate& getEndDate() const;
+        const Fares& getFares() const
+        {
+            return _fares;
+        }
+        Fares& getFares()
+        {
+            return _fares;
+        }
 
-        void setPublisherName(const std::string& name);
-        void setPublisherUrl(const std::string& url);
-        void setLang(const std::string& lang);
-        void setVersion(const std::string& version);
-        void setStartDate(const ServiceDate& start);
-        void setEndDate(const ServiceDate& end);
+        [[nodiscard]] const std::string& getPublisherName() const
+        {
+            return _publisherName;
+        }
+        [[nodiscard]] const std::string& getPublisherUrl() const
+        {
+            return _publisherUrl;
+        }
+        [[nodiscard]] const std::string& getLang() const
+        {
+            return _lang;
+        }
+        [[nodiscard]] const std::string& getVersion() const
+        {
+            return _version;
+        }
+        [[nodiscard]] const ServiceDate& getStartDate() const
+        {
+            return _startDate;
+        }
+        [[nodiscard]] const ServiceDate& getEndDate() const
+        {
+            return _endDate;
+        }
 
-        void updateBox(double lat, double lon);
-        [[nodiscard]] double getMinLat() const;
-        [[nodiscard]] double getMinLon() const;
-        [[nodiscard]] double getMaxLat() const;
-        [[nodiscard]] double getMaxLon() const;
+        void setPublisherName(const std::string& name)
+        {
+            _publisherName = name;
+        }
+        void setPublisherUrl(const std::string& url)
+        {
+            _publisherUrl = url;
+        }
+        void setLang(const std::string& lang)
+        {
+            _lang = lang;
+        }
+        void setVersion(const std::string& version)
+        {
+            _version = version;
+        }
+        void setStartDate(const ServiceDate& start)
+        {
+            _startDate = start;
+        }
+        void setEndDate(const ServiceDate& end)
+        {
+            _endDate = end;
+        }
+
+        void updateBox(double lat, double lon)
+        {
+            if (lat > _maxLat) _maxLat = lat;
+            if (lon > _maxLon) _maxLon = lon;
+            if (lat < _minLat) _minLat = lat;
+            if (lon < _minLon) _minLon = lon;
+        }
+        [[nodiscard]] double getMinLat() const
+        {
+            return _minLat;
+        }
+        [[nodiscard]] double getMinLon() const
+        {
+            return _minLon;
+        }
+        [[nodiscard]] double getMaxLat() const
+        {
+            return _maxLat;
+        }
+        [[nodiscard]] double getMaxLon() const
+        {
+            return _maxLon;
+        }
 
         [[nodiscard]] const std::string& getPath() const { return _path; }
         void setPath(const std::string& p) { _path = p; }
@@ -137,10 +241,8 @@ namespace cppgtfs::gtfs
         ServiceDate _startDate, _endDate;
     };
 
-    using Feed = FeedBase<Agency, Route, Stop, Service, StopTime, Shape, Fare, Container, Container, Container, Container, Container, Container, Container>;
-    using ContFeed = FeedBase<Agency, Route, Stop, Service, StopTime, Shape, Fare, ContContainer, ContContainer, ContContainer, ContContainer, ContContainer, ContContainer, ContContainer>;
-
-#include "Feed.tpp"
+    using Feed = FeedBase<Agency, Route, Stop, Service, StopTime, Shape, Fare, Container>;
+    using ContFeed = FeedBase<Agency, Route, Stop, Service, StopTime, Shape, Fare, ContContainer>;
 
 }    // namespace cppgtfs::gtfs
 

@@ -48,8 +48,7 @@ namespace cppgtfs::gtfs
     {
         ShapePoint(float lat, float ln, float dist, uint32_t seq);
 
-        ShapePoint() :
-            lat(0), lng(0), travelDist(-1), seq(0) {}
+        ShapePoint();
 
         float lat{ 0.F };
         float lng{ 0.F };
@@ -71,8 +70,6 @@ namespace cppgtfs::gtfs
     {
     public:
         using Ref = Shape*;
-
-        static std::string getId(Ref r) { return r->getId(); }
 
         Shape() = default;
 

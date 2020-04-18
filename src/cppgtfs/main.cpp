@@ -1,20 +1,8 @@
-#include <catch2/catch.hpp>
 #include <cppgtfs/Reader.h>
-#include <config.h>
-using Catch::Matchers::EndsWith;
-using Catch::Matchers::StartsWith;
 
-TEST_CASE("Create reader and parse exemple files", "[Reader]")
+int main()
 {
-    cppgtfs::Reader reader(DATA_FOLDER "/incorrect");
-    cppgtfs::gtfs::Feed feed;
-
-    REQUIRE_THROWS(reader.parse(feed));
-}
-
-TEST_CASE("Create ok reader and parse exemple files", "[Reader]")
-{
-    cppgtfs::Reader reader(DATA_FOLDER "/correct");
+    cppgtfs::Reader reader("/home/vvesa/Projects/ot/cppgtfs/test/data" "/correct");
     cppgtfs::gtfs::Feed targetFeed;
 
     reader.parseFeedInfo(targetFeed);
@@ -30,10 +18,7 @@ TEST_CASE("Create ok reader and parse exemple files", "[Reader]")
     //reader.parseTransfers(targetFeed);
     reader.parseFareAttributes(targetFeed);
     reader.parseFareRules(targetFeed);
-    cppgtfs::gtfs::Feed::Agencies& x = targetFeed.getAgencies();
-    cppgtfs::gtfs::Feed::Routes& routes = targetFeed.getRoutes();
+//    cppgtfs::gtfs::Feed::Routes routes = targetFeed.getRoutes();
 
-
+    return 0;
 }
-
-

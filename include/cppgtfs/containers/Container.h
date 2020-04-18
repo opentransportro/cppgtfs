@@ -16,7 +16,8 @@ namespace cppgtfs::gtfs
     public:
         Container() = default;
         ~Container();
-
+        Container(Container&) = delete;
+        Container& operator=(Container&) = delete;
         /**
          * Adds a object of type T into the container and returns a reference to it
          * @param ent - entity to be inserted into container
@@ -51,6 +52,8 @@ namespace cppgtfs::gtfs
         for (auto i : _map) {
             delete i.second;
         }
+
+        _map.clear();
     }
 
     // ____________________________________________________________________________
@@ -58,7 +61,7 @@ namespace cppgtfs::gtfs
     T* Container<T>::add(const T& ent)
     {
         T* c = new T(ent);
-        if (_map.insert(std::pair<std::string, T*>(T::getId(c), c)).second) {
+        if (_map.insert(std::pair<std::string, T*>(c->getId(), c)).second) {
             return c;
         }
         return 0;

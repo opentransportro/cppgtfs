@@ -5,9 +5,10 @@
 #ifndef AD_CPPGTFS_GTFS_AGENCY_H_
 #define AD_CPPGTFS_GTFS_AGENCY_H_
 
+#include <csv/CsvParser.h>
 #include <string>
 #include <utility>
-#include <csv/CsvParser.h>
+#include <memory>
 
 namespace cppgtfs::gtfs
 {
@@ -42,9 +43,7 @@ namespace cppgtfs::gtfs
     class Agency
     {
     public:
-        using Ref = Agency*;
-
-        static std::string getId(Ref r) { return r->getId(); }
+        using Ref = Agency*; //std::shared_ptr<Agency>;
 
         Agency() = default;
 
