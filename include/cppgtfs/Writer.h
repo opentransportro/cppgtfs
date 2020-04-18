@@ -65,7 +65,7 @@ namespace cppgtfs
 
         bool writeFeedInfo(gtfs::Feed* f, std::ostream* os) const;
 
-        bool writeTransfer(const gtfs::TransferFlat& ag, CsvWriter* csvw) const;
+        bool writeTransfer(const gtfs::Transfer::Flat& ag, CsvWriter* csvw) const;
 
         bool writeTransfers(gtfs::Feed* f, std::ostream* os) const;
 

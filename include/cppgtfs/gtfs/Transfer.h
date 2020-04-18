@@ -12,36 +12,37 @@
 
 namespace cppgtfs::gtfs
 {
-    struct TransfersFields
-    {
-        fieldId fromStopIdFld;
-        fieldId toStopIdFld;
-        fieldId transferTypeFld;
-        fieldId minTransferTimeFld;
-
-        // ____________________________________________________________________________
-        static TransfersFields fromCsvParser(const csv::CsvParser& csvp);
-    };
-    struct TransferFlat
-    {
-        enum TYPE : uint8_t
-        {
-            RECOMMENDED = 0,
-            TIMED = 1,
-            MIN_TIME = 2,
-            NO_TRANSFER = 3
-        };
-
-        std::string fromStop;
-        std::string toStop;
-        TYPE type;
-        int32_t tTime;
-    };
-
     class Transfer
     {
     public:
-        using TYPE = gtfs::TransferFlat::TYPE;
+
+        struct Fields
+        {
+            fieldId fromStopIdFld;
+            fieldId toStopIdFld;
+            fieldId transferTypeFld;
+            fieldId minTransferTimeFld;
+
+            // ____________________________________________________________________________
+            static Fields fromCsvParser(const csv::CsvParser& csvp);
+        };
+        struct Flat
+        {
+            enum TYPE : uint8_t
+            {
+                RECOMMENDED = 0,
+                TIMED = 1,
+                MIN_TIME = 2,
+                NO_TRANSFER = 3
+            };
+
+            std::string fromStop;
+            std::string toStop;
+            TYPE type;
+            int32_t tTime;
+        };
+
+        using TYPE = gtfs::Transfer::Flat::TYPE;
 
         Transfer() = default;
 
@@ -55,7 +56,7 @@ namespace cppgtfs::gtfs
 
         [[nodiscard]] int32_t getMinTransferTime() const;
 
-        [[nodiscard]] gtfs::TransferFlat getFlat() const;
+        [[nodiscard]] gtfs::Transfer::Flat getFlat() const;
 
         void setFromStop(Stop* fromStop);
         void setToStop(Stop* toStop);

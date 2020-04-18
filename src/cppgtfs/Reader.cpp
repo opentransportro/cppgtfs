@@ -9,12 +9,12 @@
 
 namespace cppgtfs
 {
-    bool ReaderBase::nextTransfer(CsvParser& csvp, TransferFlat* t, const TransfersFields& flds) const
+    bool ReaderBase::nextTransfer(CsvParser& csvp, Transfer::Flat* t, const Transfer::Fields& flds) const
     {
         if (csvp.readNextLine()) {
             t->fromStop = _dataExtractor.getString(csvp, flds.fromStopIdFld);
             t->toStop = _dataExtractor.getString(csvp, flds.toStopIdFld);
-            t->type = static_cast<TransferFlat::TYPE>(_dataExtractor.getRangeInteger(csvp, flds.transferTypeFld, 0, 3, 0));
+            t->type = static_cast<Transfer::Flat::TYPE>(_dataExtractor.getRangeInteger(csvp, flds.transferTypeFld, 0, 3, 0));
             t->tTime = _dataExtractor.getRangeInteger(csvp, flds.minTransferTimeFld, 0, UINT32_MAX, -1);
             return true;
         }
@@ -293,8 +293,8 @@ namespace cppgtfs
     {
         CsvParser csvp(s);
 
-        TransferFlat ft;
-        auto flds = TransfersFields::fromCsvParser(csvp);
+        Transfer::Flat ft;
+        auto flds = Transfer::Fields::fromCsvParser(csvp);
 
         while (nextTransfer(csvp, &ft, flds)) {
             Stop* fromStop = targetFeed.getStops().get(ft.fromStop);

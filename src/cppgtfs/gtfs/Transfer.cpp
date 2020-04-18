@@ -2,9 +2,9 @@
 
 namespace cppgtfs::gtfs
 {
-    TransfersFields TransfersFields::fromCsvParser(const csv::CsvParser& csvp)
+    Transfer::Fields Transfer::Fields::fromCsvParser(const csv::CsvParser& csvp)
     {
-        cppgtfs::gtfs::TransfersFields t;
+        cppgtfs::gtfs::Transfer::Fields t;
         t.fromStopIdFld = csvp.getFieldIndex("from_stop_id");
         t.toStopIdFld = csvp.getFieldIndex("to_stop_id");
         t.transferTypeFld = csvp.getFieldIndex("transfer_type");
@@ -17,9 +17,9 @@ namespace cppgtfs::gtfs
     Stop* Transfer::getToStop() const { return _toStop; }
     Transfer::TYPE Transfer::getType() const { return _type; }
     int32_t Transfer::getMinTransferTime() const { return _tTime; }
-    gtfs::TransferFlat Transfer::getFlat() const
+    gtfs::Transfer::Flat Transfer::getFlat() const
     {
-        return gtfs::TransferFlat{ getFromStop()->getId(), getToStop()->getId(), getType(), getMinTransferTime() };
+        return gtfs::Transfer::Flat{ getFromStop()->getId(), getToStop()->getId(), getType(), getMinTransferTime() };
     }
     void Transfer::setFromStop(Stop* fromStop)
     {

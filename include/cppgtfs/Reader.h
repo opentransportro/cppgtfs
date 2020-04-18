@@ -50,7 +50,7 @@ namespace cppgtfs
         bool nextStopTime(CsvParser& csvp, StopTime::Flat* s, const StopTime::Fields& flds) const;
 
         // ____________________________________________________________________________
-        bool nextTransfer(CsvParser& csvp, TransferFlat* t, const TransfersFields& flds) const;
+        bool nextTransfer(CsvParser& csvp, Transfer::Flat* t, const Transfer::Fields& flds) const;
 
         // ____________________________________________________________________________
         bool nextFrequency(CsvParser& csvp, Frequency::Flat* r, const Frequency::Fields& flds) const;

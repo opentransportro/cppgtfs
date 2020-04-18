@@ -398,7 +398,7 @@ CsvWriter Writer::getTransfersCsvw(std::ostream* os)
 }
 
 // ____________________________________________________________________________
-bool Writer::writeTransfer(const gtfs::TransferFlat& t,
+bool Writer::writeTransfer(const gtfs::Transfer::Flat& t,
     CsvWriter* csvw) const
 {
     csvw->writeString(t.fromStop);
