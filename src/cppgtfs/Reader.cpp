@@ -163,7 +163,7 @@ namespace cppgtfs
         }
         return false;
     }
-    bool ReaderBase::nextShapePoint(CsvParser& csvp, ShapePointFlat* c, const ShapeFields& flds) const
+    bool ReaderBase::nextShapePoint(CsvParser& csvp, ShapePoint::Flat* c, const Shape::Fields& flds) const
     {
         if (csvp.readNextLine()) {
             c->id = _dataExtractor.getString(csvp, flds.shapeIdFld);

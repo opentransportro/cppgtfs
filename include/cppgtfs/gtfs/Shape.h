@@ -15,37 +15,17 @@
 namespace cppgtfs::gtfs
 {
     using fieldId = csv::fieldId;
-    struct ShapeFields
-    {
-        fieldId shapeIdFld;
-        fieldId shapePtSequenceFld;
-        fieldId shapePtLonFld;
-        fieldId shapePtLatFld;
-        fieldId shapeDistTraveledFld;
-
-        // ____________________________________________________________________________
-        static ShapeFields fromCsvParser(const csv::CsvParser& csvp)
-        {
-            ShapeFields s;
-            s.shapeIdFld = csvp.getFieldIndex("shape_id");
-            s.shapePtSequenceFld = csvp.getFieldIndex("shape_pt_sequence");
-            s.shapePtLonFld = csvp.getFieldIndex("shape_pt_lon");
-            s.shapePtLatFld = csvp.getFieldIndex("shape_pt_lat");
-            s.shapeDistTraveledFld = csvp.getOptFieldIndex("shape_dist_traveled");
-            return s;
-        }
-    };
-
-    struct ShapePointFlat
-    {
-        std::string id;
-        double lat, lng;
-        double travelDist;
-        uint32_t seq;
-    };
 
     struct ShapePoint
     {
+        struct Flat
+        {
+            std::string id;
+            double lat, lng;
+            double travelDist;
+            uint32_t seq;
+        };
+
         ShapePoint(float lat, float ln, float dist, uint32_t seq);
 
         ShapePoint();
@@ -69,6 +49,27 @@ namespace cppgtfs::gtfs
     class Shape
     {
     public:
+        struct Fields
+        {
+            fieldId shapeIdFld;
+            fieldId shapePtSequenceFld;
+            fieldId shapePtLonFld;
+            fieldId shapePtLatFld;
+            fieldId shapeDistTraveledFld;
+
+            // ____________________________________________________________________________
+            static Fields fromCsvParser(const csv::CsvParser& csvp)
+            {
+                Fields s;
+                s.shapeIdFld = csvp.getFieldIndex("shape_id");
+                s.shapePtSequenceFld = csvp.getFieldIndex("shape_pt_sequence");
+                s.shapePtLonFld = csvp.getFieldIndex("shape_pt_lon");
+                s.shapePtLatFld = csvp.getFieldIndex("shape_pt_lat");
+                s.shapeDistTraveledFld = csvp.getOptFieldIndex("shape_dist_traveled");
+                return s;
+            }
+        };
+
         using Ref = Shape*;
 
         Shape() = default;

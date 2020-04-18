@@ -294,7 +294,7 @@ CsvWriter Writer::getShapesCsvw(std::ostream* os)
 }
 
 // ____________________________________________________________________________
-bool Writer::writeShapePoint(const gtfs::ShapePointFlat& s,
+bool Writer::writeShapePoint(const gtfs::ShapePoint::Flat& s,
     CsvWriter* csvw) const
 {
     csvw->writeString(s.id);
@@ -316,7 +316,7 @@ bool Writer::writeShapes(gtfs::Feed* sourceFeed, std::ostream* s) const
     csvw.flushLine();
     for (const auto& t : sourceFeed->getShapes()) {
         for (const auto& p : t.second->getPoints()) {
-            writeShapePoint(gtfs::ShapePointFlat{ t.second->getId(), p.lat, p.lng, p.travelDist, p.seq },
+            writeShapePoint(gtfs::ShapePoint::Flat{ t.second->getId(), p.lat, p.lng, p.travelDist, p.seq },
                 &csvw);
         }
     }

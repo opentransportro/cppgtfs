@@ -47,7 +47,7 @@ namespace cppgtfs
 
         bool writeStops(gtfs::Feed* f, std::ostream* os) const;
 
-        bool writeShapePoint(const gtfs::ShapePointFlat& ag, CsvWriter* csvw) const;
+        bool writeShapePoint(const gtfs::ShapePoint::Flat& ag, CsvWriter* csvw) const;
 
         bool writeShapes(gtfs::Feed* f, std::ostream* os) const;
 

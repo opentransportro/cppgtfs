@@ -44,7 +44,7 @@ namespace cppgtfs
         ReaderBase(bool strict);
 
         // ____________________________________________________________________________
-        bool nextShapePoint(CsvParser& csvp, ShapePointFlat* c, const ShapeFields& flds) const;
+        bool nextShapePoint(CsvParser& csvp, ShapePoint::Flat* c, const Shape::Fields& flds) const;
 
         // ____________________________________________________________________________
         bool nextStopTime(CsvParser& csvp, StopTime::Flat* s, const StopTime::Fields& flds) const;
@@ -881,8 +881,8 @@ namespace cppgtfs
     {
         CsvParser csvp(s);
 
-        ShapePointFlat fp;
-        auto flds = ShapeFields::fromCsvParser(csvp);
+        ShapePoint::Flat fp;
+        auto flds = Shape::Fields::fromCsvParser(csvp);
 
         while (nextShapePoint(csvp, &fp, flds)) {
             auto shape = targetFeed.getShapes().get(fp.id);
