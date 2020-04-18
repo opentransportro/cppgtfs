@@ -72,19 +72,18 @@ namespace cppgtfs::gtfs
     };
 
 
-    template<typename RouteT>
     class FareRule
     {
     public:
         FareRule() = default;
 
-        FareRule(typename RouteT::Ref route, std::string originId, std::string destId, std::string containsId) :
+        FareRule(Route::Ref route, std::string originId, std::string destId, std::string containsId) :
             _route(route),
             _originId(std::move(originId)),
             _destId(std::move(destId)),
             _containsId(std::move(containsId)) {}
 
-        typename RouteT::Ref getRoute() const { return _route; }
+        Route::Ref getRoute() const { return _route; }
 
         [[nodiscard]] const std::string& getOriginId() const { return _originId; }
 
@@ -94,18 +93,17 @@ namespace cppgtfs::gtfs
 
 
     private:
-        typename RouteT::Ref _route;
+        Route::Ref _route;
         std::string _originId;
         std::string _destId;
         std::string _containsId;
     };
 
 
-    template<typename RouteT>
     class Fare
     {
     public:
-        using Ref = Fare<RouteT>*;
+        using Ref = Fare*;
 
         using PAYMENT_METHOD = FareFlat::PAYMENT_METHOD;
         using NUM_TRANSFERS = FareFlat::NUM_TRANSFERS;
@@ -137,12 +135,12 @@ namespace cppgtfs::gtfs
 
         [[nodiscard]] int64_t getDuration() const { return _duration; }
 
-        const std::vector<FareRule<RouteT>>& getFareRules() const
+        const std::vector<FareRule>& getFareRules() const
         {
             return _fareRules;
         }
 
-        void addFareRule(const FareRule<RouteT>& rule) { _fareRules.push_back(rule); }
+        void addFareRule(const FareRule& rule) { _fareRules.push_back(rule); }
 
         [[nodiscard]] FareFlat getFlat() const
         {
@@ -187,7 +185,7 @@ namespace cppgtfs::gtfs
         Agency* _agency{ nullptr };
         int64_t _duration{ 0 };
 
-        std::vector<FareRule<RouteT>> _fareRules;
+        std::vector<FareRule> _fareRules;
     };
 
 }    // namespace cppgtfs::gtfs

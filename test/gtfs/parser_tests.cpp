@@ -30,9 +30,6 @@ TEST_CASE("Create ok reader and parse exemple files", "[Reader]")
     //reader.parseTransfers(targetFeed);
     reader.parseFareAttributes(targetFeed);
     reader.parseFareRules(targetFeed);
-    cppgtfs::gtfs::Feed::Agencies& x = targetFeed.getAgencies();
-    cppgtfs::gtfs::Feed::Routes& routes = targetFeed.getRoutes();
-
 
 }
 

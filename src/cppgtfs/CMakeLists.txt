@@ -20,7 +20,7 @@ add_library(cppgtfs
         gtfs/StopTime.cpp
         gtfs/Transfer.cpp
         gtfs/Feed.cpp
-        gtfs/Frequency.cpp gtfs/Route.cpp main.cpp)
+        gtfs/Frequency.cpp gtfs/Route.cpp main.cpp gtfs/Trip.cpp)
 
 target_include_directories(cppgtfs PUBLIC ${CPPGTFS_INCLUDE_DIR})
 target_link_libraries(cppgtfs csvparser project_options project_warnings)

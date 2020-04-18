@@ -57,13 +57,12 @@ namespace cppgtfs::gtfs
         double shapeDistTravelled;
     };
 
-    template<typename StopT>
     class StopTime
     {
     public:
         using PU_DO_TYPE = gtfs::StopTimeFlat::PU_DO_TYPE;
 
-        StopTime(const Time& at, const Time& dt, typename StopT::Ref s, uint32_t seq, const std::string& hs, PU_DO_TYPE put, PU_DO_TYPE dot, float distTrav, bool isTp) :
+        StopTime(const Time& at, const Time& dt, Stop::Ref s, uint32_t seq, const std::string& hs, PU_DO_TYPE put, PU_DO_TYPE dot, float distTrav, bool isTp) :
             _at(at),
             _dt(dt),
             _s(s),
@@ -78,9 +77,9 @@ namespace cppgtfs::gtfs
 
         const Time& getDepartureTime() const { return _dt; }
 
-        const typename StopT::Ref getStop() const { return _s; }
+        Stop::Ref getStop() const { return _s; }
 
-        typename StopT::Ref getStop() { return _s; }
+        Stop::Ref getStop() { return _s; }
 
         const std::string& getHeadsign() const { return _headsign; }
 
@@ -106,7 +105,7 @@ namespace cppgtfs::gtfs
         Time _at;
         Time _dt;
 
-        typename StopT::Ref _s;
+        Stop::Ref _s;
         uint32_t _sequence;
         std::string _headsign;
         uint8_t _pickupType : 2;
@@ -115,10 +114,9 @@ namespace cppgtfs::gtfs
         float _shapeDistTravelled;
     };
 
-    template<typename StopTimeT>
     struct StopTimeCompare
     {
-        bool operator()(const StopTimeT& lh, const StopTimeT& rh) const
+        bool operator()(const StopTime& lh, const StopTime& rh) const
         {
             return lh.getSeq() < rh.getSeq();
         }

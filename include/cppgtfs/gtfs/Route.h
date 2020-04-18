@@ -72,13 +72,14 @@ namespace cppgtfs::gtfs
         static std::set<RouteFlat::TYPE> getTypesFromString(std::string name);
     };
 
-
-    class RouteBase
+    class Route
     {
     public:
-        RouteBase() = default;
+        using Ref = Route*;
 
-        explicit RouteBase(std::string id, std::string short_name, std::string long_name, std::string desc, typename RouteFlat::TYPE type, std::string url, uint32_t color, uint32_t text_color) :
+        Route() = default;
+
+        explicit Route(std::string id, Agency::Ref agency, std::string short_name, std::string long_name, std::string desc, typename RouteFlat::TYPE type, std::string url, uint32_t color, uint32_t text_color) :
             _id(std::move(id)),
             _short_name(std::move(short_name)),
             _long_name(std::move(long_name)),
@@ -86,11 +87,13 @@ namespace cppgtfs::gtfs
             _type(type),
             _url(std::move(url)),
             _color(color),
-            _text_color(text_color)
+            _text_color(text_color),
+            _agency(agency)
         {
+
         }
 
-        virtual ~RouteBase()
+        virtual ~Route()
         {
 
         }
@@ -121,19 +124,6 @@ namespace cppgtfs::gtfs
             return RouteFlat::getHexColorString(_text_color);
         }
 
-        virtual RouteFlat getFlat() const
-        {
-            RouteFlat r;
-            r.id = _id;
-            r.short_name = _short_name;
-            r.long_name = _long_name;
-            r.desc = _desc;
-            r.type = _type;
-            r.url = _url;
-            r.color = _color;
-            r.text_color = _text_color;
-            return r;
-        }
 
         void setId(const std::string& id)
         {
@@ -167,6 +157,24 @@ namespace cppgtfs::gtfs
         {
             _text_color = textColor;
         }
+        Agency::Ref getAgency() const { return _agency; }
+
+        Agency::Ref getAgency() { return _agency; }
+
+        RouteFlat getFlat() const
+        {
+            RouteFlat r;
+            r.id = _id;
+            r.short_name = _short_name;
+            r.long_name = _long_name;
+            r.desc = _desc;
+            r.type = _type;
+            r.url = _url;
+            r.color = _color;
+            r.text_color = _text_color;
+            r.agency = _agency->getId();
+            return r;
+        }
 
     private:
         std::string _id{};
@@ -177,45 +185,8 @@ namespace cppgtfs::gtfs
         std::string _url{};
         uint32_t _color{};
         uint32_t _text_color{};
+        Agency::Ref _agency{ nullptr };
     };
-
-    template<typename AgencyT>
-    class RouteB: public RouteBase
-    {
-    public:
-        using Ref = RouteB<AgencyT>*;
-
-        RouteB() = default;
-
-        explicit RouteB(std::string id, typename AgencyT::Ref agency, std::string short_name, std::string long_name, std::string desc, typename RouteFlat::TYPE type, std::string url, uint32_t color, uint32_t text_color) :
-            RouteBase(id, short_name, long_name, desc, type, url, color, text_color),
-            _agency(agency)
-        {
-
-        }
-
-        virtual ~RouteB()
-        {
-
-        }
-
-        const typename AgencyT::Ref getAgency() const { return _agency; }
-
-        typename AgencyT::Ref getAgency() { return _agency; }
-
-        RouteFlat getFlat() const override
-        {
-            RouteFlat r = RouteBase::getFlat();
-            r.agency = _agency->getId();
-            return r;
-        }
-
-    private:
-        typename AgencyT::Ref _agency{ nullptr };
-    };
-
-    using Route = RouteB<Agency>;
-
 }    // namespace cppgtfs::gtfs
 
 #endif    // AD_CPPGTFS_GTFS_ROUTE_H_

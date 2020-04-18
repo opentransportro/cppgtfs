@@ -61,7 +61,22 @@ namespace cppgtfs::gtfs
             return gtfs::TransferFlat{ getFromStop()->getId(), getToStop()->getId(), getType(), getMinTransferTime() };
         }
 
-        // TODO(patrick): implement setters
+        void setFromStop(Stop* fromStop)
+        {
+            _fromStop = fromStop;
+        }
+        void setToStop(Stop* toStop)
+        {
+            _toStop = toStop;
+        }
+        void setType(TYPE type)
+        {
+            _type = type;
+        }
+        void setTTime(int32_t tTime)
+        {
+            _tTime = tTime;
+        }
 
     private:
         Stop* _fromStop;

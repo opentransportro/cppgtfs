@@ -10,9 +10,11 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
-#include "Agency.h"
+
 #include "cppgtfs/containers/ContContainer.h"
 #include "cppgtfs/containers/Container.h"
+
+#include "Agency.h"
 #include "Fare.h"
 #include "Route.h"
 #include "Service.h"
@@ -22,40 +24,25 @@
 #include "Trip.h"
 
 #define FEEDTPL             \
-    template<               \
-        typename AgencyT,   \
-        typename RouteT,    \
-        typename StopT,     \
-        typename ServiceT,  \
-        template<typename> class StopTimeT,    \
-        typename ShapeT, \
-        template<typename> class FareT,        \
-        template<typename> class ContainerT>
+    template<template<typename> class ContainerT>
 #define FEEDB \
-    FeedBase<AgencyT, RouteT, StopT, ServiceT, StopTimeT, ShapeT, FareT, ContainerT>
+    FeedBase<ContainerT>
 
 namespace cppgtfs::gtfs
 {
     template<
-        typename AgencyT,
-        typename RouteT,
-        typename StopT,
-        typename ServiceT,
-        template<typename> class StopTimeT,
-        typename ShapeT,
-        template<typename> class FareT,
         template<typename> class ContainerT
     >
     class FeedBase
     {
     public:
-        using Agencies = ContainerT<AgencyT>;
-        using Stops = ContainerT<StopT>;
-        using Routes = ContainerT<RouteT>;
-        using Trips = ContainerT<TripB<StopTimeT<StopT>, ServiceT, RouteT, ShapeT>>;
-        using Shapes = ContainerT<ShapeT>;
-        using Services = ContainerT<ServiceT>;
-        using Fares = ContainerT<FareT<RouteT>>;
+        using Agencies = ContainerT<Agency>;
+        using Stops = ContainerT<Stop>;
+        using Routes = ContainerT<Route>;
+        using Trips = ContainerT<Trip>;
+        using Shapes = ContainerT<Shape>;
+        using Services = ContainerT<Service>;
+        using Fares = ContainerT<Fare>;
         using Transfers = std::vector<Transfer>;
         using Zones = std::set<std::string>;
 
@@ -241,8 +228,8 @@ namespace cppgtfs::gtfs
         ServiceDate _startDate, _endDate;
     };
 
-    using Feed = FeedBase<Agency, Route, Stop, Service, StopTime, Shape, Fare, Container>;
-    using ContFeed = FeedBase<Agency, Route, Stop, Service, StopTime, Shape, Fare, ContContainer>;
+    using Feed = FeedBase<Container>;
+    using ContFeed = FeedBase<ContContainer>;
 
 }    // namespace cppgtfs::gtfs
 

@@ -215,8 +215,8 @@ namespace cppgtfs
         auto flds = TransfersFields::fromCsvParser(csvp);
 
         while (nextTransfer(csvp, &ft, flds)) {
-            StopT* fromStop = targetFeed.getStops().get(ft.fromStop);
-            StopT* toStop = targetFeed.getStops().get(ft.toStop);
+            Stop* fromStop = targetFeed.getStops().get(ft.fromStop);
+            Stop* toStop = targetFeed.getStops().get(ft.toStop);
 
             if (!fromStop) {
                 std::stringstream msg;
@@ -272,7 +272,7 @@ namespace cppgtfs
         auto flds = FareFields::fromCsvParser(csvp);
 
         while (nextFare(csvp, &ff, flds)) {
-            typename AgencyT::Ref agency = typename AgencyT::Ref();
+            Agency::Ref agency = Agency::Ref();
 
             if (!ff.agency.empty()) {
                 agency = targetFeed.getAgencies().get(ff.agency);
@@ -283,7 +283,7 @@ namespace cppgtfs
                     throw ParseException(msg.str(), "agency_id", csvp.getCurLine());
                 }
             }
-            targetFeed.getFares().add(Fare<RouteT>(ff.id, ff.price, ff.currencyType, ff.paymentMethod, ff.numTransfers, agency, ff.duration));
+            targetFeed.getFares().add(Fare(ff.id, ff.price, ff.currencyType, ff.paymentMethod, ff.numTransfers, agency, ff.duration));
         }
     }
 
@@ -297,8 +297,8 @@ namespace cppgtfs
         auto flds = FareRuleFields::fromCsvParser(csvp);
 
         while (nextFareRule(csvp, &fr, flds)) {
-            FareT<RouteT>* fare = targetFeed.getFares().get(fr.fare);
-            RouteT* route = targetFeed.getRoutes().get(fr.route);
+            Fare* fare = targetFeed.getFares().get(fr.fare);
+            Route* route = targetFeed.getRoutes().get(fr.route);
 
             if (!fare) {
                 std::stringstream msg;
@@ -338,7 +338,7 @@ namespace cppgtfs
                 throw ParseException(msg.str(), "contains_id", csvp.getCurLine());
             }
 
-            FareRule<RouteT> r(route, fr.originZone, fr.destZone, fr.containsZone);
+            FareRule r(route, fr.originZone, fr.destZone, fr.containsZone);
             fare->addFareRule(r);
         }
 
@@ -374,19 +374,19 @@ namespace cppgtfs
     void Reader::parseAgencies(FEEDB& targetFeed, std::istream* s) const
     {
         CsvParser csvp(s);
-        typename AgencyT::Ref a = (typename AgencyT::Ref());
+        Agency::Ref a = (Agency::Ref());
         AgencyFlat fa;
         auto flds = AgencyFields::fromCsvParser(csvp);
 
         while (nextAgency(csvp, &fa, flds)) {
-            if ((typename AgencyT::Ref()) == (a = targetFeed.getAgencies().add(Agency(fa.id, fa.name, fa.url, fa.timezone, fa.lang, fa.phone, fa.fare_url, fa.agency_email)))) {
+            if ((Agency::Ref()) == (a = targetFeed.getAgencies().add(Agency(fa.id, fa.name, fa.url, fa.timezone, fa.lang, fa.phone, fa.fare_url, fa.agency_email)))) {
                 std::stringstream msg;
                 msg << "'agency_id' must be dataset unique. Collision with id '" << a->getId() << "')";
                 throw ParseException(msg.str(), "agency_id", csvp.getCurLine());
             }
         }
 
-        if ((typename AgencyT::Ref()) == a) {
+        if ((Agency::Ref()) == a) {
             throw ParseException("the feed has no agency defined. This is a required field.", "", 1);
         }
 
@@ -408,8 +408,8 @@ namespace cppgtfs
         while (nextStop(csvp, &fs, flds)) {
             targetFeed.updateBox(fs.lat, fs.lng);
 
-            const StopT& stop =
-                StopT(fs.id, fs.code, fs.name, fs.desc, fs.lat, fs.lng, fs.zone_id, fs.stop_url, fs.location_type, 0, fs.stop_timezone, fs.wheelchair_boarding, fs.platform_code);
+            const Stop& stop =
+                Stop(fs.id, fs.code, fs.name, fs.desc, fs.lat, fs.lng, fs.zone_id, fs.stop_url, fs.location_type, 0, fs.stop_timezone, fs.wheelchair_boarding, fs.platform_code);
 
             if (!fs.parent_station.empty()) {
                 if (fs.location_type == StopFlat::LOCATION_TYPE::STATION) {
@@ -438,7 +438,7 @@ namespace cppgtfs
 
         // second pass to resolve parentStation pointers
         for (const auto& ps : parentStations) {
-            StopT* parentStation = 0;
+            Stop* parentStation = 0;
             parentStation = targetFeed.getStops().get(ps.second.second);
             if (!parentStation) {
                 std::stringstream msg;
@@ -462,11 +462,11 @@ namespace cppgtfs
         auto flds = RouteFields::fromCsvParser(csvp);
 
         while (nextRoute(csvp, &fr, flds)) {
-            typename AgencyT::Ref routeAgency = 0;
+            Agency::Ref routeAgency = 0;
 
             if (!fr.agency.empty()) {
                 routeAgency = targetFeed.getAgencies().get(fr.agency);
-                if ((typename AgencyT::Ref()) == routeAgency) {
+                if ((typename Agency::Ref()) == routeAgency) {
                     std::stringstream msg;
                     msg << "no agency with id '" << fr.agency << "' defined, cannot "
                         << "reference here.";
@@ -474,7 +474,7 @@ namespace cppgtfs
                 }
             }
 
-            if (!targetFeed.getRoutes().add(RouteT(fr.id, routeAgency, fr.short_name, fr.long_name, fr.desc, fr.type, fr.url, fr.color, fr.text_color))) {
+            if (!targetFeed.getRoutes().add(Route(fr.id, routeAgency, fr.short_name, fr.long_name, fr.desc, fr.type, fr.url, fr.color, fr.text_color))) {
                 std::stringstream msg;
                 msg << "'route_id' must be dataset unique. Collision with id '" << fr.id
                     << "')";
@@ -496,7 +496,7 @@ namespace cppgtfs
         auto flds = CalendarFields::fromCsvParser(csvp);
 
         while (nextCalendar(csvp, &fc, flds)) {
-            if ((typename ServiceT::Ref()) == targetFeed.getServices().add(ServiceT(fc.id, fc.serviceDays, fc.begin, fc.end))) {
+            if ((typename Service::Ref()) == targetFeed.getServices().add(Service(fc.id, fc.serviceDays, fc.begin, fc.end))) {
                 std::stringstream msg;
                 msg << "'service_id' must be unique in calendars.txt. Collision with id '"
                     << fc.id << "')";
@@ -516,10 +516,10 @@ namespace cppgtfs
         auto flds = CalendarDateFields::fromCsvParser(csvp);
 
         while (nextCalendarDate(csvp, &fc, flds)) {
-            ServiceT* e = targetFeed.getServices().get(fc.id);
+            Service* e = targetFeed.getServices().get(fc.id);
 
             if (!e) {
-                targetFeed.getServices().add(ServiceT(fc.id));
+                targetFeed.getServices().add(Service(fc.id));
                 e = targetFeed.getServices().get(fc.id);
             }
 
@@ -539,7 +539,7 @@ namespace cppgtfs
         auto flds = TripFields::fromCsvParser(csvp);
 
         while (nextTrip(csvp, &ft, flds)) {
-            RouteT* tripRoute = 0;
+            Route* tripRoute = 0;
 
             tripRoute = targetFeed.getRoutes().get(ft.route);
             if (!tripRoute) {
@@ -549,11 +549,11 @@ namespace cppgtfs
                 throw ParseException(msg.str(), "route_id", csvp.getCurLine());
             }
 
-            typename ShapeT::Ref tripShape = (typename ShapeT::Ref());
+            typename Shape::Ref tripShape = (typename Shape::Ref());
 
             if (!ft.shape.empty()) {
                 tripShape = targetFeed.getShapes().getRef(ft.shape);
-                if (tripShape == (typename ShapeT::Ref())) {
+                if (tripShape == (typename Shape::Ref())) {
                     std::stringstream msg;
                     msg << "no shape with id '" << ft.shape << "' defined, cannot "
                         << "reference here.";
@@ -561,17 +561,17 @@ namespace cppgtfs
                 }
             }
 
-            typename ServiceT::Ref tripService =
+            typename Service::Ref tripService =
                 targetFeed.getServices().getRef(ft.service);
 
-            if ((typename ServiceT::Ref()) == tripService) {
+            if ((typename Service::Ref()) == tripService) {
                 std::stringstream msg;
                 msg << "no service with id '" << ft.service << "' defined, cannot "
                     << "reference here.";
                 throw ParseException(msg.str(), "service_id", csvp.getCurLine());
             }
 
-            if (typename TripB<StopTimeT<StopT>, ServiceT, RouteT, ShapeT>::Ref() == targetFeed.getTrips().add(TripB<StopTimeT<StopT>, ServiceT, RouteT, ShapeT>(ft.id, tripRoute, tripService, ft.headsign, ft.short_name, ft.dir, ft.block_id, tripShape, ft.wc, ft.ba))) {
+            if (typename Trip::Ref() == targetFeed.getTrips().add(Trip(ft.id, tripRoute, tripService, ft.headsign, ft.short_name, ft.dir, ft.block_id, tripShape, ft.wc, ft.ba))) {
                 std::stringstream msg;
                 msg << "'trip_id' must be dataset unique. Collision with id '"
                     << _dataExtractor.getString(csvp, flds.tripIdFld) << "')";
@@ -888,7 +888,7 @@ namespace cppgtfs
             targetFeed.updateBox(fp.lat, fp.lng);
 
             if (!shape) {
-                shape = targetFeed.getShapes().add(ShapeT(fp.id));
+                shape = targetFeed.getShapes().add(Shape(fp.id));
             }
 
             if (shape) {
@@ -914,8 +914,8 @@ namespace cppgtfs
         auto flds = StopTimeFields::fromCsvParser(csvp);
 
         while (nextStopTime(csvp, &fst, flds)) {
-            StopT* stop = 0;
-            TripB<StopTimeT<StopT>, ServiceT, RouteT, ShapeT>* trip = 0;
+            Stop* stop = 0;
+            Trip* trip = 0;
 
             stop = targetFeed.getStops().get(fst.s);
             trip = targetFeed.getTrips().get(fst.trip);
@@ -935,7 +935,7 @@ namespace cppgtfs
                 throw ParseException(msg.str(), "trip_id", csvp.getCurLine());
             }
 
-            StopTimeT<StopT> st(fst.at, fst.dt, stop, fst.sequence, fst.headsign, fst.pickupType, fst.dropOffType, fst.shapeDistTravelled, fst.isTimepoint);
+            StopTime st(fst.at, fst.dt, stop, fst.sequence, fst.headsign, fst.pickupType, fst.dropOffType, fst.shapeDistTravelled, fst.isTimepoint);
 
             if (st.getArrivalTime() > st.getDepartureTime()) {
                 throw ParseException("arrival time '" + st.getArrivalTime().toString() + "' is later than departure time '" + st.getDepartureTime().toString() + "'. You cannot depart earlier than you arrive.",
