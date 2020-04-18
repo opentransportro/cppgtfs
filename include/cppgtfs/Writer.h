@@ -81,11 +81,11 @@ namespace cppgtfs
 
         bool writeFrequencies(gtfs::Feed* f, std::ostream* os) const;
 
-        bool writeFare(const gtfs::FareFlat& ag, CsvWriter* csvw) const;
+        bool writeFare(const gtfs::Fare::Flat& ag, CsvWriter* csvw) const;
 
         bool writeFares(gtfs::Feed* f, std::ostream* os) const;
 
-        bool writeFareRule(const gtfs::FareRuleFlat& ag, CsvWriter* csvw) const;
+        bool writeFareRule(const gtfs::FareRule::Flat& ag, CsvWriter* csvw) const;
 
         bool writeFareRules(gtfs::Feed* f, std::ostream* os) const;
 

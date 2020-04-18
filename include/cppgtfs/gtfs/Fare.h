@@ -13,68 +13,30 @@
 
 namespace cppgtfs::gtfs
 {
-    struct FareRuleFields
-    {
-        fieldId fareIdFld;
-        fieldId routeIdFld;
-        fieldId originIdFld;
-        fieldId destinationIdFld;
-        fieldId containsIdFld;
-
-        static FareRuleFields fromCsvParser(const csv::CsvParser& csvp);
-    };
-
-    struct FareRuleFlat
-    {
-        std::string fare;
-        std::string route;
-        std::string originZone;
-        std::string destZone;
-        std::string containsZone;
-    };
-
-    struct FareFields
-    {
-        fieldId fareIdFld;
-        fieldId priceFld;
-        fieldId currencyTypeFld;
-        fieldId paymentMethodFld;
-        fieldId transfersFld;
-        fieldId agencyFld;
-        fieldId transferDurationFld;
-
-        static FareFields fromCsvParser(const csv::CsvParser& csvp);
-    };
-
-    struct FareFlat
-    {
-        enum PAYMENT_METHOD : bool
-        {
-            ON_BOARD = 0,
-            BEFORE_BOARDING = 1
-        };
-
-        enum NUM_TRANSFERS : uint8_t
-        {
-            NO_TRANSFERS = 0,
-            ONCE = 1,
-            TWICE = 2,
-            UNLIMITED = 3
-        };
-
-        std::string id;
-        double price;
-        std::string currencyType;
-        PAYMENT_METHOD paymentMethod;
-        NUM_TRANSFERS numTransfers;
-        std::string agency;
-        int64_t duration;
-    };
-
-
     class FareRule
     {
     public:
+        struct Fields
+        {
+            fieldId fareIdFld;
+            fieldId routeIdFld;
+            fieldId originIdFld;
+            fieldId destinationIdFld;
+            fieldId containsIdFld;
+
+            static Fields fromCsvParser(const csv::CsvParser& csvp);
+        };
+
+        struct Flat
+        {
+            std::string fare;
+            std::string route;
+            std::string originZone;
+            std::string destZone;
+            std::string containsZone;
+        };
+
+
         FareRule() = default;
 
         FareRule(Route::Ref route, std::string originId, std::string destId, std::string containsId) :
@@ -103,10 +65,48 @@ namespace cppgtfs::gtfs
     class Fare
     {
     public:
+        struct Fields
+        {
+            fieldId fareIdFld;
+            fieldId priceFld;
+            fieldId currencyTypeFld;
+            fieldId paymentMethodFld;
+            fieldId transfersFld;
+            fieldId agencyFld;
+            fieldId transferDurationFld;
+
+            static Fields fromCsvParser(const csv::CsvParser& csvp);
+        };
+
+        struct Flat
+        {
+            enum PAYMENT_METHOD : bool
+            {
+                ON_BOARD = 0,
+                BEFORE_BOARDING = 1
+            };
+
+            enum NUM_TRANSFERS : uint8_t
+            {
+                NO_TRANSFERS = 0,
+                ONCE = 1,
+                TWICE = 2,
+                UNLIMITED = 3
+            };
+
+            std::string id;
+            double price;
+            std::string currencyType;
+            PAYMENT_METHOD paymentMethod;
+            NUM_TRANSFERS numTransfers;
+            std::string agency;
+            int64_t duration;
+        };
+
         using Ref = Fare*;
 
-        using PAYMENT_METHOD = FareFlat::PAYMENT_METHOD;
-        using NUM_TRANSFERS = FareFlat::NUM_TRANSFERS;
+        using PAYMENT_METHOD = Flat::PAYMENT_METHOD;
+        using NUM_TRANSFERS = Flat::NUM_TRANSFERS;
 
         static std::string getId(Ref r) { return r->getId(); }
 
@@ -142,7 +142,7 @@ namespace cppgtfs::gtfs
 
         void addFareRule(const FareRule& rule) { _fareRules.push_back(rule); }
 
-        [[nodiscard]] FareFlat getFlat() const
+        [[nodiscard]] Flat getFlat() const
         {
             return { _id, _price, _currencyType, _paymentMethod, _numTransfers, _agency != nullptr ? _agency->getId() : "", _duration };
         }

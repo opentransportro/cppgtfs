@@ -432,7 +432,7 @@ CsvWriter Writer::getFaresCsvw(std::ostream* os)
 }
 
 // ____________________________________________________________________________
-bool Writer::writeFare(const gtfs::FareFlat& t, CsvWriter* csvw) const
+bool Writer::writeFare(const gtfs::Fare::Flat& t, CsvWriter* csvw) const
 {
     csvw->writeString(t.id);
     csvw->writeDouble(t.price);
@@ -471,7 +471,7 @@ CsvWriter Writer::getFareRulesCsvw(std::ostream* os)
 }
 
 // ____________________________________________________________________________
-bool Writer::writeFareRule(const gtfs::FareRuleFlat& t,
+bool Writer::writeFareRule(const gtfs::FareRule::Flat& t,
     CsvWriter* csvw) const
 {
     csvw->writeString(t.fare);
@@ -504,7 +504,7 @@ bool Writer::writeFareRules(gtfs::Feed* f, std::ostream* os) const
     for (const auto& fare : f->getFares()) {
         for (const auto& r : fare.second->getFareRules()) {
             writeFareRule(
-                gtfs::FareRuleFlat{
+                gtfs::FareRule::Flat{
                     fare.second->getId(), r.getRoute() ? r.getRoute()->getId() : "", r.getOriginId(), r.getDestId(), r.getContainsId() },
                 &csvw);
         }

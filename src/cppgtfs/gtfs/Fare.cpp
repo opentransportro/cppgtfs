@@ -2,10 +2,10 @@
 
 namespace cppgtfs::gtfs
 {
-    FareRuleFields cppgtfs::gtfs::FareRuleFields::fromCsvParser(const csv::CsvParser& csvp)
+    FareRule::Fields cppgtfs::gtfs::FareRule::Fields::fromCsvParser(const csv::CsvParser& csvp)
 
     {
-        FareRuleFields f;
+        FareRule::Fields f;
         f.fareIdFld = csvp.getFieldIndex("fare_id");
         f.routeIdFld = csvp.getOptFieldIndex("route_id");
         f.originIdFld = csvp.getOptFieldIndex("origin_id");
@@ -13,9 +13,9 @@ namespace cppgtfs::gtfs
         f.containsIdFld = csvp.getOptFieldIndex("contains_id");
         return f;
     }
-    FareFields cppgtfs::gtfs::FareFields::fromCsvParser(const csv::CsvParser& csvp)
+    Fare::Fields cppgtfs::gtfs::Fare::Fields::fromCsvParser(const csv::CsvParser& csvp)
     {
-        FareFields f;
+        Fare::Fields f;
         f.fareIdFld = csvp.getFieldIndex("fare_id");
         f.priceFld = csvp.getFieldIndex("price");
         f.currencyTypeFld = csvp.getFieldIndex("currency_type");

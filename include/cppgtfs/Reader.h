@@ -56,10 +56,10 @@ namespace cppgtfs
         bool nextFrequency(CsvParser& csvp, FrequencyFlat* r, const FrequencyFields& flds) const;
 
         // ____________________________________________________________________________
-        bool nextFare(CsvParser& csvp, FareFlat* t, const FareFields& flds) const;
+        bool nextFare(CsvParser& csvp, Fare::Flat* t, const Fare::Fields& flds) const;
 
         // ____________________________________________________________________________
-        bool nextFareRule(CsvParser& csvp, FareRuleFlat* t, const FareRuleFields& flds) const;
+        bool nextFareRule(CsvParser& csvp, FareRule::Flat* t, const FareRule::Fields& flds) const;
 
         // ____________________________________________________________________________
         bool nextAgency(CsvParser& csvp, gtfs::Agency::Flat* a, const gtfs::Agency::Fields& flds) const;
@@ -269,8 +269,8 @@ namespace cppgtfs
     {
         CsvParser csvp(s);
 
-        FareFlat ff;
-        auto flds = FareFields::fromCsvParser(csvp);
+        Fare::Flat ff;
+        auto flds = Fare::Fields::fromCsvParser(csvp);
 
         while (nextFare(csvp, &ff, flds)) {
             Agency::Ref agency = Agency::Ref();
@@ -294,8 +294,8 @@ namespace cppgtfs
     {
         CsvParser csvp(s);
 
-        FareRuleFlat fr;
-        auto flds = FareRuleFields::fromCsvParser(csvp);
+        FareRule::Flat fr;
+        auto flds = FareRule::Fields::fromCsvParser(csvp);
 
         while (nextFareRule(csvp, &fr, flds)) {
             Fare* fare = targetFeed.getFares().get(fr.fare);

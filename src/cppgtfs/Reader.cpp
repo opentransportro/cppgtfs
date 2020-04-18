@@ -34,21 +34,21 @@ namespace cppgtfs
 
         return false;
     }
-    bool ReaderBase::nextFare(CsvParser& csvp, FareFlat* t, const FareFields& flds) const
+    bool ReaderBase::nextFare(CsvParser& csvp, Fare::Flat* t, const Fare::Fields& flds) const
     {
         if (csvp.readNextLine()) {
             t->id = _dataExtractor.getString(csvp, flds.fareIdFld);
             t->price = _dataExtractor.getDouble(csvp, flds.priceFld);
             t->currencyType = _dataExtractor.getString(csvp, flds.currencyTypeFld);
-            t->paymentMethod = static_cast<typename FareFlat::PAYMENT_METHOD>(_dataExtractor.getRangeInteger(csvp, flds.paymentMethodFld, 0, 1));
-            t->numTransfers = static_cast<typename FareFlat::NUM_TRANSFERS>(_dataExtractor.getRangeInteger(csvp, flds.transfersFld, 0, 3, 3));
+            t->paymentMethod = static_cast<typename Fare::Flat::PAYMENT_METHOD>(_dataExtractor.getRangeInteger(csvp, flds.paymentMethodFld, 0, 1));
+            t->numTransfers = static_cast<typename Fare::Flat::NUM_TRANSFERS>(_dataExtractor.getRangeInteger(csvp, flds.transfersFld, 0, 3, 3));
             t->agency = _dataExtractor.getString(csvp, flds.agencyFld, "");
             t->duration = _dataExtractor.getRangeInteger(csvp, flds.transferDurationFld, 0, INT64_MAX, -1);
         }
 
         return false;
     }
-    bool ReaderBase::nextFareRule(CsvParser& csvp, FareRuleFlat* t, const FareRuleFields& flds) const
+    bool ReaderBase::nextFareRule(CsvParser& csvp, FareRule::Flat* t, const FareRule::Fields& flds) const
     {
         if (csvp.readNextLine()) {
             t->fare = _dataExtractor.getString(csvp, flds.fareIdFld);
