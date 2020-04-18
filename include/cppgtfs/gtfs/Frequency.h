@@ -15,27 +15,29 @@ namespace csv
 namespace cppgtfs::gtfs
 {
     using fieldId = csv::fieldId;
-    struct FrequencyFields
-    {
-        fieldId tripIdFld;
-        fieldId startTimeFld;
-        fieldId endTimeFld;
-        fieldId headwaySecsFld;
-        fieldId exactTimesFld;
 
-        static FrequencyFields fromCsvParser(const csv::CsvParser& csvp);
-    };
-
-    struct FrequencyFlat
-    {
-        std::string tripId;
-        Time startTime, endTime;
-        uint16_t headwaySecs;
-        bool exactTimes;
-    };
     class Frequency
     {
     public:
+        struct Fields
+        {
+            fieldId tripIdFld;
+            fieldId startTimeFld;
+            fieldId endTimeFld;
+            fieldId headwaySecsFld;
+            fieldId exactTimesFld;
+
+            static Fields fromCsvParser(const csv::CsvParser& csvp);
+        };
+
+        struct Flat
+        {
+            std::string tripId;
+            Time startTime, endTime;
+            uint16_t headwaySecs;
+            bool exactTimes;
+        };
+
         Frequency(const Time& startTime, const Time& endTime, uint16_t headwaySecs, bool exactTimes);
 
         [[nodiscard]] const Time& getStartTime() const;

@@ -596,7 +596,7 @@ CsvWriter Writer::getFrequencyCsvw(std::ostream* os)
 }
 
 // ____________________________________________________________________________
-bool Writer::writeFrequency(const gtfs::FrequencyFlat& f, CsvWriter* csvw) const
+bool Writer::writeFrequency(const gtfs::Frequency::Flat& f, CsvWriter* csvw) const
 {
     csvw->writeString(f.tripId);
     csvw->writeString(f.startTime.toString());
@@ -615,7 +615,7 @@ bool Writer::writeFrequencies(gtfs::Feed* f, std::ostream* os) const
 
     for (const auto& t : f->getTrips()) {
         for (const auto& f : t.second->getFrequencies()) {
-            writeFrequency(gtfs::FrequencyFlat{ t.second->getId(), f.getStartTime(), f.getEndTime(), f.getHeadwaySecs(), f.hasExactTimes() }, &csvw);
+            writeFrequency(gtfs::Frequency::Flat{ t.second->getId(), f.getStartTime(), f.getEndTime(), f.getHeadwaySecs(), f.hasExactTimes() }, &csvw);
         }
     }
 

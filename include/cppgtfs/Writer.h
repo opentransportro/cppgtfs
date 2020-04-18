@@ -77,7 +77,7 @@ namespace cppgtfs
 
         bool writeCalendarDates(gtfs::Feed* f, std::ostream* os) const;
 
-        bool writeFrequency(const gtfs::FrequencyFlat& ag, CsvWriter* csvw) const;
+        bool writeFrequency(const gtfs::Frequency::Flat& ag, CsvWriter* csvw) const;
 
         bool writeFrequencies(gtfs::Feed* f, std::ostream* os) const;
 

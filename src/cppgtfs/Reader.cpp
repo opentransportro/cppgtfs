@@ -21,7 +21,7 @@ namespace cppgtfs
 
         return false;
     }
-    bool ReaderBase::nextFrequency(CsvParser& csvp, gtfs::FrequencyFlat* r, const gtfs::FrequencyFields& flds) const
+    bool ReaderBase::nextFrequency(CsvParser& csvp, gtfs::Frequency::Flat* r, const gtfs::Frequency::Fields& flds) const
     {
         if (csvp.readNextLine()) {
             r->tripId = _dataExtractor.getString(csvp, flds.tripIdFld);

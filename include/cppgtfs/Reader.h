@@ -53,7 +53,7 @@ namespace cppgtfs
         bool nextTransfer(CsvParser& csvp, TransferFlat* t, const TransfersFields& flds) const;
 
         // ____________________________________________________________________________
-        bool nextFrequency(CsvParser& csvp, FrequencyFlat* r, const FrequencyFields& flds) const;
+        bool nextFrequency(CsvParser& csvp, Frequency::Flat* r, const Frequency::Fields& flds) const;
 
         // ____________________________________________________________________________
         bool nextFare(CsvParser& csvp, Fare::Flat* t, const Fare::Fields& flds) const;
@@ -246,8 +246,8 @@ namespace cppgtfs
     {
         CsvParser csvp(s);
 
-        FrequencyFlat ff;
-        auto flds = FrequencyFields::fromCsvParser(csvp);
+        Frequency::Flat ff;
+        auto flds = Frequency::Fields::fromCsvParser(csvp);
 
         while (nextFrequency(csvp, &ff, flds)) {
             Frequency f(ff.startTime, ff.endTime, ff.headwaySecs, ff.exactTimes);

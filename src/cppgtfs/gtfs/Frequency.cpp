@@ -3,9 +3,9 @@
 
 namespace cppgtfs::gtfs
 {
-    FrequencyFields FrequencyFields::fromCsvParser(const csv::CsvParser& csvp)
+    Frequency::Fields Frequency::Fields::fromCsvParser(const csv::CsvParser& csvp)
     {
-        FrequencyFields r;
+        Frequency::Fields r;
         r.tripIdFld = csvp.getFieldIndex("trip_id");
         r.startTimeFld = csvp.getFieldIndex("start_time");
         r.endTimeFld = csvp.getFieldIndex("end_time");
