@@ -18,49 +18,50 @@ namespace cppgtfs::gtfs
 {
     using Time = util::Time;
 
-    struct StopTimeFields
-    {
-        fieldId stopIdFld;
-        fieldId tripIdFld;
-        fieldId arrivalTimeFld;
-        fieldId departureTimeFld;
-        fieldId stopSequenceFld;
-        fieldId stopHeadsignFld;
-        fieldId shapeDistTraveledFld;
-        fieldId timepointFld;
-        fieldId pickUpTypeFld;
-        fieldId dropOffTypeFld;
-
-        // ____________________________________________________________________________
-        static StopTimeFields fromCsvParser(const csv::CsvParser& csvp);
-    };
-    struct StopTimeFlat
-    {
-        enum PU_DO_TYPE : uint8_t
-        {
-            REGULAR = 0,
-            NEVER = 1,
-            MUST_PHONE_AGENCY = 2,
-            MUST_COORDINATE_W_DRIVER = 3
-        };
-
-        util::Time at;
-        util::Time dt;
-
-        std::string trip;
-        std::string s;
-        uint32_t sequence;
-        std::string headsign;
-        PU_DO_TYPE pickupType;
-        PU_DO_TYPE dropOffType;
-        bool isTimepoint;
-        double shapeDistTravelled;
-    };
-
     class StopTime
     {
     public:
-        using PU_DO_TYPE = gtfs::StopTimeFlat::PU_DO_TYPE;
+
+        struct Fields
+        {
+            fieldId stopIdFld;
+            fieldId tripIdFld;
+            fieldId arrivalTimeFld;
+            fieldId departureTimeFld;
+            fieldId stopSequenceFld;
+            fieldId stopHeadsignFld;
+            fieldId shapeDistTraveledFld;
+            fieldId timepointFld;
+            fieldId pickUpTypeFld;
+            fieldId dropOffTypeFld;
+
+            // ____________________________________________________________________________
+            static Fields fromCsvParser(const csv::CsvParser& csvp);
+        };
+        struct Flat
+        {
+            enum PU_DO_TYPE : uint8_t
+            {
+                REGULAR = 0,
+                NEVER = 1,
+                MUST_PHONE_AGENCY = 2,
+                MUST_COORDINATE_W_DRIVER = 3
+            };
+
+            util::Time at;
+            util::Time dt;
+
+            std::string trip;
+            std::string s;
+            uint32_t sequence;
+            std::string headsign;
+            PU_DO_TYPE pickupType;
+            PU_DO_TYPE dropOffType;
+            bool isTimepoint;
+            double shapeDistTravelled;
+        };
+
+        using PU_DO_TYPE = gtfs::StopTime::Flat::PU_DO_TYPE;
 
         StopTime(const Time& at, const Time& dt, Stop::Ref s, uint32_t seq, const std::string& hs, PU_DO_TYPE put, PU_DO_TYPE dot, float distTrav, bool isTp) :
             _at(at),

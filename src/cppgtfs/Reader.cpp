@@ -190,7 +190,7 @@ namespace cppgtfs
 
         return false;
     }
-    bool ReaderBase::nextStopTime(CsvParser& csvp, StopTimeFlat* s, const StopTimeFields& flds) const
+    bool ReaderBase::nextStopTime(CsvParser& csvp, StopTime::Flat* s, const StopTime::Fields& flds) const
     {
         if (csvp.readNextLine()) {
             s->at = _dataExtractor.getTime(csvp, flds.arrivalTimeFld);
@@ -200,9 +200,9 @@ namespace cppgtfs
             s->s = _dataExtractor.getString(csvp, flds.stopIdFld);
             s->sequence = _dataExtractor.getRangeInteger(csvp, flds.stopSequenceFld, 0, UINT32_MAX);
             s->headsign = _dataExtractor.getString(csvp, flds.stopHeadsignFld, "");
-            s->pickupType = static_cast<StopTimeFlat::PU_DO_TYPE>(
+            s->pickupType = static_cast<StopTime::Flat::PU_DO_TYPE>(
                 _dataExtractor.getRangeInteger(csvp, flds.pickUpTypeFld, 0, 3, 0));
-            s->dropOffType = static_cast<StopTimeFlat::PU_DO_TYPE>(
+            s->dropOffType = static_cast<StopTime::Flat::PU_DO_TYPE>(
                 _dataExtractor.getRangeInteger(csvp, flds.dropOffTypeFld, 0, 3, 0));
 
             // if at and dt are empty, default to 0 here

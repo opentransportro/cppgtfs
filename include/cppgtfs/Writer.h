@@ -55,7 +55,7 @@ namespace cppgtfs
 
         bool writeTrips(gtfs::Feed* f, std::ostream* os) const;
 
-        bool writeStopTime(const gtfs::StopTimeFlat& ag, CsvWriter* csvw) const;
+        bool writeStopTime(const gtfs::StopTime::Flat& ag, CsvWriter* csvw) const;
 
         bool writeStopTimes(gtfs::Feed* f, std::ostream* os) const;
 

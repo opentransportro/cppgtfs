@@ -5,9 +5,9 @@
 
 namespace cppgtfs::gtfs
 {
-    StopTimeFields StopTimeFields::fromCsvParser(const csv::CsvParser& csvp)
+    StopTime::Fields StopTime::Fields::fromCsvParser(const csv::CsvParser& csvp)
     {
-        StopTimeFields s;
+        StopTime::Fields s;
         s.stopIdFld = csvp.getFieldIndex("stop_id");
         s.tripIdFld = csvp.getFieldIndex("trip_id");
         s.arrivalTimeFld = csvp.getFieldIndex("arrival_time");

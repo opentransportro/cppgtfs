@@ -47,7 +47,7 @@ namespace cppgtfs
         bool nextShapePoint(CsvParser& csvp, ShapePointFlat* c, const ShapeFields& flds) const;
 
         // ____________________________________________________________________________
-        bool nextStopTime(CsvParser& csvp, StopTimeFlat* s, const StopTimeFields& flds) const;
+        bool nextStopTime(CsvParser& csvp, StopTime::Flat* s, const StopTime::Fields& flds) const;
 
         // ____________________________________________________________________________
         bool nextTransfer(CsvParser& csvp, TransferFlat* t, const TransfersFields& flds) const;
@@ -911,8 +911,8 @@ namespace cppgtfs
     {
         CsvParser csvp(s);
 
-        StopTimeFlat fst;
-        auto flds = StopTimeFields::fromCsvParser(csvp);
+        StopTime::Flat fst;
+        auto flds = StopTime::Fields::fromCsvParser(csvp);
 
         while (nextStopTime(csvp, &fst, flds)) {
             Stop* stop = 0;

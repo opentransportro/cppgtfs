@@ -251,7 +251,7 @@ CsvWriter Writer::getStopTimesCsvw(std::ostream* os)
 }
 
 // ____________________________________________________________________________
-bool Writer::writeStopTime(const gtfs::StopTimeFlat& st,
+bool Writer::writeStopTime(const gtfs::StopTime::Flat& st,
     CsvWriter* csvw) const
 {
     csvw->writeString(st.trip);
@@ -279,7 +279,7 @@ bool Writer::writeStopTimes(gtfs::Feed* sourceFeed, std::ostream* s) const
     for (const auto& t : sourceFeed->getTrips()) {
         for (const auto& p : t.second->getStopTimes()) {
             writeStopTime(
-                gtfs::StopTimeFlat{ p.getArrivalTime(), p.getDepartureTime(), t.second->getId(), p.getStop()->getId(), p.getSeq(), p.getHeadsign(), p.getPickupType(), p.getDropOffType(), p.isTimepoint(), p.getShapeDistanceTravelled() },
+                gtfs::StopTime::Flat{ p.getArrivalTime(), p.getDepartureTime(), t.second->getId(), p.getStop()->getId(), p.getSeq(), p.getHeadsign(), p.getPickupType(), p.getDropOffType(), p.isTimepoint(), p.getShapeDistanceTravelled() },
                 &csvw);
         }
     }
