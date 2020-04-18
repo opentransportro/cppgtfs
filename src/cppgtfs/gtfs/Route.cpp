@@ -213,4 +213,25 @@ namespace cppgtfs::gtfs
 
         return ret;
     }
+    Route::Route(std::string id, Agency::Ref agency, std::string short_name, std::string long_name, std::string desc, RouteFlat::TYPE type, std::string url, uint32_t color, uint32_t text_color) :
+        _id(std::move(id)),
+        _short_name(std::move(short_name)),
+        _long_name(std::move(long_name)),
+        _desc(std::move(desc)),
+        _type(type),
+        _url(std::move(url)),
+        _color(color),
+        _text_color(text_color),
+        _agency(agency)
+    {
+
+    }
+    std::string Route::getColorString() const
+    {
+        return RouteFlat::getHexColorString(_color);
+    }
+    std::string Route::getTextColorString() const
+    {
+        return RouteFlat::getHexColorString(_text_color);
+    }
 }

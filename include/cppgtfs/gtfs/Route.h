@@ -77,26 +77,7 @@ namespace cppgtfs::gtfs
     public:
         using Ref = Route*;
 
-        Route() = default;
-
-        explicit Route(std::string id, Agency::Ref agency, std::string short_name, std::string long_name, std::string desc, typename RouteFlat::TYPE type, std::string url, uint32_t color, uint32_t text_color) :
-            _id(std::move(id)),
-            _short_name(std::move(short_name)),
-            _long_name(std::move(long_name)),
-            _desc(std::move(desc)),
-            _type(type),
-            _url(std::move(url)),
-            _color(color),
-            _text_color(text_color),
-            _agency(agency)
-        {
-
-        }
-
-        virtual ~Route()
-        {
-
-        }
+        explicit Route(std::string id, Agency::Ref agency, std::string short_name, std::string long_name, std::string desc, typename RouteFlat::TYPE type, std::string url, uint32_t color, uint32_t text_color);
 
         [[nodiscard]] const std::string& getId() const { return _id; }
 
@@ -112,17 +93,11 @@ namespace cppgtfs::gtfs
 
         [[nodiscard]] uint32_t getColor() const { return _color; }
 
-        [[nodiscard]] std::string getColorString() const
-        {
-            return RouteFlat::getHexColorString(_color);
-        }
+        [[nodiscard]] std::string getColorString() const;
 
         [[nodiscard]] uint32_t getTextColor() const { return _text_color; }
 
-        [[nodiscard]] std::string getTextColorString() const
-        {
-            return RouteFlat::getHexColorString(_text_color);
-        }
+        [[nodiscard]] std::string getTextColorString() const;
 
 
         void setId(const std::string& id)

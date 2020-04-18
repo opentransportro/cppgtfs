@@ -8,42 +8,42 @@
 #include <csv/CsvParser.h>
 #include <string>
 #include <utility>
-#include <memory>
 
 namespace cppgtfs::gtfs
 {
     using fieldId = csv::fieldId;
 
-    struct AgencyFields
-    {
-        fieldId agencyNameFld;
-        fieldId agencyUrlFld;
-        fieldId agencyTimezoneFld;
-        fieldId agencyEmailFld;
-        fieldId agencyFareUrlFld;
-        fieldId agencyLangFld;
-        fieldId agencyPhoneFld;
-        fieldId agencyIdFld;
-
-        static AgencyFields fromCsvParser(const csv::CsvParser& csvp);
-    };
-
-    struct AgencyFlat
-    {
-        std::string id;
-        std::string name;
-        std::string url;
-        std::string timezone;
-        std::string lang;
-        std::string phone;
-        std::string fare_url;
-        std::string agency_email;
-    };
-
     class Agency
     {
     public:
-        using Ref = Agency*; //std::shared_ptr<Agency>;
+        struct Fields
+        {
+            fieldId agencyNameFld;
+            fieldId agencyUrlFld;
+            fieldId agencyTimezoneFld;
+            fieldId agencyEmailFld;
+            fieldId agencyFareUrlFld;
+            fieldId agencyLangFld;
+            fieldId agencyPhoneFld;
+            fieldId agencyIdFld;
+
+            static Fields fromCsvParser(const csv::CsvParser& csvp);
+        };
+
+        struct Flat
+        {
+            std::string id;
+            std::string name;
+            std::string url;
+            std::string timezone;
+            std::string lang;
+            std::string phone;
+            std::string fare_url;
+            std::string agency_email;
+        };
+
+
+        using Ref = Agency*;
 
         Agency() = default;
 
@@ -65,6 +65,8 @@ namespace cppgtfs::gtfs
 
         [[nodiscard]] const std::string& getAgencyEmail() const;
 
+        [[nodiscard]] Agency::Flat getFlat() const;
+
         void setId(const std::string& id);
         void setName(const std::string& name);
         void setUrl(const std::string& url);
@@ -74,7 +76,6 @@ namespace cppgtfs::gtfs
         void setFareUrl(const std::string& fareUrl);
         void setAgencyEmail(const std::string& agencyEmail);
 
-        [[nodiscard]] AgencyFlat getFlat() const;
 
     private:
         std::string _id;

@@ -27,10 +27,11 @@
 #include "cppgtfs/gtfs/StopTime.h"
 #include "cppgtfs/exceptions/ParseException.h"
 #include "cppgtfs/exceptions/FileNotFoundException.h"
-
+#include <cppgtfs/gtfs/Model.h>
 
 using namespace cppgtfs::gtfs;
 using namespace csv;
+
 
 // A GTFS parser
 namespace cppgtfs
@@ -61,7 +62,7 @@ namespace cppgtfs
         bool nextFareRule(CsvParser& csvp, FareRuleFlat* t, const FareRuleFields& flds) const;
 
         // ____________________________________________________________________________
-        bool nextAgency(CsvParser& csvp, gtfs::AgencyFlat* a, const gtfs::AgencyFields& flds) const;
+        bool nextAgency(CsvParser& csvp, gtfs::Agency::Flat* a, const gtfs::Agency::Fields& flds) const;
 
         // ____________________________________________________________________________
         bool nextStop(CsvParser& csvp, StopFlat* s, const StopFields& flds) const;
@@ -375,8 +376,8 @@ namespace cppgtfs
     {
         CsvParser csvp(s);
         Agency::Ref a = (Agency::Ref());
-        AgencyFlat fa;
-        auto flds = AgencyFields::fromCsvParser(csvp);
+        Agency::Flat fa;
+        auto flds = Agency::Fields::fromCsvParser(csvp);
 
         while (nextAgency(csvp, &fa, flds)) {
             if ((Agency::Ref()) == (a = targetFeed.getAgencies().add(Agency(fa.id, fa.name, fa.url, fa.timezone, fa.lang, fa.phone, fa.fare_url, fa.agency_email)))) {

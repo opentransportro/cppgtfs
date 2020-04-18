@@ -39,7 +39,7 @@ namespace cppgtfs
         // write a GtfsFeed to a zip/folder
         bool write(gtfs::Feed* sourceFeed, const std::string& path) const;
 
-        bool writeAgency(const gtfs::AgencyFlat& ag, CsvWriter* csvw) const;
+        bool writeAgency(const gtfs::Agency::Flat& ag, CsvWriter* csvw) const;
 
         bool writeAgencies(gtfs::Feed* f, std::ostream* os) const;
 

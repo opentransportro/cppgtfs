@@ -54,9 +54,9 @@ namespace cppgtfs::gtfs
         _agency_email = agencyEmail;
     }
 
-    AgencyFlat Agency::getFlat() const
+    Agency::Flat Agency::getFlat() const
     {
-        return AgencyFlat{
+        return Agency::Flat{
             _id,
             _name,
             _url,
@@ -67,9 +67,9 @@ namespace cppgtfs::gtfs
             _agency_email
         };
     }
-    AgencyFields AgencyFields::fromCsvParser(const csv::CsvParser& csvp)
+    Agency::Fields Agency::Fields::fromCsvParser(const csv::CsvParser& csvp)
     {
-        AgencyFields r;
+        Agency::Fields r;
         r.agencyNameFld = csvp.getFieldIndex("agency_name");
         r.agencyUrlFld = csvp.getFieldIndex("agency_url");
         r.agencyTimezoneFld = csvp.getFieldIndex("agency_timezone");

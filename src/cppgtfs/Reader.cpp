@@ -60,7 +60,7 @@ namespace cppgtfs
 
         return false;
     }
-    bool ReaderBase::nextAgency(CsvParser& csvp, gtfs::AgencyFlat* a, const gtfs::AgencyFields& flds) const
+    bool ReaderBase::nextAgency(CsvParser& csvp, gtfs::Agency::Flat* a, const gtfs::Agency::Fields& flds) const
     {
         if (csvp.readNextLine()) {
             a->id = _dataExtractor.getString(csvp, flds.agencyIdFld, "");

@@ -24,6 +24,7 @@ namespace cppgtfs::gtfs
         using SharedPtr = std::shared_ptr<WrappedObject>;
         using WeakPtr = std::weak_ptr<WrappedObject>;
         using UniquePtr = std::unique_ptr<WrappedObject>;
+        using RawPtr = WrappedObject*;
     };
 
     /**

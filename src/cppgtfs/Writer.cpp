@@ -133,7 +133,7 @@ CsvWriter Writer::getAgencyCsvw(std::ostream* os)
 }
 
 // ____________________________________________________________________________
-bool Writer::writeAgency(const gtfs::AgencyFlat& ag, CsvWriter* csvw) const
+bool Writer::writeAgency(const gtfs::Agency::Flat& ag, CsvWriter* csvw) const
 {
     csvw->writeString(ag.id);
     csvw->writeString(ag.name);
