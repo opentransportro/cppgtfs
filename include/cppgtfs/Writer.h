@@ -43,7 +43,7 @@ namespace cppgtfs
 
         bool writeAgencies(gtfs::Feed* f, std::ostream* os) const;
 
-        bool writeStop(const gtfs::StopFlat& ag, CsvWriter* csvw) const;
+        bool writeStop(const gtfs::Stop::Flat& ag, CsvWriter* csvw) const;
 
         bool writeStops(gtfs::Feed* f, std::ostream* os) const;
 

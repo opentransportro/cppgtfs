@@ -77,7 +77,7 @@ namespace cppgtfs
 
         return false;
     }
-    bool ReaderBase::nextStop(CsvParser& csvp, StopFlat* s, const StopFields& flds) const
+    bool ReaderBase::nextStop(CsvParser& csvp, Stop::Flat* s, const Stop::Fields& flds) const
     {
         if (csvp.readNextLine()) {
             s->id = _dataExtractor.getString(csvp, flds.stopIdFld);
@@ -91,9 +91,9 @@ namespace cppgtfs
             s->parent_station = _dataExtractor.getString(csvp, flds.parentStationFld, "");
             s->lat = _dataExtractor.getDouble(csvp, flds.stopLatFld);
             s->lng = _dataExtractor.getDouble(csvp, flds.stopLonFld);
-            s->wheelchair_boarding = static_cast<StopFlat::WHEELCHAIR_BOARDING>(
+            s->wheelchair_boarding = static_cast<Stop::Flat::WHEELCHAIR_BOARDING>(
                 _dataExtractor.getRangeInteger(csvp, flds.wheelchairBoardingFld, 0, 2, 0));
-            s->location_type = static_cast<StopFlat::LOCATION_TYPE>(
+            s->location_type = static_cast<Stop::Flat::LOCATION_TYPE>(
                 _dataExtractor.getRangeInteger(csvp, flds.locationTypeFld, 0, 2, 0));
 
             return true;

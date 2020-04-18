@@ -15,66 +15,66 @@ namespace cppgtfs::gtfs
 {
     using fieldId = csv::fieldId;
 
-    struct StopFields
-    {
-        fieldId stopIdFld;
-        fieldId stopNameFld;
-        fieldId stopLatFld;
-        fieldId stopLonFld;
-        fieldId parentStationFld;
-        fieldId stopCodeFld;
-        fieldId stopDescFld;
-        fieldId zoneIdFld;
-        fieldId stopUrlFld;
-        fieldId stopTimezoneFld;
-        fieldId wheelchairBoardingFld;
-        fieldId locationTypeFld;
-        fieldId platformCodeFld;
-
-        static StopFields fromCsvParser(const csv::CsvParser& csvp);
-    };
-
-    struct StopFlat
-    {
-        enum LOCATION_TYPE : uint8_t
-        {
-            STOP = 0,
-            STATION = 1,
-            STATION_ENTRANCE = 2
-        };
-
-        enum WHEELCHAIR_BOARDING : uint8_t
-        {
-            NO_INFORMATION = 0,
-            BOARDING_POSSIBLE = 1,
-            BOARDING_NOT_POSSIBLE = 2
-        };
-
-        std::string id;
-        std::string code;
-        std::string name;
-        std::string desc;
-        std::string zone_id;
-        std::string stop_url;
-        std::string stop_timezone;
-        std::string platform_code;
-        std::string parent_station;
-        float lat, lng;
-        StopFlat::WHEELCHAIR_BOARDING wheelchair_boarding;
-        StopFlat::LOCATION_TYPE location_type;
-    };
-
     class Stop
     {
     public:
+        struct Fields
+        {
+            fieldId stopIdFld;
+            fieldId stopNameFld;
+            fieldId stopLatFld;
+            fieldId stopLonFld;
+            fieldId parentStationFld;
+            fieldId stopCodeFld;
+            fieldId stopDescFld;
+            fieldId zoneIdFld;
+            fieldId stopUrlFld;
+            fieldId stopTimezoneFld;
+            fieldId wheelchairBoardingFld;
+            fieldId locationTypeFld;
+            fieldId platformCodeFld;
+
+            static Fields fromCsvParser(const csv::CsvParser& csvp);
+        };
+
+        struct Flat
+        {
+            enum LOCATION_TYPE : uint8_t
+            {
+                STOP = 0,
+                STATION = 1,
+                STATION_ENTRANCE = 2
+            };
+
+            enum WHEELCHAIR_BOARDING : uint8_t
+            {
+                NO_INFORMATION = 0,
+                BOARDING_POSSIBLE = 1,
+                BOARDING_NOT_POSSIBLE = 2
+            };
+
+            std::string id;
+            std::string code;
+            std::string name;
+            std::string desc;
+            std::string zone_id;
+            std::string stop_url;
+            std::string stop_timezone;
+            std::string platform_code;
+            std::string parent_station;
+            float lat, lng;
+            Flat::WHEELCHAIR_BOARDING wheelchair_boarding;
+            Flat::LOCATION_TYPE location_type;
+        };
+
         using Ref = Stop*;
 
-        using LOCATION_TYPE = StopFlat::LOCATION_TYPE;
-        using WHEELCHAIR_BOARDING = StopFlat::WHEELCHAIR_BOARDING;
+        using LOCATION_TYPE = Flat::LOCATION_TYPE;
+        using WHEELCHAIR_BOARDING = Flat::WHEELCHAIR_BOARDING;
 
         Stop() = default;
 
-        Stop(std::string id, std::string code, std::string name, std::string desc, float lat, float lng, std::string zone_id, std::string stop_url, StopFlat::LOCATION_TYPE location_type, Stop* parent_station, std::string stop_timezone, StopFlat::WHEELCHAIR_BOARDING wheelchair_boarding, std::string platform_code) :
+        Stop(std::string id, std::string code, std::string name, std::string desc, float lat, float lng, std::string zone_id, std::string stop_url, Stop::Flat::LOCATION_TYPE location_type, Stop* parent_station, std::string stop_timezone, Stop::Flat::WHEELCHAIR_BOARDING wheelchair_boarding, std::string platform_code) :
             _id(std::move(id)),
             _code(std::move(code)),
             _name(std::move(name)),
@@ -107,7 +107,7 @@ namespace cppgtfs::gtfs
 
         [[nodiscard]] const std::string& getStopUrl() const { return _stop_url; }
 
-        [[nodiscard]] StopFlat::LOCATION_TYPE getLocationType() const { return _location_type; }
+        [[nodiscard]] Stop::Flat::LOCATION_TYPE getLocationType() const { return _location_type; }
 
         [[nodiscard]] const Stop* getParentStation() const { return _parent_station; }
 
@@ -117,14 +117,14 @@ namespace cppgtfs::gtfs
 
         [[nodiscard]] const std::string& getStopTimezone() const { return _stop_timezone; }
 
-        [[nodiscard]] StopFlat::WHEELCHAIR_BOARDING getWheelchairBoarding() const
+        [[nodiscard]] Stop::Flat::WHEELCHAIR_BOARDING getWheelchairBoarding() const
         {
             return _wheelchair_boarding;
         }
 
-        [[nodiscard]] StopFlat getFlat() const
+        [[nodiscard]] Stop::Flat getFlat() const
         {
-            StopFlat r;
+            Stop::Flat r;
             r.id = _id;
             r.code = _code;
             r.name = _name;
@@ -155,8 +155,8 @@ namespace cppgtfs::gtfs
         Stop* _parent_station{};
         float _lat{};
         float _lng{};
-        StopFlat::WHEELCHAIR_BOARDING _wheelchair_boarding{};
-        StopFlat::LOCATION_TYPE _location_type{};
+        Stop::Flat::WHEELCHAIR_BOARDING _wheelchair_boarding{};
+        Stop::Flat::LOCATION_TYPE _location_type{};
     };
 
 }    // namespace cppgtfs::gtfs

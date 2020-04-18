@@ -1,9 +1,9 @@
 #include <cppgtfs/gtfs/Stop.h>
 namespace cppgtfs::gtfs
 {
-    StopFields StopFields::fromCsvParser(const csv::CsvParser& csvp)
+    Stop::Fields Stop::Fields::fromCsvParser(const csv::CsvParser& csvp)
     {
-        StopFields r;
+        Stop::Fields r;
         r.stopIdFld = csvp.getFieldIndex("stop_id");
         r.stopNameFld = csvp.getFieldIndex("stop_name");
         r.stopLatFld = csvp.getFieldIndex("stop_lat");

@@ -167,7 +167,7 @@ CsvWriter Writer::getStopsCsvw(std::ostream* os)
 }
 
 // ____________________________________________________________________________
-bool Writer::writeStop(const gtfs::StopFlat& s, CsvWriter* csvw) const
+bool Writer::writeStop(const gtfs::Stop::Flat& s, CsvWriter* csvw) const
 {
     csvw->writeString(s.id);
     csvw->writeString(s.code);

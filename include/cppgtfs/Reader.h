@@ -65,7 +65,7 @@ namespace cppgtfs
         bool nextAgency(CsvParser& csvp, gtfs::Agency::Flat* a, const gtfs::Agency::Fields& flds) const;
 
         // ____________________________________________________________________________
-        bool nextStop(CsvParser& csvp, StopFlat* s, const StopFields& flds) const;
+        bool nextStop(CsvParser& csvp, Stop::Flat* s, const Stop::Fields& flds) const;
 
         // ____________________________________________________________________________
         bool nextRoute(CsvParser& csvp, Route::Flat* r, const Route::Fields& flds) const;
@@ -403,8 +403,8 @@ namespace cppgtfs
 
         std::map<std::string, std::pair<size_t, std::string>> parentStations;
 
-        StopFlat fs;
-        auto flds = StopFields::fromCsvParser(csvp);
+        Stop::Flat fs;
+        auto flds = Stop::Fields::fromCsvParser(csvp);
 
         while (nextStop(csvp, &fs, flds)) {
             targetFeed.updateBox(fs.lat, fs.lng);
@@ -413,7 +413,7 @@ namespace cppgtfs
                 Stop(fs.id, fs.code, fs.name, fs.desc, fs.lat, fs.lng, fs.zone_id, fs.stop_url, fs.location_type, 0, fs.stop_timezone, fs.wheelchair_boarding, fs.platform_code);
 
             if (!fs.parent_station.empty()) {
-                if (fs.location_type == StopFlat::LOCATION_TYPE::STATION) {
+                if (fs.location_type == Stop::Flat::LOCATION_TYPE::STATION) {
                     throw ParseException(
                         "a stop with location_type 'station' (1) cannot"
                         " have a parent station",
