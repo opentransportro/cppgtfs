@@ -27,7 +27,7 @@ TEST_CASE("Create ok reader and parse exemple files", "[Reader]")
     reader.parseTrips(targetFeed);
     reader.parseStopTimes(targetFeed);
     reader.parseFrequencies(targetFeed);
-    //reader.parseTransfers(targetFeed);
+    reader.parseTransfers(targetFeed);
     reader.parseFareAttributes(targetFeed);
     reader.parseFareRules(targetFeed);
 

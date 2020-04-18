@@ -234,4 +234,60 @@ namespace cppgtfs::gtfs
     {
         return Route::Flat::getHexColorString(_text_color);
     }
+    const std::string& Route::getId() const { return _id; }
+    const std::string& Route::getShortName() const { return _short_name; }
+    const std::string& Route::getLongName() const { return _long_name; }
+    const std::string& Route::getDesc() const { return _desc; }
+    typename Route::Flat::TYPE Route::getType() const { return _type; }
+    const std::string& Route::getUrl() const { return _url; }
+    uint32_t Route::getColor() const { return _color; }
+    uint32_t Route::getTextColor() const { return _text_color; }
+    void Route::setId(const std::string& id)
+    {
+        _id = id;
+    }
+    void Route::setShortName(const std::string& shortName)
+    {
+        _short_name = shortName;
+    }
+    void Route::setLongName(const std::string& longName)
+    {
+        _long_name = longName;
+    }
+    void Route::setDesc(const std::string& desc)
+    {
+        _desc = desc;
+    }
+    void Route::setType(Route::Flat::TYPE type)
+    {
+        _type = type;
+    }
+    void Route::setUrl(const std::string& url)
+    {
+        _url = url;
+    }
+    void Route::setColor(uint32_t color)
+    {
+        _color = color;
+    }
+    void Route::setTextColor(uint32_t textColor)
+    {
+        _text_color = textColor;
+    }
+    Agency::Ref Route::getAgency() const { return _agency; }
+    Agency::Ref Route::getAgency() { return _agency; }
+    Route::Flat Route::getFlat() const
+    {
+        Route::Flat r;
+        r.id = _id;
+        r.short_name = _short_name;
+        r.long_name = _long_name;
+        r.desc = _desc;
+        r.type = _type;
+        r.url = _url;
+        r.color = _color;
+        r.text_color = _text_color;
+        r.agency = _agency->getId();
+        return r;
+    }
 }

@@ -58,42 +58,20 @@ namespace cppgtfs::gtfs
             fieldId shapeDistTraveledFld;
 
             // ____________________________________________________________________________
-            static Fields fromCsvParser(const csv::CsvParser& csvp)
-            {
-                Fields s;
-                s.shapeIdFld = csvp.getFieldIndex("shape_id");
-                s.shapePtSequenceFld = csvp.getFieldIndex("shape_pt_sequence");
-                s.shapePtLonFld = csvp.getFieldIndex("shape_pt_lon");
-                s.shapePtLatFld = csvp.getFieldIndex("shape_pt_lat");
-                s.shapeDistTraveledFld = csvp.getOptFieldIndex("shape_dist_traveled");
-                return s;
-            }
+            static Fields fromCsvParser(const csv::CsvParser& csvp);
         };
 
         using Ref = Shape*;
 
         Shape() = default;
 
-        explicit Shape(std::string id) :
-            _id(std::move(id)) {}
+        explicit Shape(std::string id);
 
-        [[nodiscard]] const std::string& getId() const { return _id; }
+        [[nodiscard]] const std::string& getId() const;
 
-        [[nodiscard]] const ShapePoints& getPoints() const { return _shapePoints; }
+        [[nodiscard]] const ShapePoints& getPoints() const;
 
-        bool addPoint(const ShapePoint& p)
-        {
-            for (auto& _shapePoint : _shapePoints) {
-                if (_shapePoint.seq == p.seq) {
-                    return false;
-                }
-            }
-            _shapePoints.reserve(_shapePoints.size() + 1);
-            _shapePoints.push_back(p);
-            auto cmp = ShapePointCompare();
-            std::sort(_shapePoints.begin(), _shapePoints.end(), cmp);
-            return true;
-        }
+        bool addPoint(const ShapePoint& p);
 
     private:
         std::string _id;

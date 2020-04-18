@@ -3,7 +3,7 @@
 int main()
 {
 
-    using Test = Model<Agency::Fields, Agency>;
+    using Test = Model<Agency>;
 
 
     auto agency = Test::create("id", "name", "url", "timezone", "lang", "phone", "fare_url", "agency_email");

@@ -75,82 +75,44 @@ namespace cppgtfs::gtfs
             static std::set<Flat::TYPE> getTypesFromString(std::string name);
         };
 
-
         using Ref = Route*;
 
         explicit Route(std::string id, Agency::Ref agency, std::string short_name, std::string long_name, std::string desc, typename Route::Flat::TYPE type, std::string url, uint32_t color, uint32_t text_color);
 
-        [[nodiscard]] const std::string& getId() const { return _id; }
+        [[nodiscard]] const std::string& getId() const;
 
-        [[nodiscard]] const std::string& getShortName() const { return _short_name; }
+        [[nodiscard]] const std::string& getShortName() const;
 
-        [[nodiscard]] const std::string& getLongName() const { return _long_name; }
+        [[nodiscard]] const std::string& getLongName() const;
 
-        [[nodiscard]] const std::string& getDesc() const { return _desc; }
+        [[nodiscard]] const std::string& getDesc() const;
 
-        [[nodiscard]] typename Route::Flat::TYPE getType() const { return _type; }
+        [[nodiscard]] typename Route::Flat::TYPE getType() const;
 
-        [[nodiscard]] const std::string& getUrl() const { return _url; }
+        [[nodiscard]] const std::string& getUrl() const;
 
-        [[nodiscard]] uint32_t getColor() const { return _color; }
+        [[nodiscard]] uint32_t getColor() const;
 
         [[nodiscard]] std::string getColorString() const;
 
-        [[nodiscard]] uint32_t getTextColor() const { return _text_color; }
+        [[nodiscard]] uint32_t getTextColor() const;
 
         [[nodiscard]] std::string getTextColorString() const;
 
 
-        void setId(const std::string& id)
-        {
-            _id = id;
-        }
-        void setShortName(const std::string& shortName)
-        {
-            _short_name = shortName;
-        }
-        void setLongName(const std::string& longName)
-        {
-            _long_name = longName;
-        }
-        void setDesc(const std::string& desc)
-        {
-            _desc = desc;
-        }
-        void setType(typename Route::Flat::TYPE type)
-        {
-            _type = type;
-        }
-        void setUrl(const std::string& url)
-        {
-            _url = url;
-        }
-        void setColor(uint32_t color)
-        {
-            _color = color;
-        }
-        void setTextColor(uint32_t textColor)
-        {
-            _text_color = textColor;
-        }
-        Agency::Ref getAgency() const { return _agency; }
+        void setId(const std::string& id);
+        void setShortName(const std::string& shortName);
+        void setLongName(const std::string& longName);
+        void setDesc(const std::string& desc);
+        void setType(typename Route::Flat::TYPE type);
+        void setUrl(const std::string& url);
+        void setColor(uint32_t color);
+        void setTextColor(uint32_t textColor);
+        Agency::Ref getAgency() const;
 
-        Agency::Ref getAgency() { return _agency; }
+        Agency::Ref getAgency();
 
-        Route::Flat getFlat() const
-        {
-            Route::Flat r;
-            r.id = _id;
-            r.short_name = _short_name;
-            r.long_name = _long_name;
-            r.desc = _desc;
-            r.type = _type;
-            r.url = _url;
-            r.color = _color;
-            r.text_color = _text_color;
-            r.agency = _agency->getId();
-            return r;
-        }
+        Route::Flat getFlat() const;
 
     private:
         std::string _id{};

@@ -45,38 +45,22 @@ namespace cppgtfs::gtfs
 
         Transfer() = default;
 
-        Transfer(Stop* fromStop, Stop* toStop, TYPE type, int32_t tTime) :
-            _fromStop(fromStop), _toStop(toStop), _type(type), _tTime(tTime) {}
+        Transfer(Stop* fromStop, Stop* toStop, TYPE type, int32_t tTime);
 
-        [[nodiscard]] Stop* getFromStop() const { return _fromStop; }
+        [[nodiscard]] Stop* getFromStop() const;
 
-        [[nodiscard]] Stop* getToStop() const { return _toStop; }
+        [[nodiscard]] Stop* getToStop() const;
 
-        [[nodiscard]] TYPE getType() const { return _type; }
+        [[nodiscard]] TYPE getType() const;
 
-        [[nodiscard]] int32_t getMinTransferTime() const { return _tTime; }
+        [[nodiscard]] int32_t getMinTransferTime() const;
 
-        [[nodiscard]] gtfs::TransferFlat getFlat() const
-        {
-            return gtfs::TransferFlat{ getFromStop()->getId(), getToStop()->getId(), getType(), getMinTransferTime() };
-        }
+        [[nodiscard]] gtfs::TransferFlat getFlat() const;
 
-        void setFromStop(Stop* fromStop)
-        {
-            _fromStop = fromStop;
-        }
-        void setToStop(Stop* toStop)
-        {
-            _toStop = toStop;
-        }
-        void setType(TYPE type)
-        {
-            _type = type;
-        }
-        void setTTime(int32_t tTime)
-        {
-            _tTime = tTime;
-        }
+        void setFromStop(Stop* fromStop);
+        void setToStop(Stop* toStop);
+        void setType(TYPE type);
+        void setTTime(int32_t tTime);
 
     private:
         Stop* _fromStop;

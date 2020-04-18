@@ -39,19 +39,15 @@ namespace cppgtfs::gtfs
 
         FareRule() = default;
 
-        FareRule(Route::Ref route, std::string originId, std::string destId, std::string containsId) :
-            _route(route),
-            _originId(std::move(originId)),
-            _destId(std::move(destId)),
-            _containsId(std::move(containsId)) {}
+        FareRule(Route::Ref route, std::string originId, std::string destId, std::string containsId);
 
-        Route::Ref getRoute() const { return _route; }
+        Route::Ref getRoute() const;
 
-        [[nodiscard]] const std::string& getOriginId() const { return _originId; }
+        [[nodiscard]] const std::string& getOriginId() const;
 
-        [[nodiscard]] const std::string& getDestId() const { return _destId; }
+        [[nodiscard]] const std::string& getDestId() const;
 
-        [[nodiscard]] const std::string& getContainsId() const { return _containsId; }
+        [[nodiscard]] const std::string& getContainsId() const;
 
 
     private:
@@ -108,73 +104,37 @@ namespace cppgtfs::gtfs
         using PAYMENT_METHOD = Flat::PAYMENT_METHOD;
         using NUM_TRANSFERS = Flat::NUM_TRANSFERS;
 
-        static std::string getId(Ref r) { return r->getId(); }
-
         Fare() = default;
 
-        explicit Fare(std::string id, double price, std::string currencyType, PAYMENT_METHOD paymentMethod, NUM_TRANSFERS numTransfers, Agency* agency, int64_t dur) :
-            _id(std::move(id)),
-            _price(price),
-            _currencyType(std::move(currencyType)),
-            _paymentMethod(paymentMethod),
-            _numTransfers(numTransfers),
-            _agency(agency),
-            _duration(dur) {}
+        explicit Fare(std::string id, double price, std::string currencyType, PAYMENT_METHOD paymentMethod, NUM_TRANSFERS numTransfers, Agency* agency, int64_t dur);
 
-        [[nodiscard]] const std::string& getId() const { return _id; }
+        [[nodiscard]] const std::string& getId() const;
 
-        [[nodiscard]] double getPrice() const { return _price; }
+        [[nodiscard]] double getPrice() const;
 
-        [[nodiscard]] const std::string& getCurrencyType() const { return _currencyType; }
+        [[nodiscard]] const std::string& getCurrencyType() const;
 
-        [[nodiscard]] PAYMENT_METHOD getPaymentMethod() const { return _paymentMethod; }
+        [[nodiscard]] PAYMENT_METHOD getPaymentMethod() const;
 
-        [[nodiscard]] NUM_TRANSFERS getNumTransfers() const { return _numTransfers; }
+        [[nodiscard]] NUM_TRANSFERS getNumTransfers() const;
 
-        [[nodiscard]] Agency* getAgency() const { return _agency; }
+        [[nodiscard]] Agency* getAgency() const;
 
-        [[nodiscard]] int64_t getDuration() const { return _duration; }
+        [[nodiscard]] int64_t getDuration() const;
 
-        const std::vector<FareRule>& getFareRules() const
-        {
-            return _fareRules;
-        }
+        const std::vector<FareRule>& getFareRules() const;
 
-        void addFareRule(const FareRule& rule) { _fareRules.push_back(rule); }
+        void addFareRule(const FareRule& rule);
 
-        [[nodiscard]] Flat getFlat() const
-        {
-            return { _id, _price, _currencyType, _paymentMethod, _numTransfers, _agency != nullptr ? _agency->getId() : "", _duration };
-        }
+        [[nodiscard]] Flat getFlat() const;
 
-        void setId(const std::string& id)
-        {
-            _id = id;
-        }
-        void setPrice(double price)
-        {
-            _price = price;
-        }
-        void setCurrencyType(const std::string& currencyType)
-        {
-            _currencyType = currencyType;
-        }
-        void setPaymentMethod(PAYMENT_METHOD paymentMethod)
-        {
-            _paymentMethod = paymentMethod;
-        }
-        void setNumTransfers(NUM_TRANSFERS numTransfers)
-        {
-            _numTransfers = numTransfers;
-        }
-        void setAgency(Agency* agency)
-        {
-            _agency = agency;
-        }
-        void setDuration(int64_t duration)
-        {
-            _duration = duration;
-        }
+        void setId(const std::string& id);
+        void setPrice(double price);
+        void setCurrencyType(const std::string& currencyType);
+        void setPaymentMethod(PAYMENT_METHOD paymentMethod);
+        void setNumTransfers(NUM_TRANSFERS numTransfers);
+        void setAgency(Agency* agency);
+        void setDuration(int64_t duration);
 
     private:
         std::string _id{};

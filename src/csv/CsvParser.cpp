@@ -11,7 +11,7 @@
 
 using std::remove;
 
-// _____________________________________________________________________________
+
 namespace csv
 {
     CsvParser::CsvParser(std::istream* stream) :
@@ -22,7 +22,7 @@ namespace csv
         }
     }
 
-    // _____________________________________________________________________________
+
     bool CsvParser::readNextLine()
     {
         if (_stream == nullptr || !_stream->good()) {
@@ -127,14 +127,14 @@ namespace csv
         return true;
     }
 
-    // _____________________________________________________________________________
+
     const char* CsvParser::getTString(const fieldId i) const
     {
         if (i >= _currentItems.size()) { return ""; }
         return _currentItems[i];
     }
 
-    // _____________________________________________________________________________
+
     double CsvParser::getDouble(const fieldId i) const
     {
         if (i >= _currentItems.size() || !isDouble(_currentItems[i]))
@@ -142,14 +142,14 @@ namespace csv
         return atof(_currentItems[i]);
     }
 
-    // _____________________________________________________________________________
+
     bool CsvParser::lineIsEmpty(std::string* line) const
     {
         strtrim(line);
         return line->empty();
     }
 
-    // _____________________________________________________________________________
+
     bool CsvParser::lineIsEmpty(const char* line) const
     {
         size_t i = 0;
@@ -161,7 +161,7 @@ namespace csv
         return true;
     }
 
-    // _____________________________________________________________________________
+
     int32_t CsvParser::getLong(const fieldId i) const
     {
         if (i >= _currentItems.size() || !isLong(_currentItems[i])) {
@@ -170,46 +170,46 @@ namespace csv
         return atol(_currentItems[i]);
     }
 
-    // _____________________________________________________________________________
+
     bool CsvParser::hasItem(const std::string& fieldName) const
     {
         return _headerMap.find(fieldName) != _headerMap.end();
     }
 
-    // _____________________________________________________________________________
+
     bool CsvParser::fieldIsEmpty(const std::string& fieldName) const
     {
         return strlen(getTString(fieldName)) == 0;
     }
 
-    // _____________________________________________________________________________
+
     bool CsvParser::fieldIsEmpty(fieldId field) const
     {
         return strlen(getTString(field)) == 0;
     }
 
-    // _____________________________________________________________________________
+
     const char* CsvParser::getTString(const std::string& fieldName) const
     {
         return getTString(getFieldIndex(fieldName));
     }
 
-    // _____________________________________________________________________________
+
     double CsvParser::getDouble(const std::string& fieldName) const
     {
         return getDouble(getFieldIndex(fieldName));
     }
 
-    // _____________________________________________________________________________
+
     int32_t CsvParser::getLong(const std::string& fieldName) const
     {
         return getDouble(getFieldIndex(fieldName));
     }
 
-    // _____________________________________________________________________________
+
     size_t CsvParser::getNumColumns() const { return _currentItems.size(); }
 
-    // _____________________________________________________________________________
+
     size_t CsvParser::getFieldIndex(const std::string& fieldName) const
     {
         if (_headerMap.find(fieldName) == _headerMap.end()) {
@@ -218,7 +218,7 @@ namespace csv
         return _headerMap.find(fieldName)->second;
     }
 
-    // _____________________________________________________________________________
+
     size_t CsvParser::getOptFieldIndex(const std::string& fieldName) const
     {
         if (_headerMap.find(fieldName) == _headerMap.end()) {
@@ -227,13 +227,13 @@ namespace csv
         return _headerMap.find(fieldName)->second;
     }
 
-    // _____________________________________________________________________________
+
     int32_t CsvParser::getCurLine() const { return _curLine; }
 
-    // _____________________________________________________________________________
+
     size_t CsvParser::getCurOffset() const { return _offset; }
 
-    // _____________________________________________________________________________
+
     std::string CsvParser::getFieldName(fieldId i) const
     {
         if (i < _headerVec.size()) {
@@ -242,7 +242,7 @@ namespace csv
         return "(no field name given)";
     }
 
-    // _____________________________________________________________________________
+
     void CsvParser::parseHeader()
     {
         _headerMap.clear();
@@ -254,7 +254,7 @@ namespace csv
         }
     }
 
-    // _____________________________________________________________________________
+
     const char* CsvParser::inlineRightTrim(const char* t)
     {
         char* s = const_cast<char*>(t);

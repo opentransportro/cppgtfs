@@ -13,11 +13,11 @@ using std::remove;
 
 namespace csv
 {
-    // _____________________________________________________________________________
+
     CsvWriter::CsvWriter(std::ostream* str, HeaderList headers) :
         _stream(str), _headers(std::move(headers)), _delim(',') {}
 
-    // _____________________________________________________________________________
+
     bool CsvWriter::writeDouble(double d)
     {
         std::ostringstream str;
@@ -27,10 +27,10 @@ namespace csv
         return true;
     }
 
-    // _____________________________________________________________________________
+
     void CsvWriter::skip() { _curL.push_back(""); }
 
-    // _____________________________________________________________________________
+
     bool CsvWriter::writeString(const std::string& str)
     {
         if (str.find(_delim) != std::string::npos || str.find('"') != std::string::npos) {
@@ -42,7 +42,7 @@ namespace csv
         return true;
     }
 
-    // _____________________________________________________________________________
+
     std::string CsvWriter::escStr(const std::string& str)
     {
         std::stringstream ret;
@@ -57,14 +57,14 @@ namespace csv
         return ret.str();
     }
 
-    // _____________________________________________________________________________
+
     bool CsvWriter::writeRawString(const std::string& str)
     {
         _curL.push_back(str);
         return true;
     }
 
-    // _____________________________________________________________________________
+
     bool CsvWriter::writeInt(int i)
     {
         std::ostringstream str;
@@ -73,7 +73,7 @@ namespace csv
         return true;
     }
 
-    // _____________________________________________________________________________
+
     void CsvWriter::flushLine()
     {
         if (!_hWritten) {
@@ -85,7 +85,7 @@ namespace csv
         _curL.clear();
     }
 
-    // _____________________________________________________________________________
+
     void CsvWriter::writeStrArr(const std::vector<std::string>& arr)
     {
         if (arr.empty()) { return; }

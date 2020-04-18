@@ -101,18 +101,17 @@ namespace cppgtfs::gtfs
 
 
     template<
-        typename WrappedFields,
         typename WrappedObject,
         template<typename> class ContainerT = Container
     >
     class Model:
-        public ModelWrapper<WrappedFields, WrappedObject>,
+        public ModelWrapper<typename WrappedObject::Fields, WrappedObject>,
         public PointerWrapper<WrappedObject>,
         public ContainerWrapper<WrappedObject, ContainerT>
     {
     public:
         template<class ... Types>
-        Model(Types ... args): ModelWrapper<WrappedFields,WrappedObject>(args...) { }
+        Model(Types ... args): ModelWrapper<typename WrappedObject::Fields,WrappedObject>(args...) { }
     };
 
 }

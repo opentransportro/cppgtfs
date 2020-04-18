@@ -80,10 +80,8 @@ namespace cppgtfs::gtfs
 
     class Trip
     {
-        // typedef std::set<StopTimeT, StopTimeCompare<StopTimeT>> StopTimes;
         using StopTimes = std::vector<StopTime>;
         using Frequencies = std::vector<Frequency>;
-
     public:
         using Ref = Trip*;
 
@@ -134,21 +132,7 @@ namespace cppgtfs::gtfs
 
         void addFrequency(const Frequency& t);
 
-        [[nodiscard]] gtfs::TripFlat getFlat() const
-        {
-            return gtfs::TripFlat{
-                _id,
-                _route->getId(),
-                _service->getId(),
-                _headsign,
-                _short_name,
-                _dir,
-                _block_id,
-                _shape->getId(),
-                _wc,
-                _ba
-            };
-        };
+        [[nodiscard]] gtfs::TripFlat getFlat() const;
 
     private:
         std::string _id{};

@@ -39,6 +39,7 @@ namespace cppgtfs::gtfs
 
         static CalendarDateFields fromCsvParser(const csv::CsvParser& csvp);
     };
+
     class ServiceDateFlat
     {
     public:
@@ -70,6 +71,7 @@ namespace cppgtfs::gtfs
     private:
         uint32_t _yyyymmdd : 24;
     };
+
     struct CalendarFlat
     {
         enum SERVICE_DAY : uint8_t
@@ -105,6 +107,7 @@ namespace cppgtfs::gtfs
         EXCEPTION_TYPE type;
         ServiceDateFlat date;
     };
+
     bool operator>(const ServiceDateFlat& lh, const ServiceDateFlat& rh);
     bool operator<(const ServiceDateFlat& lh, const ServiceDateFlat& rh);
     bool operator==(const ServiceDateFlat& lh, const ServiceDateFlat& rh);

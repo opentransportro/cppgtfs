@@ -23,30 +23,22 @@
 #include "Transfer.h"
 #include "Trip.h"
 
-#define FEEDTPL             \
-    template<template<typename> class ContainerT>
-#define FEEDB \
-    FeedBase<ContainerT>
-
 namespace cppgtfs::gtfs
 {
-    template<
-        template<typename> class ContainerT
-    >
-    class FeedBase
+    class Feed
     {
     public:
-        using Agencies = ContainerT<Agency>;
-        using Stops = ContainerT<Stop>;
-        using Routes = ContainerT<Route>;
-        using Trips = ContainerT<Trip>;
-        using Shapes = ContainerT<Shape>;
-        using Services = ContainerT<Service>;
-        using Fares = ContainerT<Fare>;
+        using Agencies = Container<Agency>;
+        using Stops = Container<Stop>;
+        using Routes = Container<Route>;
+        using Trips = Container<Trip>;
+        using Shapes = Container<Shape>;
+        using Services = Container<Service>;
+        using Fares = Container<Fare>;
         using Transfers = std::vector<Transfer>;
         using Zones = std::set<std::string>;
 
-        FeedBase() :
+        Feed() :
             _maxLat(std::numeric_limits<double>::lowest()),
             _maxLon(std::numeric_limits<double>::lowest()),
             _minLat(std::numeric_limits<double>::max()),
@@ -227,9 +219,6 @@ namespace cppgtfs::gtfs
         std::string _publisherName, _publisherUrl, _lang, _version, _path;
         ServiceDate _startDate, _endDate;
     };
-
-    using Feed = FeedBase<Container>;
-    using ContFeed = FeedBase<ContContainer>;
 
 }    // namespace cppgtfs::gtfs
 

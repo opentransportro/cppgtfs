@@ -63,44 +63,29 @@ namespace cppgtfs::gtfs
 
         using PU_DO_TYPE = gtfs::StopTime::Flat::PU_DO_TYPE;
 
-        StopTime(const Time& at, const Time& dt, Stop::Ref s, uint32_t seq, const std::string& hs, PU_DO_TYPE put, PU_DO_TYPE dot, float distTrav, bool isTp) :
-            _at(at),
-            _dt(dt),
-            _s(s),
-            _sequence(seq),
-            _headsign(hs),
-            _pickupType(put),
-            _dropOffType(dot),
-            _isTimepoint(isTp),
-            _shapeDistTravelled(distTrav) {}
+        StopTime(const Time& at, const Time& dt, Stop::Ref s, uint32_t seq, const std::string& hs, PU_DO_TYPE put, PU_DO_TYPE dot, float distTrav, bool isTp);
 
-        const Time& getArrivalTime() const { return _at; }
+        const Time& getArrivalTime() const;
 
-        const Time& getDepartureTime() const { return _dt; }
+        const Time& getDepartureTime() const;
 
-        Stop::Ref getStop() const { return _s; }
+        Stop::Ref getStop() const;
 
-        Stop::Ref getStop() { return _s; }
+        Stop::Ref getStop();
 
-        const std::string& getHeadsign() const { return _headsign; }
+        const std::string& getHeadsign() const;
 
-        PU_DO_TYPE getPickupType() const
-        {
-            return static_cast<PU_DO_TYPE>(_pickupType);
-        }
+        PU_DO_TYPE getPickupType() const;
 
-        PU_DO_TYPE getDropOffType() const
-        {
-            return static_cast<PU_DO_TYPE>(_dropOffType);
-        }
+        PU_DO_TYPE getDropOffType() const;
 
-        float getShapeDistanceTravelled() const { return _shapeDistTravelled; }
+        float getShapeDistanceTravelled() const;
 
-        void setShapeDistanceTravelled(double d) { _shapeDistTravelled = d; }
+        void setShapeDistanceTravelled(double d);
 
-        bool isTimepoint() const { return _isTimepoint; }
+        bool isTimepoint() const;
 
-        uint16_t getSeq() const { return _sequence; }
+        uint16_t getSeq() const;
 
     private:
         Time _at;
@@ -117,10 +102,7 @@ namespace cppgtfs::gtfs
 
     struct StopTimeCompare
     {
-        bool operator()(const StopTime& lh, const StopTime& rh) const
-        {
-            return lh.getSeq() < rh.getSeq();
-        }
+        bool operator()(const StopTime& lh, const StopTime& rh) const;
     };
 
 
