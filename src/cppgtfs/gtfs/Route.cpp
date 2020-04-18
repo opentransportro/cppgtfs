@@ -2,9 +2,9 @@
 
 namespace cppgtfs::gtfs
 {
-    RouteFields RouteFields::fromCsvParser(const csv::CsvParser& csvp)
+    Route::Fields Route::Fields::fromCsvParser(const csv::CsvParser& csvp)
     {
-        RouteFields r;
+        Route::Fields r;
         r.routeIdFld = csvp.getFieldIndex("route_id");
         r.routeLongNameFld = csvp.getOptFieldIndex("route_long_name");
         r.routeShortNameFld = csvp.getOptFieldIndex("route_short_name");
@@ -16,14 +16,14 @@ namespace cppgtfs::gtfs
         r.routeTextColorFld = csvp.getOptFieldIndex("route_text_color");
         return r;
     }
-    std::string RouteFlat::getHexColorString(uint32_t color)
+    std::string Route::Flat::getHexColorString(uint32_t color)
     {
         // using stringstream here, because it doesnt add "0x" to the front
         std::stringstream ss;
         ss << std::hex << std::setfill('0') << std::setw(6) << color;
         return ss.str();
     }
-    std::string RouteFlat::getTypeString(RouteFlat::TYPE t)
+    std::string Route::Flat::getTypeString(Route::Flat::TYPE t)
     {
         if (t == TYPE::COACH) {
             return "coach";
@@ -31,7 +31,7 @@ namespace cppgtfs::gtfs
         std::string names[8] = { "tram", "subway", "rail", "bus", "ferry", "cablecar", "gondola", "funicular" };
         return names[static_cast<size_t>(t)];
     }
-    RouteFlat::TYPE RouteFlat::getRouteType(int t)
+    Route::Flat::TYPE Route::Flat::getRouteType(int t)
     {
         switch (t) {
             case 2:
@@ -137,9 +137,9 @@ namespace cppgtfs::gtfs
                 return TYPE::NONE;
         }
     }
-    std::set<RouteFlat::TYPE> RouteFlat::getTypesFromString(std::string name)
+    std::set<Route::Flat::TYPE> Route::Flat::getTypesFromString(std::string name)
     {
-        std::set<RouteFlat::TYPE> ret;
+        std::set<Route::Flat::TYPE> ret;
 
         if (name.empty()) return ret;
 
@@ -147,73 +147,73 @@ namespace cppgtfs::gtfs
         uint64_t num = strtol(name.c_str(), &rem, 10);
         if (!*rem) {
             auto i = getRouteType(num);
-            if (i != RouteFlat::TYPE::NONE) ret.insert(i);
+            if (i != Route::Flat::TYPE::NONE) ret.insert(i);
             return ret;
         }
 
         std::transform(name.begin(), name.end(), name.begin(), ::tolower);
 
         if (name == "all") {
-            ret.insert(RouteFlat::TYPE::TRAM);
-            ret.insert(RouteFlat::TYPE::SUBWAY);
-            ret.insert(RouteFlat::TYPE::RAIL);
-            ret.insert(RouteFlat::TYPE::BUS);
-            ret.insert(RouteFlat::TYPE::COACH);
-            ret.insert(RouteFlat::TYPE::FERRY);
-            ret.insert(RouteFlat::TYPE::CABLE_CAR);
-            ret.insert(RouteFlat::TYPE::GONDOLA);
-            ret.insert(RouteFlat::TYPE::FUNICULAR);
+            ret.insert(Route::Flat::TYPE::TRAM);
+            ret.insert(Route::Flat::TYPE::SUBWAY);
+            ret.insert(Route::Flat::TYPE::RAIL);
+            ret.insert(Route::Flat::TYPE::BUS);
+            ret.insert(Route::Flat::TYPE::COACH);
+            ret.insert(Route::Flat::TYPE::FERRY);
+            ret.insert(Route::Flat::TYPE::CABLE_CAR);
+            ret.insert(Route::Flat::TYPE::GONDOLA);
+            ret.insert(Route::Flat::TYPE::FUNICULAR);
             return ret;
         }
 
         if (name == "bus") {
-            ret.insert(RouteFlat::TYPE::BUS);
+            ret.insert(Route::Flat::TYPE::BUS);
             return ret;
         }
 
         if (name == "tram" || name == "streetcar" || name == "light_rail" || name == "lightrail" || name == "light-rail") {
-            ret.insert(RouteFlat::TYPE::TRAM);
+            ret.insert(Route::Flat::TYPE::TRAM);
             return ret;
         }
 
         if (name == "train" || name == "rail") {
-            ret.insert(RouteFlat::TYPE::RAIL);
+            ret.insert(Route::Flat::TYPE::RAIL);
             return ret;
         }
 
         if (name == "ferry" || name == "boat" || name == "ship") {
-            ret.insert(RouteFlat::TYPE::FERRY);
+            ret.insert(Route::Flat::TYPE::FERRY);
             return ret;
         }
 
         if (name == "subway" || name == "metro") {
-            ret.insert(RouteFlat::TYPE::SUBWAY);
+            ret.insert(Route::Flat::TYPE::SUBWAY);
             return ret;
         }
 
         if (name == "cablecar" || name == "cable_car" || name == "cable-car") {
-            ret.insert(RouteFlat::TYPE::CABLE_CAR);
+            ret.insert(Route::Flat::TYPE::CABLE_CAR);
             return ret;
         }
 
         if (name == "gondola") {
-            ret.insert(RouteFlat::TYPE::GONDOLA);
+            ret.insert(Route::Flat::TYPE::GONDOLA);
             return ret;
         }
 
         if (name == "funicular") {
-            ret.insert(RouteFlat::TYPE::FUNICULAR);
+            ret.insert(Route::Flat::TYPE::FUNICULAR);
             return ret;
         }
 
         if (name == "coach") {
-            ret.insert(RouteFlat::TYPE::COACH);
+            ret.insert(Route::Flat::TYPE::COACH);
             return ret;
         }
 
         return ret;
     }
-    Route::Route(std::string id, Agency::Ref agency, std::string short_name, std::string long_name, std::string desc, RouteFlat::TYPE type, std::string url, uint32_t color, uint32_t text_color) :
+    Route::Route(std::string id, Agency::Ref agency, std::string short_name, std::string long_name, std::string desc, Route::Flat::TYPE type, std::string url, uint32_t color, uint32_t text_color) :
         _id(std::move(id)),
         _short_name(std::move(short_name)),
         _long_name(std::move(long_name)),
@@ -228,10 +228,10 @@ namespace cppgtfs::gtfs
     }
     std::string Route::getColorString() const
     {
-        return RouteFlat::getHexColorString(_color);
+        return Route::Flat::getHexColorString(_color);
     }
     std::string Route::getTextColorString() const
     {
-        return RouteFlat::getHexColorString(_text_color);
+        return Route::Flat::getHexColorString(_text_color);
     }
 }

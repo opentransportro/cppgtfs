@@ -325,7 +325,7 @@ bool Writer::writeShapes(gtfs::Feed* sourceFeed, std::ostream* s) const
 }
 
 // ____________________________________________________________________________
-bool Writer::writeRoute(const gtfs::RouteFlat& s, CsvWriter* csvw) const
+bool Writer::writeRoute(const gtfs::Route::Flat& s, CsvWriter* csvw) const
 {
     csvw->writeString(s.id);
     if (!s.agency.empty())
@@ -337,8 +337,8 @@ bool Writer::writeRoute(const gtfs::RouteFlat& s, CsvWriter* csvw) const
     csvw->writeString(s.desc);
     csvw->writeInt(static_cast<int>(s.type));
     csvw->writeString(s.url);
-    csvw->writeString(gtfs::RouteFlat::getHexColorString(s.color));
-    csvw->writeString(gtfs::RouteFlat::getHexColorString(s.text_color));
+    csvw->writeString(gtfs::Route::Flat::getHexColorString(s.color));
+    csvw->writeString(gtfs::Route::Flat::getHexColorString(s.text_color));
     csvw->flushLine();
 
     return true;

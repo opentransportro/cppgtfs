@@ -68,7 +68,7 @@ namespace cppgtfs
         bool nextStop(CsvParser& csvp, StopFlat* s, const StopFields& flds) const;
 
         // ____________________________________________________________________________
-        bool nextRoute(CsvParser& csvp, RouteFlat* r, const RouteFields& flds) const;
+        bool nextRoute(CsvParser& csvp, Route::Flat* r, const Route::Fields& flds) const;
 
         // ____________________________________________________________________________
         bool nextCalendar(CsvParser& csvp, CalendarFlat* c, const CalendarFields& flds) const;
@@ -459,8 +459,8 @@ namespace cppgtfs
     {
         CsvParser csvp(s);
 
-        RouteFlat fr;
-        auto flds = RouteFields::fromCsvParser(csvp);
+        Route::Flat fr;
+        auto flds = Route::Fields::fromCsvParser(csvp);
 
         while (nextRoute(csvp, &fr, flds)) {
             Agency::Ref routeAgency = 0;

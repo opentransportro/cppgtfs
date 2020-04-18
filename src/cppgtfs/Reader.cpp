@@ -101,7 +101,7 @@ namespace cppgtfs
 
         return false;
     }
-    bool ReaderBase::nextRoute(CsvParser& csvp, RouteFlat* r, const RouteFields& flds) const
+    bool ReaderBase::nextRoute(CsvParser& csvp, Route::Flat* r, const Route::Fields& flds) const
     {
         if (csvp.readNextLine()) {
             r->id = _dataExtractor.getString(csvp, flds.routeIdFld);

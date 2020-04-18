@@ -41,7 +41,7 @@ namespace cppgtfs
 
         util::Time getTime(const csv::CsvParser& csv, size_t field) const;
 
-        gtfs::RouteFlat::TYPE getRouteType(const csv::CsvParser& csv, size_t field, int64_t t) const;
+        gtfs::Route::Flat::TYPE getRouteType(const csv::CsvParser& csv, size_t field, int64_t t) const;
 
     private:
         bool _strict;

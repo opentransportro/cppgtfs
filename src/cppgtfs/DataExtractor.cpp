@@ -216,10 +216,10 @@ namespace cppgtfs
     }
 
     // ____________________________________________________________________________
-    gtfs::RouteFlat::TYPE DataExtractor::getRouteType(const CsvParser& csv, size_t field, int64_t tn) const
+    gtfs::Route::Flat::TYPE DataExtractor::getRouteType(const CsvParser& csv, size_t field, int64_t tn) const
     {
-        auto t = gtfs::RouteFlat::getRouteType(tn);
-        if (t == gtfs::RouteFlat::TYPE::NONE) {
+        auto t = gtfs::Route::Flat::getRouteType(tn);
+        if (t == gtfs::Route::Flat::TYPE::NONE) {
             std::stringstream msg;
             msg << "route type '" << tn << "' not supported.";
             throw ParseException(msg.str(), csv.getFieldName(field), csv.getCurLine());

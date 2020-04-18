@@ -22,62 +22,63 @@ namespace cppgtfs::gtfs
 {
     using fieldId = csv::fieldId;
 
-    struct RouteFields
-    {
-        fieldId routeIdFld;
-        fieldId routeLongNameFld;
-        fieldId routeShortNameFld;
-        fieldId routeTypeFld;
-        fieldId routeUrlFld;
-        fieldId routeDescFld;
-        fieldId agencyIdFld;
-        fieldId routeColorFld;
-        fieldId routeTextColorFld;
-
-        static RouteFields fromCsvParser(const csv::CsvParser& csvp);
-    };
-
-    struct RouteFlat
-    {
-        enum class TYPE
-        {
-            TRAM = 0,
-            SUBWAY = 1,
-            RAIL = 2,
-            BUS = 3,
-            FERRY = 4,
-            CABLE_CAR = 5,
-            GONDOLA = 6,
-            FUNICULAR = 7,
-            COACH = 200,
-            NONE = 99
-        };
-
-        std::string id;
-        std::string agency;
-        std::string short_name;
-        std::string long_name;
-        std::string desc;
-        TYPE type;
-        std::string url;
-        uint32_t color;
-        uint32_t text_color;
-
-        static std::string getHexColorString(uint32_t color);
-
-        static std::string getTypeString(RouteFlat::TYPE t);
-
-        static RouteFlat::TYPE getRouteType(int t);
-
-        static std::set<RouteFlat::TYPE> getTypesFromString(std::string name);
-    };
-
     class Route
     {
     public:
+        struct Fields
+        {
+            fieldId routeIdFld;
+            fieldId routeLongNameFld;
+            fieldId routeShortNameFld;
+            fieldId routeTypeFld;
+            fieldId routeUrlFld;
+            fieldId routeDescFld;
+            fieldId agencyIdFld;
+            fieldId routeColorFld;
+            fieldId routeTextColorFld;
+
+            static Fields fromCsvParser(const csv::CsvParser& csvp);
+        };
+
+        struct Flat
+        {
+            enum class TYPE
+            {
+                TRAM = 0,
+                SUBWAY = 1,
+                RAIL = 2,
+                BUS = 3,
+                FERRY = 4,
+                CABLE_CAR = 5,
+                GONDOLA = 6,
+                FUNICULAR = 7,
+                COACH = 200,
+                NONE = 99
+            };
+
+            std::string id;
+            std::string agency;
+            std::string short_name;
+            std::string long_name;
+            std::string desc;
+            TYPE type;
+            std::string url;
+            uint32_t color;
+            uint32_t text_color;
+
+            static std::string getHexColorString(uint32_t color);
+
+            static std::string getTypeString(Flat::TYPE t);
+
+            static Flat::TYPE getRouteType(int t);
+
+            static std::set<Flat::TYPE> getTypesFromString(std::string name);
+        };
+
+
         using Ref = Route*;
 
-        explicit Route(std::string id, Agency::Ref agency, std::string short_name, std::string long_name, std::string desc, typename RouteFlat::TYPE type, std::string url, uint32_t color, uint32_t text_color);
+        explicit Route(std::string id, Agency::Ref agency, std::string short_name, std::string long_name, std::string desc, typename Route::Flat::TYPE type, std::string url, uint32_t color, uint32_t text_color);
 
         [[nodiscard]] const std::string& getId() const { return _id; }
 
@@ -87,7 +88,7 @@ namespace cppgtfs::gtfs
 
         [[nodiscard]] const std::string& getDesc() const { return _desc; }
 
-        [[nodiscard]] typename RouteFlat::TYPE getType() const { return _type; }
+        [[nodiscard]] typename Route::Flat::TYPE getType() const { return _type; }
 
         [[nodiscard]] const std::string& getUrl() const { return _url; }
 
@@ -116,7 +117,7 @@ namespace cppgtfs::gtfs
         {
             _desc = desc;
         }
-        void setType(typename RouteFlat::TYPE type)
+        void setType(typename Route::Flat::TYPE type)
         {
             _type = type;
         }
@@ -136,9 +137,9 @@ namespace cppgtfs::gtfs
 
         Agency::Ref getAgency() { return _agency; }
 
-        RouteFlat getFlat() const
+        Route::Flat getFlat() const
         {
-            RouteFlat r;
+            Route::Flat r;
             r.id = _id;
             r.short_name = _short_name;
             r.long_name = _long_name;
@@ -156,7 +157,7 @@ namespace cppgtfs::gtfs
         std::string _short_name{};
         std::string _long_name{};
         std::string _desc{};
-        typename RouteFlat::TYPE _type{};
+        typename Route::Flat::TYPE _type{};
         std::string _url{};
         uint32_t _color{};
         uint32_t _text_color{};
