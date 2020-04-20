@@ -36,6 +36,7 @@ struct Route {
     CABLE_CAR = 5,
     GONDOLA = 6,
     FUNICULAR = 7,
+    TROLLEYBUS = 11,
     COACH = 200,
     NONE = 99
   };
@@ -165,6 +166,8 @@ struct Route {
         return Route::TYPE::FUNICULAR;
       case 5:
         return Route::TYPE::CABLE_CAR;
+      case 11:
+        return Route::TYPE::TROLLEYBUS;
       default:
         return Route::TYPE::NONE;
     }
@@ -195,6 +198,7 @@ struct Route {
       ret.insert(flat::Route::TYPE::CABLE_CAR);
       ret.insert(flat::Route::TYPE::GONDOLA);
       ret.insert(flat::Route::TYPE::FUNICULAR);
+      ret.insert(flat::Route::TYPE::TROLLEYBUS);
       return ret;
     }
 
@@ -241,6 +245,11 @@ struct Route {
 
     if (name == "coach") {
       ret.insert(flat::Route::TYPE::COACH);
+      return ret;
+    }
+
+    if (name == "trolleybus") {
+      ret.insert(flat::Route::TYPE::TROLLEYBUS);
       return ret;
     }
 
